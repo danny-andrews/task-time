@@ -1,0 +1,12 @@
+.form {
+  border: var(--border-dashed);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-small);
+  text-align: left;
+  background: var(--color-background);
+}
+
+.input-group {
+  display: flex;
+  justify-content: space-evenly;
+}

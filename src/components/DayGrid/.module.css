@@ -1,0 +1,10 @@
+.root {
+  display: flex;
+  height: calc(100% - var(--header-height));
+}
+
+.columns {
+  display: flex;
+  border: 0 var(--border-solid);
+  flex: 1;
+}

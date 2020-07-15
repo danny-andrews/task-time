@@ -1,0 +1,15 @@
+.root > * {
+  border-radius: 0;
+}
+
+.root > * + * {
+  border-left: none;
+}
+
+.root > :first-child {
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.root > :last-child {
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}

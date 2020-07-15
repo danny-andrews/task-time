@@ -1,0 +1,71 @@
+.base {
+  width: 100%;
+  cursor: pointer;
+  padding: var(--border-width);
+
+  /* Prevent zoom on double-tap */
+  touch-action: manipulation;
+}
+
+.base:hover,
+.base:focus {
+  background: var(--color-accent);
+}
+
+.base:focus {
+  outline: none;
+}
+
+.base:active {
+  background: var(--color-background);
+}
+
+.color-primary {
+  background: var(--color-background);
+}
+
+.color-transparent {
+  background: transparent;
+}
+
+.bordered {
+  border: var(--border-solid);
+}
+
+.rounded {
+  border-radius: var(--border-radius);
+}
+
+.primary {
+  composes: base color-primary bordered rounded;
+}
+
+.square {
+  composes: base color-primary bordered;
+}
+
+.link {
+  composes: base color-transparent;
+  text-decoration: underline;
+}
+
+.naked {
+  composes: base color-transparent;
+  background: transparent;
+}
+
+.icon {
+  composes: base color-primary rounded;
+}
+
+.icon > svg {
+  vertical-align: middle;
+}
+
+@media (max-width: 600px) {
+  .base {
+    min-height: var(--min-touch-target-size);
+    min-width: var(--min-touch-target-size);
+    line-height: var(--min-touch-target-size);
+  }
+}

@@ -1,0 +1,77 @@
+.root {
+  font-weight: var(--font-weight-bold);
+}
+
+.is-important {
+  box-shadow: var(--box-shadow-important);
+}
+.is-dragging {
+  opacity: var(--opacity-half);
+}
+
+.difficulty-easy {
+  height: 1.5rem;
+}
+.difficulty-medium {
+  height: 3rem;
+}
+.difficulty-hard {
+  height: 6rem;
+}
+
+.button-group {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+}
+
+.staleness-low {
+  color: var(--color-severity1);
+}
+.staleness-medium {
+  color: var(--color-severity2);
+}
+.staleness-high {
+  color: var(--color-severity3);
+}
+
+.staleness-button {
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-bold);
+  padding: var(--spacing-small);
+}
+
+.text,
+.staleness-button,
+.edit {
+  composes: center-contents from "../Atoms/index.module.css";
+}
+
+.staleness-button,
+.edit {
+  flex-basis: 15%;
+}
+
+.text {
+  flex: 1;
+}
+
+.edit {
+  text-decoration: underline;
+}
+
+.refresh {
+  display: none;
+  width: 70%;
+  height: 70%;
+}
+
+.staleness-button:hover .staleness-text,
+.staleness-button:focus .staleness-text {
+  display: none;
+}
+
+.staleness-button:hover .refresh,
+.staleness-button:focus .refresh {
+  display: block;
+}

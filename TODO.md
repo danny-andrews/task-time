@@ -1,0 +1,6 @@
+- Add edit functionality
+- Distinguish complete task from delete task
+- Loading states
+- Add reorder functionality
+- Move to custom build system
+- Improve focus styles

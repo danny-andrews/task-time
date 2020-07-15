@@ -1,0 +1,11 @@
+.root {
+  border: var(--border-solid);
+  height: 1.5rem;
+  display: block;
+  background: var(--color-background);
+}
+
+.root[type="text"] {
+  width: 100%;
+  padding: var(--spacing-tiny);
+}

@@ -1,0 +1,21 @@
+.inner-spacing-tiny > * + * {
+  margin-top: var(--spacing-tiny);
+}
+
+.inner-spacing-small > * + * {
+  margin-top: var(--spacing-small);
+}
+
+.inner-spacing-medium > * + * {
+  margin-top: var(--spacing-medium);
+}
+
+.inner-spacing-large > * + * {
+  margin-top: var(--spacing-large);
+}
+
+.center-contents {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,10 @@
+.vertical-nav {
+  margin: 0 var(--spacing-small);
+  flex: 0;
+}
+
+@media (min-width: 600px) {
+  .vertical-nav {
+    min-width: 2rem;
+  }
+}

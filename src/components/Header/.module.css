@@ -1,0 +1,4 @@
+.root {
+  composes: center-contents from "../Atoms/index.module.css";
+  height: var(--header-height);
+}
