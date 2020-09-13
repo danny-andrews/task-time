@@ -1,6 +1,17 @@
-extends: eslint:recommended
+extends:
+  - eslint:recommended
+  - plugin:react/recommended
+  - plugin:jsx-a11y/recommended
+env:
+  jest: true
+  browser: true
+  es6: true
 parserOptions:
-  ecmaVersion: 6
+  ecmaVersion: 9
   sourceType: module
   ecmaFeatures:
     jsx: true
+    objectRestSpread: true
+settings:
+  react:
+    version: detect
