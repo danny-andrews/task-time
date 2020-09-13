@@ -1,30 +1,6 @@
-import { formatISO, parseISO } from "date-fns";
-import { sum, map, fromPairs, pipe, path } from "ramda";
+import { map, addIndex, always } from "ramda";
 
-export const formatISODate = (date) =>
-  formatISO(date, { representation: "date" });
-
-export const normalizeModels = pipe(
-  map((model) => [model.id, model]),
-  fromPairs
-);
-
-export const calculateTotalDifficulty = pipe(
-  map(path(["difficulty", "value"])),
-  sum
-);
-
-export const isToday = (date) => date === formatISODate(new Date());
-
-export const formatDate = (date) => {
-  const formatter = new Intl.DateTimeFormat("en-us", {
-    weekday: "long",
-    month: "numeric",
-    day: "numeric",
-  });
-
-  return formatter.format(parseISO(date));
-};
+export const mapIndexed = addIndex(map);
 
 export const debounce = (func, duration) => {
   let timeout;
@@ -52,3 +28,5 @@ export const assert = (predicate, message) => {
 
 let counter = 0;
 export const uniqueId = (prefix = "") => `${prefix}${counter++}`;
+
+export const noop = always;

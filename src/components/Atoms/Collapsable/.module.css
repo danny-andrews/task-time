@@ -2,3 +2,7 @@
   margin: var(--spacing-small);
   margin-top: 0;
 }
+
+.panel {
+  composes: with-focus from "../index.module.css";
+}

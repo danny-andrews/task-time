@@ -3,9 +3,9 @@ import { Field } from "formik";
 import LabeledInput from "../LabeledInput";
 import styles from "./.module.css";
 
-const Input = ({ label, ...props }) => (
+const Input = ({ label, focused, ...props }) => (
   <LabeledInput label={label} name={props.name}>
-    {(id) => <Field className={styles.root} id={id} {...props} />}
+    <Field className={styles.root} {...props} />
   </LabeledInput>
 );
 

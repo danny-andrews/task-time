@@ -19,3 +19,12 @@
   align-items: center;
   justify-content: center;
 }
+
+.border-between + .border-between {
+  border-left: var(--border-solid);
+}
+
+.with-focus:focus {
+  outline: var(--outline-focus);
+  outline-offset: 1px;
+}

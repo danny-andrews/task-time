@@ -1,0 +1,44 @@
+import React from "react";
+import {
+  SliderInput,
+  SliderTrack,
+  SliderTrackHighlight,
+  SliderMarker,
+  SliderHandle,
+} from "@reach/slider";
+import { useField } from "formik";
+import styles from "./.module.css";
+import { uniqueId } from "../../../shared/util";
+
+const Slider = ({ markers, label, className, ...props }) => {
+  const [{ value }, , { setValue }] = useField(props.name);
+  const handleChange = (newValue) => setValue(newValue);
+  const labelId = uniqueId(`${props.name}-`);
+
+  return (
+    <div className={className}>
+      <p className={styles.label} id={labelId}>
+        Difficulty
+      </p>
+      <SliderInput
+        value={value}
+        onChange={handleChange}
+        className={styles.input}
+        aria-labelledby={labelId}
+        {...props}
+      >
+        <SliderTrack className={styles["slider-track"]}>
+          <SliderTrackHighlight className={styles.highlight} />
+          {markers.map(({ value, label }) => (
+            <SliderMarker key={value} className={styles.marker} value={value}>
+              <div className={styles["marker-label"]}>{label}</div>
+            </SliderMarker>
+          ))}
+          <SliderHandle className={styles.handle} />
+        </SliderTrack>
+      </SliderInput>
+    </div>
+  );
+};
+
+export default Slider;

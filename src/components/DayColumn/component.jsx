@@ -1,70 +1,85 @@
-import React, { useContext } from "react";
+import React, { useRef } from "react";
 import cn from "classnames";
 import { useDrop } from "react-dnd";
-import Task from "../Task";
+import { isPast, isToday } from "date-fns";
+import Tasks from "../Tasks";
 import TaskForm from "../TaskForm";
 import styles from "./.module.css";
 import { DND_IDS } from "../../shared/constants";
 import {
-  isToday,
-  formatDate,
-  calculateTotalDifficulty,
-} from "../../shared/util";
-import { BackendContext } from "../../shared/contexts";
+  formatHumanReadable,
+  serializeDate,
+  isPastDate,
+} from "../../shared/dates";
+import { getDifficultyForTasks } from "../../shared/model";
 import { H, Collapsable } from "../Atoms";
+import { useBackend } from "../../hooks";
 
 const DayColumn = ({ date, tasks }) => {
-  const backend = useContext(BackendContext);
+  const { updateTask, createTask } = useBackend();
 
-  const moveTask = (id, newDueDate) =>
-    backend.updateTask(id, { dueDate: newDueDate });
-
-  const completeTask = backend.deleteTask;
-  const refreshTask = (id) => backend.updateTask(id, { originalDueDate: date });
-  const addTask = ({ important, ...rest }) =>
-    backend.createTask({
+  // Handlers
+  const handleDrop = (id) => updateTask(id, { dueDate: serializeDate(date) });
+  const handleSubmit = ({ important, ...rest }) =>
+    createTask({
       ...rest,
       isImportant: important,
-      dueDate: date,
+      dueDate: serializeDate(date),
     });
 
+  // DnD
   const [{ isOver }, drop] = useDrop({
     accept: DND_IDS.TASK,
     drop: (item) => {
-      moveTask(item.id, date);
+      handleDrop(item.id);
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
   });
 
-  const className = cn(styles.root, {
-    [styles["current-date"]]: isToday(date),
-    [styles["is-over"]]: isOver,
+  // Template Vars
+  const isCurrentDay = isToday(date);
+  const classes = cn(styles.root, {
+    [styles["accent"]]: isCurrentDay,
+    [styles["dnd-is-hovering"]]: !isPastDate(date) && isOver,
   });
+  const tasksSectionClasses = cn(styles["tasks-section"], {
+    [styles["blocked"]]: isOver && isPastDate(date),
+  });
+  const headerClasses = cn(styles.header, {
+    [styles["strikethrough"]]: isPastDate(date),
+  });
+  const totalDifficulty = getDifficultyForTasks(tasks);
+  const formRef = useRef(null);
+  const handleDisplay = () => {
+    formRef.current.focus();
+  };
+  const renderTaskForm = () => {
+    if (isPastDate(date)) return null;
+
+    return (
+      <Collapsable buttonText="New Task" onDisplay={handleDisplay}>
+        <TaskForm
+          ref={formRef}
+          className={styles.form}
+          onSubmit={handleSubmit}
+        />
+      </Collapsable>
+    );
+  };
 
   return (
-    <li ref={drop} className={className}>
-      <header className={styles.header}>
-        <H styleLevel={4}>{formatDate(date)}</H>
-        <p>Total Difficulty: {calculateTotalDifficulty(tasks)}</p>
+    <li ref={drop} className={classes}>
+      <header className={headerClasses}>
+        <H level={2} styleLevel={4}>
+          {formatHumanReadable(date)}
+        </H>
+        <p>Total Difficulty: {totalDifficulty}</p>
       </header>
-      <div className={styles["tasks-section"]}>
-        <ol className={styles.tasks}>
-          {tasks.map((task) => (
-            <Task
-              onTaskClick={completeTask}
-              onRefreshClick={refreshTask}
-              key={task.id}
-              task={task}
-            />
-          ))}
-        </ol>
-        <Collapsable buttonText="New Task">
-          <div className={styles["form-container"]}>
-            <TaskForm onSubmit={addTask} />
-          </div>
-        </Collapsable>
+      <div className={tasksSectionClasses}>
+        <Tasks tasks={tasks} date={date} />
+        {renderTaskForm()}
       </div>
     </li>
   );

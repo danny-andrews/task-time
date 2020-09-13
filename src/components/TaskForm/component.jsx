@@ -1,71 +1,62 @@
-import React, { useRef, useEffect } from "react";
+import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import { Formik, Form } from "formik";
 import cn from "classnames";
+import { assoc } from "ramda";
 import styles from "./.module.css";
-import { Input, Button } from "../Atoms";
-import utilStyles from "../Atoms/index.module.css";
-import { head } from "ramda";
-import { titleCase } from "../../shared/util";
+import { Input, Button, Slider } from "../Atoms";
+import { titleCase, mapIndexed } from "../../shared/util";
+import { useBackend } from "../../hooks";
 
-const difficulties = [
-  {
-    id: "EASY",
-    name: "easy",
-  },
-  {
-    id: "MEDIUM",
-    name: "medium",
-  },
-  {
-    id: "HARD",
-    name: "hard",
-  },
-];
+const sliderMarkersFromDifficulties = mapIndexed(({ name }, i) => ({
+  value: i,
+  label: titleCase(name),
+}));
 
-const TaskForm = ({ onSubmit, className }) => {
-  const classes = cn(styles.form, className, utilStyles["inner-spacing-small"]);
-  const inputRef = useRef(null);
-  useEffect(() => {
-    inputRef.current.focus();
-  }, []);
+const TaskForm = ({ onSubmit, className }, ref) => {
+  const { data: difficulties = [] } = useBackend().useDifficulties();
+
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      textRef.current.focus();
+    },
+  }));
+
+  // Handlers
+  const handleSubmit = (values, { resetForm }) => {
+    onSubmit(assoc("difficulty", difficulties[values.difficulty].id, values));
+    resetForm();
+    textRef.current.focus();
+  };
+
+  // Template Vars
+  const textRef = useRef();
+  const initialValues = {
+    text: "",
+    difficulty: 0,
+    important: false,
+  };
+  const classes = cn(styles.form, className);
+  const sliderMarkers = sliderMarkersFromDifficulties(difficulties);
 
   return (
-    <Formik
-      initialValues={{
-        text: "",
-        difficulty: head(difficulties).id,
-        important: false,
-      }}
-      onSubmit={(values, { resetForm }) => {
-        onSubmit(values);
-        resetForm();
-      }}
-    >
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       <Form className={classes}>
         <Input
-          innerRef={inputRef}
+          innerRef={textRef}
           label="Text"
           name="text"
           type="text"
           required
         />
 
-        <div id="difficulty-group">Difficulty</div>
-        <div
-          className={styles["input-group"]}
-          role="group"
-          aria-labelledby="difficulty-group"
-        >
-          {difficulties.map(({ id, name }) => (
-            <Input
-              key={id}
-              label={titleCase(name)}
-              name="difficulty"
-              type="radio"
-              value={id}
-            />
-          ))}
-        </div>
+        <Slider
+          markers={sliderMarkers}
+          name="difficulty"
+          label="Difficulty"
+          min={0}
+          max={2}
+          step={1}
+        />
 
         <Input label="Important?" name="important" type="checkbox" />
 
@@ -75,4 +66,4 @@ const TaskForm = ({ onSubmit, className }) => {
   );
 };
 
-export default TaskForm;
+export default forwardRef(TaskForm);

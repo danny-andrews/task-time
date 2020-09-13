@@ -1,8 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import { queryCache } from "react-query";
 import { assoc, merge, omit } from "ramda";
-import { formatISODate } from "../util";
-import { Difficulties } from "../constants";
+import { serializeDate } from "../dates";
 
 const LocalStorage = () => {
   const getItem = (key) => JSON.parse(window.localStorage.getItem(key));
@@ -14,18 +12,32 @@ const LocalStorage = () => {
   return { getItem, setItem, updateItem };
 };
 
+const difficulties = {
+  EASY: { id: "EASY", name: "easy", value: 1 },
+  MEDIUM: { id: "MEDIUM", name: "medium", value: 2 },
+  HARD: { id: "HARD", name: "hard", value: 3 },
+};
+
 export default () => {
   const localStorage = LocalStorage();
   const TASKS = "tasks";
+  const DIFFICULTIES = "difficulties";
+  localStorage.setItem(DIFFICULTIES, difficulties);
 
-  const expandDifficulty = (task) => ({
-    ...task,
-    difficulty: Difficulties[task.difficulty],
-  });
+  const getDifficulties = () =>
+    Promise.resolve(Object.values(localStorage.getItem(DIFFICULTIES)));
+
+  const expandDifficulty = (task) =>
+    getDifficulties().then((difficulties) => ({
+      ...task,
+      difficulty: difficulties.find(
+        (difficulty) => difficulty.id === task.difficulty
+      ),
+    }));
 
   const getTasks = () =>
-    Promise.resolve(
-      Object.values(localStorage.getItem(TASKS)).map(expandDifficulty)
+    Promise.resolve(Object.values(localStorage.getItem(TASKS))).then((tasks) =>
+      Promise.all(tasks.map(expandDifficulty))
     );
 
   const createTask = ({ text, dueDate, isImportant, difficulty }) => {
@@ -33,22 +45,19 @@ export default () => {
     const newTask = {
       id,
       originalDueDate: dueDate,
-      createdAt: formatISODate(new Date()),
+      createdAt: serializeDate(new Date()),
       text,
       dueDate,
       difficulty,
       isImportant,
     };
     localStorage.updateItem(TASKS, assoc(id, newTask));
-    queryCache.invalidateQueries("tasks");
 
     return Promise.resolve();
   };
 
   const deleteTask = (id) => {
     localStorage.updateItem(TASKS, omit([id]));
-
-    queryCache.invalidateQueries("tasks");
 
     return Promise.resolve();
   };
@@ -58,10 +67,8 @@ export default () => {
       assoc(id, merge(tasks[id], updates), tasks)
     );
 
-    queryCache.invalidateQueries("tasks");
-
     return Promise.resolve();
   };
 
-  return { getTasks, createTask, updateTask, deleteTask };
+  return { getTasks, createTask, updateTask, deleteTask, getDifficulties };
 };

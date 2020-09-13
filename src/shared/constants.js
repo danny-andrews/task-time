@@ -1,29 +1,12 @@
 import Type from "union-type";
 
-export const Difficulties = {
-  EASY: {
-    id: "EASY",
-    name: "easy",
-    value: 1,
-  },
-  MEDIUM: {
-    id: "MEDIUM",
-    name: "medium",
-    value: 2,
-  },
-  HARD: {
-    id: "HARD",
-    name: "hard",
-    value: 3,
-  },
-};
-
 export const DND_IDS = {
   TASK: "TASK",
 };
 
 export const QUERY_IDS = {
   TASKS: "TASKS",
+  DIFFICULTIES: "DIFFICULTIES",
 };
 
 export const Breakpoints = {

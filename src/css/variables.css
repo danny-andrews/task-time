@@ -3,21 +3,32 @@
   --color-white: #fff;
   --color-black: #000;
   --color-green: #008000;
-  --color-orange: #ffa500;
+  --color-yellow: #fff700;
   --color-red: #ff0000;
-  --color-light-grey: hsl(0, 0%, 90%);
-  --color-dark-grey: hsl(0, 0%, 20%);
+  --color-light-grey-1: hsl(0, 0%, 90%);
+  --color-light-grey-2: hsl(0, 0%, 70%);
+  --color-dark-grey-1: hsl(0, 0%, 20%);
+  --color-dark-grey-2: hsl(0, 0%, 30%);
   --color-blue: blue;
 
   /* Color Scheme (use these) */
   --color-text: var(--color-black);
   --color-background: var(--color-white);
-  --color-border: var(--color-black);
-  --color-accent: var(--color-light-grey);
+  --color-accent-1: var(--color-light-grey-1);
+  --color-accent-2: var(--color-light-grey-2);
+  --color-border: var(--color-accent-2);
   --color-attention: var(--color-red);
-  --color-severity1: var(--color-green);
-  --color-severity2: var(--color-orange);
-  --color-severity3: var(--color-red);
+  --color-warning: var(--color-yellow);
+  --color-error: var(--color-attention);
+
+  /* Gradients */
+  --blocked-gradient: repeating-linear-gradient(
+    45deg,
+    var(--color-text),
+    var(--color-text) 10px,
+    var(--color-warning) 10px,
+    var(--color-warning) 20px
+  );
 
   /* Sizing */
   --spacing-tiny: 0.25rem;
@@ -31,13 +42,13 @@
   --border-dashed: 1px dashed var(--color-border);
   --border-solid: var(--border-width) solid var(--color-border);
   --border-radius: 0.25rem;
-
-  /* Box Shadows */
   --box-shadow-important: -4px 4px 4px var(--color-attention);
+  --outline-focus: 2px dashed #005fcc;
 
   /* Fonts */
   --font-stack: system, -apple-system, ".SFNSText-Regular", "San Francisco",
     "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
+  --font-size-small: 0.8rem;
 
   /* Font Weights */
   --font-weight-normal: 400;
@@ -56,10 +67,11 @@
     --color-text: var(--color-white);
     --color-background: var(--color-black);
     --color-border: var(--color-white);
-    --color-accent: var(--color-dark-grey);
+    --color-accent: var(--color-dark-grey-1);
+    --color-accent: var(--color-dark-grey-2);
     --color-attention: var(--color-white);
-    --color-severity1: var(--color-green);
-    --color-severity2: var(--color-orange);
-    --color-severity3: var(--color-red);
+    --color-severity-1: var(--color-green);
+    --color-severity-2: var(--color-orange);
+    --color-severity-3: var(--color-red);
   }
 }

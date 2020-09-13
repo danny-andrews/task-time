@@ -1,35 +1,33 @@
 .root {
+  composes: border-between from "../Atoms/index.module.css";
+
   flex: 1;
   text-align: center;
   display: flex;
   flex-direction: column;
 }
 
-.root + .root {
-  border-left: var(--border-solid);
+/* States */
+.accent {
+  background: var(--color-accent-1);
+}
+
+.dnd-is-hovering {
+  opacity: var(--opacity-half);
+}
+
+.strikethrough {
+  text-decoration: line-through;
+}
+
+.blocked {
+  background: var(--blocked-gradient);
 }
 
 .header {
   border-bottom: var(--border-solid);
   font-weight: var(--font-weight-bold);
   padding: var(--spacing-medium);
-}
-
-.tasks {
-  overflow-y: scroll;
-  padding: var(--spacing-medium);
-}
-
-.tasks > * + * {
-  margin-top: var(--spacing-medium);
-}
-
-.current-date {
-  background: var(--color-accent);
-}
-
-.is-over {
-  opacity: var(--opacity-half);
 }
 
 .tasks-section {
@@ -40,8 +38,8 @@
   justify-content: space-between;
 }
 
-.form-container {
+.form {
   border: var(--border-solid);
   border-top: 0;
-  padding: var(--spacing-tiny);
+  padding: var(--spacing-small);
 }

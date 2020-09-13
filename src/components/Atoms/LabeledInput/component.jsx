@@ -1,18 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./.module.css";
-import { uniqueId } from "../../../shared/util";
+import cn from "classnames";
 
-const LabeledInput = ({ label, name, children }) => {
-  const [id] = useState(uniqueId(`${name}-`));
-
-  return (
-    <div>
-      <label htmlFor={id} className={styles.label}>
-        {label}
-      </label>
-      {children(id)}
-    </div>
-  );
-};
+const LabeledInput = ({ label, children, className }) => (
+  <label className={cn(styles.root, className)}>
+    <div className={styles["label-text"]}>{label}</div>
+    {children}
+  </label>
+);
 
 export default LabeledInput;

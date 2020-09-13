@@ -1,0 +1,6 @@
+.root {
+  composes: inner-spacing-medium from "../Atoms/index.module.css";
+
+  overflow-y: scroll;
+  padding: var(--spacing-medium);
+}

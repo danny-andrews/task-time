@@ -4,7 +4,7 @@ import { H } from "../Atoms";
 
 const Header = () => (
   <header className={styles.root}>
-    <H>Task Time</H>
+    <H level={1}>Task Time</H>
   </header>
 );
 

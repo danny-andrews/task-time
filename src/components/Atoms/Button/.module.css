@@ -9,7 +9,7 @@
 
 .base:hover,
 .base:focus {
-  background: var(--color-accent);
+  background: var(--color-accent-1);
 }
 
 .base:focus {
@@ -42,16 +42,6 @@
 
 .square {
   composes: base color-primary bordered;
-}
-
-.link {
-  composes: base color-transparent;
-  text-decoration: underline;
-}
-
-.naked {
-  composes: base color-transparent;
-  background: transparent;
 }
 
 .icon {

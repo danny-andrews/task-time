@@ -1,4 +1,7 @@
-.label {
+.root {
   display: block;
+}
+
+.label-text {
   margin-bottom: var(--spacing-tiny);
 }

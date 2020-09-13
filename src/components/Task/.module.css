@@ -1,53 +1,64 @@
 .root {
   font-weight: var(--font-weight-bold);
-}
-
-.is-important {
-  box-shadow: var(--box-shadow-important);
-}
-.is-dragging {
-  opacity: var(--opacity-half);
-}
-
-.difficulty-easy {
-  height: 1.5rem;
-}
-.difficulty-medium {
-  height: 3rem;
-}
-.difficulty-hard {
-  height: 6rem;
-}
-
-.button-group {
   display: flex;
   align-items: stretch;
   height: 100%;
 }
 
-.staleness-low {
-  color: var(--color-severity1);
-}
-.staleness-medium {
-  color: var(--color-severity2);
-}
-.staleness-high {
-  color: var(--color-severity3);
+/* States */
+.is-important {
+  box-shadow: var(--box-shadow-important);
+
+  /* Fix for Chrome bug where it doesn't respect border-radius in the
+  drag-and-drop ghost image. Ref: https://tinyurl.com/y5n5ux27. */
+  transform: translate(0, 0);
 }
 
-.staleness-button {
+.is-dragging {
+  opacity: var(--opacity-half);
+}
+
+/* Difficulties */
+.difficulty-easy {
+  height: 3rem;
+}
+.difficulty-medium {
+  height: 5rem;
+}
+.difficulty-hard {
+  height: 7rem;
+}
+
+.staleness {
   font-size: 1.25rem;
   font-weight: var(--font-weight-bold);
   padding: var(--spacing-small);
 }
 
+.refresh {
+  display: none;
+  object-fit: cover;
+  width: 50%;
+  height: 100%;
+}
+
+.staleness:hover .staleness-text,
+.staleness:focus .staleness-text {
+  display: none;
+}
+
+.staleness:hover .refresh,
+.staleness:focus .refresh {
+  display: block;
+}
+
 .text,
-.staleness-button,
+.staleness,
 .edit {
   composes: center-contents from "../Atoms/index.module.css";
 }
 
-.staleness-button,
+.staleness,
 .edit {
   flex-basis: 15%;
 }
@@ -58,20 +69,4 @@
 
 .edit {
   text-decoration: underline;
-}
-
-.refresh {
-  display: none;
-  width: 70%;
-  height: 70%;
-}
-
-.staleness-button:hover .staleness-text,
-.staleness-button:focus .staleness-text {
-  display: none;
-}
-
-.staleness-button:hover .refresh,
-.staleness-button:focus .refresh {
-  display: block;
 }

@@ -1,6 +1,6 @@
 .form {
-  border: var(--border-dashed);
-  border-radius: var(--border-radius);
+  composes: inner-spacing-small from "../Atoms/index.module.css";
+
   padding: var(--spacing-small);
   text-align: left;
   background: var(--color-background);

@@ -1,10 +1,12 @@
 .vertical-nav {
-  margin: 0 var(--spacing-small);
+  composes: inner-spacing-small from "../index.module.css";
+
+  padding: var(--spacing-small);
   flex: 0;
 }
 
 @media (min-width: 600px) {
   .vertical-nav {
-    min-width: 2rem;
+    min-width: 3rem;
   }
 }
