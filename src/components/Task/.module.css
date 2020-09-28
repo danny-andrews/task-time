@@ -7,11 +7,7 @@
 
 /* States */
 .is-important {
-  box-shadow: var(--box-shadow-important);
-
-  /* Fix for Chrome bug where it doesn't respect border-radius in the
-  drag-and-drop ghost image. Ref: https://tinyurl.com/y5n5ux27. */
-  transform: translate(0, 0);
+  filter: var(--drop-shadow-important);
 }
 
 .is-dragging {

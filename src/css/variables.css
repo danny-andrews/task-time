@@ -42,7 +42,7 @@
   --border-dashed: 1px dashed var(--color-border);
   --border-solid: var(--border-width) solid var(--color-border);
   --border-radius: 0.25rem;
-  --box-shadow-important: -4px 4px 4px var(--color-attention);
+  --drop-shadow-important: drop-shadow(-4px 4px 4px var(--color-attention));
   --outline-focus: 2px dashed #005fcc;
 
   /* Fonts */
