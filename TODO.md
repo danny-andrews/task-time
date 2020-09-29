@@ -22,3 +22,4 @@
 
 - Leverage css grid for layout?
 - Clean up slider
+- Deserialize task dates to make them easier to use

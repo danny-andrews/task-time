@@ -11,12 +11,13 @@ import { noop } from "../../../shared/util";
 const Collapsable = ({ buttonText, children, onDisplay = noop }) => {
   const [isOpen, setIsOpen] = useState(false);
   const panelRef = useRef(null);
-  const handleClick = () => {
+  const handleClick = (e) => {
     const newState = !isOpen;
 
     setIsOpen(newState);
     panelRef.current.hidden = !newState;
     if (newState) onDisplay();
+    e.preventDefault();
   };
 
   return (

@@ -4,14 +4,24 @@ import styles from "./.module.css";
 
 const Button = forwardRef(
   (
-    { className, children, as = "button", variation = "primary", ...rest },
+    {
+      className,
+      children,
+      as = "button",
+      variation = "primary",
+      isDisabled = false,
+      ...rest
+    },
     ref
   ) => {
-    const classes = cn(className, styles[variation]);
+    const classes = cn(className, styles[variation], {
+      [styles.disabled]: isDisabled,
+    });
     const Tag = as;
+    const tabIndex = isDisabled ? -1 : 0;
 
     return (
-      <Tag className={classes} {...rest} ref={ref}>
+      <Tag className={classes} ref={ref} tabIndex={tabIndex} {...rest}>
         {children}
       </Tag>
     );

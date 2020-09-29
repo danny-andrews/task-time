@@ -6,12 +6,16 @@
 }
 
 /* States */
-.is-important {
+.important {
   filter: var(--drop-shadow-important);
 }
 
-.is-dragging {
+.complete {
   opacity: var(--opacity-half);
+}
+
+.text.complete {
+  text-decoration: line-through;
 }
 
 /* Difficulties */
@@ -48,10 +52,8 @@
   display: block;
 }
 
-.text,
-.staleness,
-.edit {
-  composes: center-contents from "../Atoms/index.module.css";
+.staleness {
+  composes: center-contents from "../../../css/util.module.css";
 }
 
 .staleness,

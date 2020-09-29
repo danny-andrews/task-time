@@ -1,5 +1,5 @@
 .root {
-  composes: center-contents from "../Atoms/index.module.css";
+  composes: center-contents from "../../css/util.module.css";
 
   height: var(--header-height);
   background: var(--color-accent-2);

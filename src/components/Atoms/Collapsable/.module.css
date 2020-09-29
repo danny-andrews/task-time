@@ -4,5 +4,5 @@
 }
 
 .panel {
-  composes: with-focus from "../index.module.css";
+  composes: with-focus from "../../../css/util.module.css";
 }

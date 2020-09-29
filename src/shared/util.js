@@ -1,4 +1,4 @@
-import { map, addIndex, always } from "ramda";
+import { map, addIndex, always, pipe, fromPairs } from "ramda";
 
 export const mapIndexed = addIndex(map);
 
@@ -30,3 +30,9 @@ let counter = 0;
 export const uniqueId = (prefix = "") => `${prefix}${counter++}`;
 
 export const noop = always;
+
+export const toObjBy = (fn) =>
+  pipe(
+    map((val) => [fn(val), val]),
+    fromPairs
+  );

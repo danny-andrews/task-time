@@ -16,6 +16,17 @@
   outline: none;
 }
 
+.disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: var(--opacity-half);
+}
+
+.disabled:hover,
+.disabled:focus {
+  background: inherit;
+}
+
 .base:active {
   background: var(--color-background);
 }
@@ -36,6 +47,7 @@
   border-radius: var(--border-radius);
 }
 
+/* Variations */
 .primary {
   composes: base color-primary bordered rounded;
 }

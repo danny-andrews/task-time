@@ -1,5 +1,5 @@
 .form {
-  composes: inner-spacing-small from "../Atoms/index.module.css";
+  composes: inner-spacing-small from "../../css/util.module.css";
 
   padding: var(--spacing-small);
   text-align: left;
