@@ -18,28 +18,26 @@
   text-decoration: line-through;
 }
 
-/* Difficulties */
-.difficulty-easy {
-  height: 3rem;
-}
-.difficulty-medium {
-  height: 5rem;
-}
-.difficulty-hard {
-  height: 7rem;
-}
-
 .staleness {
   font-size: 1.25rem;
   font-weight: var(--font-weight-bold);
   padding: var(--spacing-small);
 }
 
-.refresh {
+.refresh-icon {
   display: none;
+}
+
+.icon {
   object-fit: cover;
   width: 50%;
   height: 100%;
+}
+
+.refresh-icon,
+.edit-icon,
+.trash-icon {
+  composes: icon;
 }
 
 .staleness:hover .staleness-text,
@@ -47,8 +45,8 @@
   display: none;
 }
 
-.staleness:hover .refresh,
-.staleness:focus .refresh {
+.staleness:hover .refresh-icon,
+.staleness:focus .refresh-icon {
   display: block;
 }
 

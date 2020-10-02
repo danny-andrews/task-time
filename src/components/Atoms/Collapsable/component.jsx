@@ -6,6 +6,7 @@ import {
 } from "@reach/disclosure";
 import styles from "./.module.css";
 import { SquareButton } from "../";
+import { DownArrow, RightArrow } from "../../Icons";
 import { noop } from "../../../shared/util";
 
 const Collapsable = ({ buttonText, children, onDisplay = noop }) => {
@@ -19,11 +20,22 @@ const Collapsable = ({ buttonText, children, onDisplay = noop }) => {
     if (newState) onDisplay();
     e.preventDefault();
   };
+  const renderArrow = () =>
+    isOpen ? (
+      <DownArrow className={styles.icon} />
+    ) : (
+      <RightArrow className={styles.icon} />
+    );
 
   return (
     <div className={styles.root}>
       <Disclosure open={isOpen} className={styles.root}>
-        <DisclosureButton onClick={handleClick} as={SquareButton}>
+        <DisclosureButton
+          onClick={handleClick}
+          as={SquareButton}
+          className={styles.button}
+        >
+          {renderArrow()}
           {buttonText}
         </DisclosureButton>
         <DisclosurePanel className={styles.panel} ref={panelRef}>

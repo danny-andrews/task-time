@@ -43,7 +43,7 @@ export default () => {
   const getTasks = () =>
     retrieveAll(TASKS).then(updateDueDates).then(expandDifficulties);
 
-  const createTask = ({ text, dueDate, isImportant, difficulty }) =>
+  const createTask = ({ text, dueDate, isImportant, difficulty, position }) =>
     create(TASKS, {
       originalDueDate: serializeDate(dueDate),
       text,
@@ -51,6 +51,7 @@ export default () => {
       isComplete: false,
       difficulty,
       isImportant,
+      position,
     });
 
   const updateTask = (id, updates) => update(TASKS, id, updates);

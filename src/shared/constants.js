@@ -10,8 +10,9 @@ export const QUERY_IDS = {
 };
 
 export const Breakpoints = {
-  PHONE: 600,
-  TABLET: 900,
+  PHONE: 0,
+  TABLET: 600,
+  TABLET_LARGE: 900,
   DESKTOP: 1200,
   DESKTOP_LARGE: 1800,
 };
@@ -19,6 +20,7 @@ export const Breakpoints = {
 export const Device = Type({
   Phone: [],
   Tablet: [],
+  TabletLarge: [],
   Desktop: [],
   DesktopLarge: [],
 });
@@ -28,6 +30,8 @@ export const DeviceFactory = (width) => {
     return Device.DesktopLarge;
   } else if (width >= Breakpoints.DESKTOP) {
     return Device.Desktop;
+  } else if (width >= Breakpoints.TABLET_LARGE) {
+    return Device.TabletLarge;
   } else if (width >= Breakpoints.TABLET) {
     return Device.Tablet;
   } else {

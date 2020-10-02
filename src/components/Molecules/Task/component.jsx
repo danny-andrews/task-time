@@ -1,71 +1,129 @@
 import React from "react";
 import cn from "classnames";
 import styles from "./.module.css";
-import { Button, ButtonGroup } from "../../Atoms";
-import { Refresh } from "../../Icons";
+import { Button, IconButton, ButtonGroup } from "../../Atoms";
+import { Refresh, Edit, Trash } from "../../Icons";
 import { isPastDate } from "../../../shared/dates";
 
+// Base height of component (to be used as rem value)
+const BASE_HEIGHT = 2.5;
+
+// Base task component. This isn't meant to be used directly, hence why it is
+// not exported. A task can be in one of three states, Incomplete, Complete, and
+// Locked. These are codified in variation components defined below.
 const Task = ({
+  // Render control
   isDisabled = false,
   disableRefresh = false,
-  disableEdit = false,
+  secondaryAction,
+
+  // Task values
   text,
-  isImportant,
-  difficultyName,
+  difficulty,
   staleness,
+  isImportant,
+  isComplete,
+
+  // Events
   onTaskClick,
   onRefreshClick,
-  isComplete,
 }) => {
-  // Template Vars
-  const classes = cn(
-    styles.root,
-    styles[`difficulty-${difficultyName.toLowerCase()}`],
-    {
-      [styles["complete"]]: isComplete,
-      [styles["important"]]: isImportant,
-    }
-  );
+  const classes = cn(styles.root, {
+    [styles["complete"]]: isComplete,
+    [styles["important"]]: isImportant,
+  });
   const textClasses = cn(styles.text, { [styles["complete"]]: isComplete });
+
+  // I'm normally against inline styles, but I'm making an exception here
+  // because the css value really is completely dynamic.
+  const style = {
+    height: `${difficulty * BASE_HEIGHT}rem`,
+  };
 
   const renderStaleness = () => {
     if (staleness <= 0) return null;
 
     return (
-      <Button
-        isDisabled={disableRefresh}
-        onClick={onRefreshClick}
+      <IconButton
         className={styles.staleness}
+        onClick={onRefreshClick}
+        isDisabled={disableRefresh}
       >
         <div className={styles["staleness-text"]}>{staleness}d</div>
-        <Refresh className={styles.refresh} />
-      </Button>
+        <Refresh
+          aria-label="Refresh staleness"
+          className={styles["refresh-icon"]}
+        />
+      </IconButton>
     );
   };
 
   return (
-    <ButtonGroup className={classes} isDisabled={isDisabled}>
+    <ButtonGroup style={style} className={classes} isDisabled={isDisabled}>
       {renderStaleness()}
-      <Button className={textClasses} onClick={onTaskClick}>
+      <Button
+        aria-label="Complete Task"
+        className={textClasses}
+        onClick={onTaskClick}
+      >
         {text}
       </Button>
-      <Button isDisabled={disableEdit} className={styles.edit}>
-        edit
-      </Button>
+      {secondaryAction}
     </ButtonGroup>
   );
 };
 
-export const LockedTask = (props) => (
-  <Task isDisabled disableRefresh disableEdit {...props} />
+export const LockedTask = ({ onDeleteClick, ...rest }) => (
+  <Task
+    isDisabled
+    disableRefresh
+    secondaryAction={
+      <Button
+        className={styles.edit}
+        onClick={onDeleteClick}
+        aria-label="Delete task"
+      >
+        <Trash className={styles["trash-icon"]} />
+      </Button>
+    }
+    {...rest}
+  />
 );
 
-export const CompletedTask = (props) => (
-  <Task disableRefresh disableEdit {...props} />
+export const CompletedTask = ({ onDeleteClick, ...rest }) => (
+  <Task
+    disableRefresh
+    secondaryAction={
+      <Button
+        className={styles.edit}
+        onClick={onDeleteClick}
+        aria-label="Delete task"
+      >
+        <Trash className={styles["trash-icon"]} />
+      </Button>
+    }
+    onSecondaryActionClick={onDeleteClick}
+    {...rest}
+  />
 );
 
-export const IncompleteTask = (props) => <Task {...props} />;
+export const IncompleteTask = ({ onEditClick, ...rest }) => (
+  <Task
+    onSecondaryActionClick={onEditClick}
+    secondaryAction={
+      <Button
+        className={styles.edit}
+        onClick={onEditClick}
+        aria-label="Edit task"
+      >
+        <Edit className={styles["edit-icon"]} />
+      </Button>
+    }
+    {...rest}
+  />
+);
 
+// Factory for getting the proper task variation component for given task data.
 export default (dueDate, isComplete) =>
   isPastDate(dueDate)
     ? LockedTask

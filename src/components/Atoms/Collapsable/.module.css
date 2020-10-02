@@ -6,3 +6,12 @@
 .panel {
   composes: with-focus from "../../../css/util.module.css";
 }
+
+.button {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  height: 1rem;
+}

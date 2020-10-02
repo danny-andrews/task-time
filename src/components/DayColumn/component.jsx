@@ -25,6 +25,7 @@ const DayColumn = ({ date, tasks }) => {
       ...rest,
       isImportant: important,
       dueDate: date,
+      position: tasks.length,
     });
 
   // DnD

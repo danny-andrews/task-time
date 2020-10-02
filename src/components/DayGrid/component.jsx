@@ -8,6 +8,14 @@ import styles from "./.module.css";
 import { getTasksForDates } from "../../shared/model";
 
 const DayGrid = ({ tasks }) => {
+  const dateWindowSize = useBreakpoint(500).case({
+    Phone: alvvays(1),
+    Tablet: alvvays(2),
+    TabletLarge: alvvays(3),
+    Desktop: alvvays(4),
+    DesktopLarge: alvvays(5),
+  });
+
   const {
     goToPrevDay,
     shiftBackward,
@@ -15,14 +23,7 @@ const DayGrid = ({ tasks }) => {
     shiftForward,
     goToCurrentDate,
     dateWindow,
-  } = useDateWindow(
-    useBreakpoint(500).case({
-      Phone: alvvays(1),
-      Tablet: alvvays(2),
-      Desktop: alvvays(3),
-      DesktopLarge: alvvays(4),
-    })
-  );
+  } = useDateWindow(dateWindowSize);
 
   const tasksInView = getTasksForDates(dateWindow.dates, tasks);
 
@@ -32,11 +33,13 @@ const DayGrid = ({ tasks }) => {
         onLeftArrowClick={goToPrevDay}
         onDoubleLeftArrowClick={shiftBackward}
         onHomeClick={goToCurrentDate}
+        numDaysInView={dateWindowSize}
       />
       <DayColumns tasksByDay={tasksInView} />
       <RightNav
         onRightArrowClick={goToNextDay}
         onDoubleRightArrowClick={shiftForward}
+        numDaysInView={dateWindowSize}
       />
     </section>
   );

@@ -1,25 +1,20 @@
 ## Features
 
-- Add edit functionality
-- Distinguish complete task from delete task
 - Add reorder functionality
+- Add edit functionality
+- Add Go-to-date button in left nav
 
 ## Infrastructure
 
-- Build backend
 - Move to custom build system
-
-## Bugs
-
-- Fix box-shadow bug when dnd'ing important tasks
+- Build backend
 
 ## Polish
 
-- Add arrow to new task Disclosure element
 - Loading states
+- Tooltips for icon buttons
 
 ## Refactoring
 
 - Leverage css grid for layout?
 - Clean up slider
-- Deserialize task dates to make them easier to use

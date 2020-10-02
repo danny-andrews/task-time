@@ -3,7 +3,10 @@ import { isEmpty, isNil } from "ramda";
 import cn from "classnames";
 import styles from "./.module.css";
 
-const ButtonGroup = ({ className, children, isDisabled, as = "div" }, ref) => {
+const ButtonGroup = (
+  { className, style, children, isDisabled, as = "div" },
+  ref
+) => {
   const classes = cn(className, styles.root);
   const Tag = as;
   const transformChild = (child) => {
@@ -18,7 +21,7 @@ const ButtonGroup = ({ className, children, isDisabled, as = "div" }, ref) => {
   };
 
   return (
-    <Tag ref={ref} className={classes}>
+    <Tag ref={ref} className={classes} style={style}>
       {Children.toArray(children)
         .filter((child) => !isEmpty(child))
         .map(transformChild)}

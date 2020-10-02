@@ -8,7 +8,7 @@
 }
 
 .base:hover,
-.base:focus {
+.base[data-focus-visible-added] {
   background: var(--color-accent-1);
 }
 

@@ -13,9 +13,11 @@ const Task = ({ task }) => {
     originalDueDate,
     dueDate,
   } = task;
-  const { toggleTask, refreshTask } = useBackend();
+  const { toggleTask, refreshTask, deleteTask } = useBackend();
   const handleTaskClick = () => toggleTask(task);
   const handleRefreshClick = () => refreshTask(task);
+  const handleDeleteClick = () => deleteTask(task.id);
+  const handleEditClick = () => console.log("Implement edit functionality");
 
   const TaskComponent = taskFactory(dueDate, isComplete);
 
@@ -27,9 +29,11 @@ const Task = ({ task }) => {
       staleness={staleness}
       text={text}
       isImportant={isImportant}
-      difficultyName={difficulty.name}
+      difficulty={difficulty.value}
       onTaskClick={handleTaskClick}
       onRefreshClick={handleRefreshClick}
+      onDeleteClick={handleDeleteClick}
+      onEditClick={handleEditClick}
     />
   );
 };

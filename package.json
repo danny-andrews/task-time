@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^7.1.2",
     "classnames": "^2.2.6",
     "date-fns": "^2.15.0",
+    "focus-visible": "^5.1.0",
     "formik": "^2.1.5",
     "local-storage": "^2.0.0",
     "ramda": "^0.27.0",
