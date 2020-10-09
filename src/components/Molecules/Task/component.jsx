@@ -1,7 +1,7 @@
 import React from "react";
 import cn from "classnames";
 import styles from "./.module.css";
-import { Button, IconButton, ButtonGroup } from "../../Atoms";
+import { PrimaryButton, IconButton, ButtonGroup } from "../../Atoms";
 import { Refresh, Edit, Trash } from "../../Icons";
 import { isPastDate } from "../../../shared/dates";
 
@@ -61,13 +61,13 @@ const Task = ({
   return (
     <ButtonGroup style={style} className={classes} isDisabled={isDisabled}>
       {renderStaleness()}
-      <Button
+      <PrimaryButton
         aria-label="Complete Task"
         className={textClasses}
         onClick={onTaskClick}
       >
         {text}
-      </Button>
+      </PrimaryButton>
       {secondaryAction}
     </ButtonGroup>
   );
@@ -78,13 +78,13 @@ export const LockedTask = ({ onDeleteClick, ...rest }) => (
     isDisabled
     disableRefresh
     secondaryAction={
-      <Button
+      <PrimaryButton
         className={styles.edit}
         onClick={onDeleteClick}
         aria-label="Delete task"
       >
         <Trash className={styles["trash-icon"]} />
-      </Button>
+      </PrimaryButton>
     }
     {...rest}
   />
@@ -94,13 +94,13 @@ export const CompletedTask = ({ onDeleteClick, ...rest }) => (
   <Task
     disableRefresh
     secondaryAction={
-      <Button
+      <PrimaryButton
         className={styles.edit}
         onClick={onDeleteClick}
         aria-label="Delete task"
       >
         <Trash className={styles["trash-icon"]} />
-      </Button>
+      </PrimaryButton>
     }
     onSecondaryActionClick={onDeleteClick}
     {...rest}
@@ -111,13 +111,13 @@ export const IncompleteTask = ({ onEditClick, ...rest }) => (
   <Task
     onSecondaryActionClick={onEditClick}
     secondaryAction={
-      <Button
+      <PrimaryButton
         className={styles.edit}
         onClick={onEditClick}
         aria-label="Edit task"
       >
         <Edit className={styles["edit-icon"]} />
-      </Button>
+      </PrimaryButton>
     }
     {...rest}
   />

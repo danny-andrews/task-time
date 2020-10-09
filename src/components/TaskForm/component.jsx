@@ -3,7 +3,7 @@ import { Formik, Form } from "formik";
 import cn from "classnames";
 import { assoc } from "ramda";
 import styles from "./.module.css";
-import { Input, Button, Slider } from "../Atoms";
+import { TextInput, Checkbox, PrimaryButton, Slider } from "../Atoms";
 import { titleCase, mapIndexed } from "../../shared/util";
 import { useBackend } from "../../hooks";
 
@@ -41,13 +41,7 @@ const TaskForm = ({ onSubmit, className }, ref) => {
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       <Form className={classes}>
-        <Input
-          innerRef={textRef}
-          label="Text"
-          name="text"
-          type="text"
-          required
-        />
+        <TextInput innerRef={textRef} label="Text" name="text" required />
 
         <Slider
           markers={sliderMarkers}
@@ -58,9 +52,9 @@ const TaskForm = ({ onSubmit, className }, ref) => {
           step={1}
         />
 
-        <Input label="Important?" name="important" type="checkbox" />
+        <Checkbox label="Important?" name="important" />
 
-        <Button type="submit">Create Task</Button>
+        <PrimaryButton type="submit">Create Task</PrimaryButton>
       </Form>
     </Formik>
   );

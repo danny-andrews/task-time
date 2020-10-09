@@ -30,10 +30,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "yarn eslint . & yarn prettier --check ."
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "lint:js": "yarn eslint . --ext=js,jsx",
+    "style:js": "yarn prettier . --check",
+    "lint:css": "stylelint 'src/**/*.css' 'src/**/.module.css'",
+    "lint": "yarn lint:js; yarn style:js; yarn lint:css"
   },
   "browserslist": {
     "production": [
@@ -48,10 +48,12 @@
     ]
   },
   "devDependencies": {
+    "@danny.andrews/stylelint-config": "^4.0.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-react": "^0.0.4",
     "fetch-mock": "^9.10.6",
     "prettier": "^2.1.1",
+    "stylelint": "^13.7.2",
     "xhr-mock": "^2.5.1"
   }
 }

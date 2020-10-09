@@ -1,15 +1,9 @@
 .root {
   composes: with-focus from "../../../css/util.module.css";
-
-  border: var(--border-solid);
-  height: 32px;
-  min-width: 32px;
-  display: block;
   background: var(--color-background);
+  border: var(--border-solid);
   border-radius: var(--border-radius);
-}
-
-.root[type="text"] {
-  width: 100%;
+  height: var(--input-height);
   padding: var(--spacing-tiny);
+  width: 100%;
 }

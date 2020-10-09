@@ -3,13 +3,13 @@
   margin-top: 0;
 }
 
-.panel {
-  composes: with-focus from "../../../css/util.module.css";
+.panel:focus {
+  outline: none;
 }
 
 .button {
-  display: flex;
   align-items: center;
+  display: flex;
 }
 
 .icon {

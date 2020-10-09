@@ -15,8 +15,8 @@
 }
 
 .center-contents {
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: center;
 }
 
@@ -27,4 +27,9 @@
 .with-focus:focus {
   outline: var(--outline-focus);
   outline-offset: 1px;
+}
+
+.smooth-fonts {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

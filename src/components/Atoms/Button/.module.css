@@ -1,7 +1,7 @@
 .base {
-  width: 100%;
   cursor: pointer;
   padding: var(--border-width);
+  width: 100%;
 
   /* Prevent zoom on double-tap */
   touch-action: manipulation;
@@ -36,7 +36,7 @@
 }
 
 .color-transparent {
-  background: transparent;
+  background: var(--color-transparent);
 }
 
 .bordered {
@@ -60,14 +60,15 @@
   composes: base color-primary rounded;
 }
 
+/* stylelint-disable-next-line selector-max-type */
 .icon > svg {
   vertical-align: middle;
 }
 
 @media (max-width: 600px) {
   .base {
+    line-height: var(--min-touch-target-size);
     min-height: var(--min-touch-target-size);
     min-width: var(--min-touch-target-size);
-    line-height: var(--min-touch-target-size);
   }
 }

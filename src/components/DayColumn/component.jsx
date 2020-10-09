@@ -8,7 +8,7 @@ import styles from "./.module.css";
 import { DND_IDS } from "../../shared/constants";
 import { formatHumanReadable, isPastDate } from "../../shared/dates";
 import { getDifficultyForTasks } from "../../shared/model";
-import { H, Collapsable } from "../Atoms";
+import { H, Disclosure } from "../Atoms";
 import { useBackend } from "../../hooks";
 
 const DayColumn = ({ date, tasks }) => {
@@ -60,13 +60,13 @@ const DayColumn = ({ date, tasks }) => {
     if (isPastDate(date)) return null;
 
     return (
-      <Collapsable buttonText="New Task" onDisplay={handleDisplay}>
+      <Disclosure buttonText="New Task" onDisplay={handleDisplay}>
         <TaskForm
           ref={formRef}
           className={styles.form}
           onSubmit={handleSubmit}
         />
-      </Collapsable>
+      </Disclosure>
     );
   };
 

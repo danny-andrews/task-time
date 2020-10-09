@@ -1,6 +1,6 @@
 .root {
-  display: flex;
-  border-right: var(--border-solid);
   border-left: var(--border-solid);
+  border-right: var(--border-solid);
+  display: flex;
   flex: 1;
 }

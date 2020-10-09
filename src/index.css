@@ -1,16 +1,16 @@
+/* stylelint-disable selector-max-type, selector-max-id */
 @import "./css/variables.css";
 @import "./css/reset.css";
+
+html {
+  composes: smooth-fonts from "./css/util.module.css";
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-stack);
+}
 
 html,
 body,
 #root {
   height: 100%;
-  color: var(--color-text);
-  background: var(--color-background);
-}
-
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-family: var(--font-stack);
 }

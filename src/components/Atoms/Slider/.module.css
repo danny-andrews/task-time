@@ -1,27 +1,28 @@
-@import "~@reach/slider/styles.css";
+@import "~/@reach/slider/styles.css";
 
-:root {
+html {
   --marker-size: 12px;
 }
 
 [data-reach-slider-input][data-orientation="horizontal"] {
+  /* stylelint-disable mavrin/stylelint-declaration-use-css-custom-properties */
+  padding: 4px 14px 20px;
   width: 100%;
-  padding-top: 16px;
-  padding-bottom: 26px;
-}
-
-.label {
-  margin-bottom: var(--spacing-tiny);
 }
 
 .input {
   composes: with-focus from "../../../css/util.module.css";
+  cursor: pointer;
+}
 
+.container {
   border: var(--border-solid);
   border-radius: var(--border-radius);
-  padding-left: 18px;
-  padding-right: 18px;
-  cursor: pointer;
+  padding: var(--spacing-medium);
+}
+
+.label {
+  margin-bottom: var(--spacing-tiny);
 }
 
 .highlight {
@@ -29,9 +30,9 @@
 }
 
 .marker {
+  border-radius: 50%;
   height: var(--marker-size);
   width: var(--marker-size);
-  border-radius: 50%;
 }
 
 .marker[data-state="under-value"] {
@@ -39,9 +40,9 @@
 }
 
 .marker-label {
+  background: var(--color-background);
   font-size: var(--font-size-small);
   margin-top: var(--spacing-medium);
-  background: var(--color-background);
   user-select: none;
   position: absolute;
   transform: translate(calc(-50% + var(--marker-size) / 2));
@@ -49,7 +50,6 @@
 
 .handle {
   composes: with-focus from "../../../css/util.module.css";
-
   border-color: var(--color-text);
 }
 

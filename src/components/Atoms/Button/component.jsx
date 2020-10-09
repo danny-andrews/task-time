@@ -28,13 +28,14 @@ const Button = forwardRef(
   }
 );
 
-const buttonVariationFactory = (variation) =>
-  forwardRef(({ ...props }, ref) => (
-    <Button variation={variation} {...props} ref={ref} />
-  ));
+export const IconButton = forwardRef((props, ref) => (
+  <Button variation="icon" {...props} ref={ref} />
+));
 
-export const IconButton = buttonVariationFactory("icon");
+export const SquareButton = forwardRef((props, ref) => (
+  <Button variation="square" {...props} ref={ref} />
+));
 
-export const SquareButton = buttonVariationFactory("square");
-
-export default Button;
+export const PrimaryButton = forwardRef((props, ref) => (
+  <Button {...props} ref={ref} />
+));

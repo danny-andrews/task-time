@@ -1,34 +1,38 @@
-:root {
+html {
   /* Base Colors (don't use directly) */
-  --color-white: #fff;
-  --color-black: #000;
-  --color-green: #008000;
-  --color-yellow: #fff700;
-  --color-red: #ff0000;
+  --color-white: hsl(0, 0%, 100%);
+  --color-black: hsl(0, 0%, 0%);
+  --color-green: hsl(120, 100%, 25%);
+  --color-yellow: hsl(58, 95%, 45%);
+  --color-red: hsl(0, 100%, 50%);
+  --color-blue: hsl(240, 100%, 50%);
+  --color-light-blue: hsl(212, 100%, 40%);
   --color-light-grey-1: hsl(0, 0%, 90%);
   --color-light-grey-2: hsl(0, 0%, 70%);
   --color-dark-grey-1: hsl(0, 0%, 20%);
   --color-dark-grey-2: hsl(0, 0%, 30%);
-  --color-blue: blue;
+  --color-transparent: hsla(0, 0%, 100%, 0);
 
   /* Color Scheme (use these) */
   --color-text: var(--color-black);
   --color-background: var(--color-white);
+  --color-border: var(--color-accent-2);
   --color-accent-1: var(--color-light-grey-1);
   --color-accent-2: var(--color-light-grey-2);
-  --color-border: var(--color-accent-2);
   --color-attention: var(--color-red);
   --color-warning: var(--color-yellow);
   --color-error: var(--color-attention);
+  --color-focus: var(--color-light-blue);
 
   /* Gradients */
-  --blocked-gradient: repeating-linear-gradient(
-    45deg,
-    var(--color-text),
-    var(--color-text) 10px,
-    var(--color-warning) 10px,
-    var(--color-warning) 20px
-  );
+  --blocked-gradient:
+    repeating-linear-gradient(
+      45deg,
+      var(--color-black),
+      var(--color-black) 10px,
+      var(--color-red) 10px,
+      var(--color-red) 20px
+    );
 
   /* Sizing */
   --spacing-tiny: 0.25rem;
@@ -36,6 +40,7 @@
   --spacing-medium: 0.75rem;
   --spacing-large: 1rem;
   --min-touch-target-size: 44px;
+  --input-height: 32px;
 
   /* Borders */
   --border-width: 1px;
@@ -43,12 +48,28 @@
   --border-solid: var(--border-width) solid var(--color-border);
   --border-radius: 0.25rem;
   --drop-shadow-important: drop-shadow(-4px 4px 4px var(--color-attention));
-  --outline-focus: 2px dashed #005fcc;
+  --outline-focus: 2px dashed var(--color-focus);
 
   /* Fonts */
-  --font-stack: system, -apple-system, ".SFNSText-Regular", "San Francisco",
-    "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
+  --font-stack:
+    system,
+    -apple-system,
+    ".SFNSText-Regular",
+    "San Francisco",
+    "Roboto",
+    "Segoe UI",
+    "Helvetica Neue",
+    "Lucida Grande",
+    sans-serif;
+
+  /* Font sizes */
   --font-size-small: 0.8rem;
+  --font-size-normal: 1rem;
+  --font-size-emphasis: 1.25;
+  --font-size-subtitle-small: 1.5rem;
+  --font-size-title-small: 1.75rem;
+  --font-size-subtitle: 2rem;
+  --font-size-title: 2.25rem;
 
   /* Font Weights */
   --font-weight-normal: 400;
@@ -60,18 +81,17 @@
 
   /* Other */
   --header-height: 4rem;
+  --nav-width: 3rem;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  html {
     --color-text: var(--color-white);
     --color-background: var(--color-black);
     --color-border: var(--color-white);
-    --color-accent: var(--color-dark-grey-1);
-    --color-accent: var(--color-dark-grey-2);
+    --color-accent-1: var(--color-dark-grey-1);
+    --color-accent-2: var(--color-dark-grey-2);
     --color-attention: var(--color-white);
-    --color-severity-1: var(--color-green);
-    --color-severity-2: var(--color-orange);
-    --color-severity-3: var(--color-red);
+    --color-focus: var(--color-yellow);
   }
 }

@@ -18,25 +18,27 @@ const Slider = ({ markers, label, className, ...props }) => {
   return (
     <div className={className}>
       <p className={styles.label} id={labelId}>
-        Difficulty
+        {label}
       </p>
-      <SliderInput
-        value={value}
-        onChange={handleChange}
-        className={styles.input}
-        aria-labelledby={labelId}
-        {...props}
-      >
-        <SliderTrack className={styles["slider-track"]}>
-          <SliderTrackHighlight className={styles.highlight} />
-          {markers.map(({ value, label }) => (
-            <SliderMarker key={value} className={styles.marker} value={value}>
-              <div className={styles["marker-label"]}>{label}</div>
-            </SliderMarker>
-          ))}
-          <SliderHandle className={styles.handle} />
-        </SliderTrack>
-      </SliderInput>
+      <div className={styles.container}>
+        <SliderInput
+          value={value}
+          onChange={handleChange}
+          className={styles.input}
+          aria-labelledby={labelId}
+          {...props}
+        >
+          <SliderTrack className={styles["slider-track"]}>
+            <SliderTrackHighlight className={styles.highlight} />
+            {markers.map(({ value, label }) => (
+              <SliderMarker key={value} className={styles.marker} value={value}>
+                <div className={styles["marker-label"]}>{label}</div>
+              </SliderMarker>
+            ))}
+            <SliderHandle className={styles.handle} />
+          </SliderTrack>
+        </SliderInput>
+      </div>
     </div>
   );
 };

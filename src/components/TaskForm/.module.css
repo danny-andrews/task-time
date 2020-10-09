@@ -1,9 +1,8 @@
 .form {
   composes: inner-spacing-small from "../../css/util.module.css";
-
+  background: var(--color-background);
   padding: var(--spacing-small);
   text-align: left;
-  background: var(--color-background);
 }
 
 .input-group {
