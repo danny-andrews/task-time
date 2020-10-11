@@ -5,7 +5,7 @@ import {
   DisclosurePanel,
 } from "@reach/disclosure";
 import styles from "./.module.css";
-import { SquareButton } from "..";
+import { SquareButton } from "../Button";
 import { DownArrow, RightArrow } from "../../Icons";
 import { noop } from "../../../shared/util";
 

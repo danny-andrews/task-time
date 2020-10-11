@@ -3,4 +3,4 @@ export {
   IncompleteTask,
   CompletedTask,
   LockedTask,
-} from "./component";
+} from "./component.jsx";

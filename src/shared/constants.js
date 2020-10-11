@@ -1,4 +1,12 @@
 import Type from "union-type";
+import { constantCase } from "constant-case";
+import breakpoints from "../css/breakpoints.json";
+import { mapObj } from "./util";
+import { replace, pipe } from "ramda";
+
+const transformVariable = pipe(replace(/--breakpoint-/, ""), constantCase);
+const pxToInt = pipe(replace(/px/, ""), Number);
+const transformBreakpoints = mapObj(transformVariable, pxToInt);
 
 export const DND_IDS = {
   TASK: "TASK",
@@ -9,13 +17,9 @@ export const QUERY_IDS = {
   DIFFICULTIES: "DIFFICULTIES",
 };
 
-export const Breakpoints = {
-  PHONE: 0,
-  TABLET: 600,
-  TABLET_LARGE: 900,
-  DESKTOP: 1200,
-  DESKTOP_LARGE: 1800,
-};
+export const Breakpoints = transformBreakpoints(
+  breakpoints["environment-variables"]
+);
 
 export const Device = Type({
   Phone: [],
@@ -26,13 +30,13 @@ export const Device = Type({
 });
 
 export const DeviceFactory = (width) => {
-  if (width >= Breakpoints.DESKTOP_LARGE) {
+  if (width >= Breakpoints.DESKTOP) {
     return Device.DesktopLarge;
-  } else if (width >= Breakpoints.DESKTOP) {
-    return Device.Desktop;
   } else if (width >= Breakpoints.TABLET_LARGE) {
-    return Device.TabletLarge;
+    return Device.Desktop;
   } else if (width >= Breakpoints.TABLET) {
+    return Device.TabletLarge;
+  } else if (width >= Breakpoints.PHONE) {
     return Device.Tablet;
   } else {
     return Device.Phone;

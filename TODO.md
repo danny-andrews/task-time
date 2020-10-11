@@ -6,7 +6,6 @@
 
 ## Infrastructure
 
-- Move to custom build system (probably parcel)
 - Use my own eslint config
 - Build backend
 
@@ -30,3 +29,4 @@
 - Fix button focus styles on mobile
 - Fix staleness calculation to use whole days rather than difference in days,
   which uses time as well.
+- Fix issue where composed classes are being duplicated in resulting bundle.

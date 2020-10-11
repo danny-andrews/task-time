@@ -7,6 +7,7 @@ import {
   SliderHandle,
 } from "@reach/slider";
 import { useField } from "formik";
+import "@reach/slider/styles.css";
 import styles from "./.module.css";
 import { uniqueId } from "../../../shared/util";
 

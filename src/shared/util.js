@@ -1,4 +1,4 @@
-import { map, addIndex, always, pipe, fromPairs } from "ramda";
+import { map, addIndex, always, pipe, fromPairs, toPairs } from "ramda";
 
 export const mapIndexed = addIndex(map);
 
@@ -34,5 +34,12 @@ export const noop = always;
 export const toObjBy = (fn) =>
   pipe(
     map((val) => [fn(val), val]),
+    fromPairs
+  );
+
+export const mapObj = (transformKey, transformValue) =>
+  pipe(
+    toPairs,
+    map(([key, value]) => [transformKey(key), transformValue(value)]),
     fromPairs
   );

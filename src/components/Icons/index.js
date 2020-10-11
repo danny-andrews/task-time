@@ -1,10 +1,9 @@
-// Icon source: https://www.freeicons.io/icon-list/business-and-online-icons
-export { ReactComponent as Home } from "./home.svg";
-export { ReactComponent as LeftArrow } from "./left-arrow.svg";
-export { ReactComponent as RightArrow } from "./right-arrow.svg";
-export { ReactComponent as DownArrow } from "./down-arrow.svg";
-export { ReactComponent as DoubleLeftArrow } from "./double-left-arrow.svg";
-export { ReactComponent as DoubleRightArrow } from "./double-right-arrow.svg";
-export { ReactComponent as Refresh } from "./refresh.svg";
-export { ReactComponent as Edit } from "./edit.svg";
-export { ReactComponent as Trash } from "./trash.svg";
+export { default as DoubleLeftArrow } from "./DoubleLeftArrow.jsx";
+export { default as DoubleRightArrow } from "./DoubleRightArrow.jsx";
+export { default as DownArrow } from "./DownArrow.jsx";
+export { default as Edit } from "./Edit.jsx";
+export { default as Home } from "./Home.jsx";
+export { default as LeftArrow } from "./LeftArrow.jsx";
+export { default as Refresh } from "./Refresh.jsx";
+export { default as RightArrow } from "./RightArrow.jsx";
+export { default as Trash } from "./Trash.jsx";

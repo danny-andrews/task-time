@@ -1,5 +1,8 @@
 .base {
   cursor: pointer;
+  line-height: var(--min-touch-target-size);
+  min-height: var(--min-touch-target-size);
+  min-width: var(--min-touch-target-size);
   padding: var(--border-width);
   width: 100%;
 
@@ -65,10 +68,10 @@
   vertical-align: middle;
 }
 
-@media (max-width: 600px) {
+@media (min-width: env(--breakpoint-phone)) {
   .base {
-    line-height: var(--min-touch-target-size);
-    min-height: var(--min-touch-target-size);
-    min-width: var(--min-touch-target-size);
+    line-height: normal;
+    min-height: auto;
+    min-width: auto;
   }
 }

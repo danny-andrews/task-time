@@ -1,1 +1,1 @@
-export { PrimaryButton, IconButton, SquareButton } from "./component";
+export { PrimaryButton, IconButton, SquareButton } from "./component.jsx";

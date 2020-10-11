@@ -1,6 +1,6 @@
 import React from "react";
 import { always as alvvays } from "ramda";
-import { useBreakpoint, useDateWindow } from "../../hooks";
+import { useDevice, useDateWindow } from "../../hooks";
 import DayColumns from "../DayColumns";
 import LeftNav from "../LeftNav";
 import RightNav from "../RightNav";
@@ -8,7 +8,7 @@ import styles from "./.module.css";
 import { getTasksForDates } from "../../shared/model";
 
 const DayGrid = ({ tasks }) => {
-  const dateWindowSize = useBreakpoint(500).case({
+  const dateWindowSize = useDevice(500).case({
     Phone: alvvays(1),
     Tablet: alvvays(2),
     TabletLarge: alvvays(3),
