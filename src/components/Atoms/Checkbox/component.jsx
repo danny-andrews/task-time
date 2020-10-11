@@ -1,7 +1,7 @@
 import React from "react";
 import { Field } from "formik";
 import LabeledInput from "../LabeledInput";
-import styles from "./.module.css";
+import styles from "./styles.module.css";
 
 const Checkbox = ({ label, ...props }) => (
   <LabeledInput label={label} name={props.name}>

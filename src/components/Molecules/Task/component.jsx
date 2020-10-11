@@ -1,6 +1,6 @@
 import React from "react";
 import cn from "classnames";
-import styles from "./.module.css";
+import styles from "./styles.module.css";
 import { PrimaryButton, IconButton, ButtonGroup } from "../../Atoms";
 import { Refresh, Edit, Trash } from "../../Icons";
 import { isPastDate } from "../../../shared/dates";

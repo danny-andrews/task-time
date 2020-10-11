@@ -4,7 +4,7 @@ import { useDrop } from "react-dnd";
 import { isToday } from "date-fns";
 import Tasks from "../Tasks";
 import TaskForm from "../TaskForm";
-import styles from "./.module.css";
+import styles from "./styles.module.css";
 import { DND_IDS } from "../../shared/constants";
 import { formatHumanReadable, isPastDate } from "../../shared/dates";
 import { getDifficultyForTasks } from "../../shared/model";

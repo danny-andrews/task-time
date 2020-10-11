@@ -8,7 +8,7 @@ import {
 } from "@reach/slider";
 import { useField } from "formik";
 import "@reach/slider/styles.css";
-import styles from "./.module.css";
+import styles from "./styles.module.css";
 import { uniqueId } from "../../../shared/util";
 
 const Slider = ({ markers, label, className, ...props }) => {

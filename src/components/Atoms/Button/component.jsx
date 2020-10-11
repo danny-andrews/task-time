@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import cn from "classnames";
-import styles from "./.module.css";
+import styles from "./styles.module.css";
 
 const Button = forwardRef(
   (

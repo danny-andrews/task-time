@@ -1,7 +1,7 @@
 import React from "react";
 import cn from "classnames";
 import { clamp } from "ramda";
-import styles from "./.module.css";
+import styles from "./styles.module.css";
 
 const H = ({ children, className, ...props }) => {
   const clampLevel = clamp(1, 6);

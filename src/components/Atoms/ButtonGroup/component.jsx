@@ -1,7 +1,7 @@
 import React, { forwardRef, Children, cloneElement } from "react";
 import { isEmpty, isNil } from "ramda";
 import cn from "classnames";
-import styles from "./.module.css";
+import styles from "./styles.module.css";
 
 const ButtonGroup = (
   { className, style, children, isDisabled, as = "div" },

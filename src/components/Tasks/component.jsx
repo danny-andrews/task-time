@@ -2,7 +2,7 @@ import React from "react";
 import cn from "classnames";
 import { useDrag } from "react-dnd";
 import Task from "../Task";
-import styles from "./.module.css";
+import styles from "./styles.module.css";
 import { DND_IDS } from "../../shared/constants";
 
 const DraggableTask = ({ task }) => {

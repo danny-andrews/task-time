@@ -4,7 +4,7 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from "@reach/disclosure";
-import styles from "./.module.css";
+import styles from "./styles.module.css";
 import { SquareButton } from "../Button";
 import { DownArrow, RightArrow } from "../../Icons";
 import { noop } from "../../../shared/util";

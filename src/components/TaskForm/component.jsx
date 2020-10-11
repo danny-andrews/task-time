@@ -2,7 +2,7 @@ import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import { Formik, Form } from "formik";
 import cn from "classnames";
 import { assoc } from "ramda";
-import styles from "./.module.css";
+import styles from "./styles.module.css";
 import { TextInput, Checkbox, PrimaryButton, Slider } from "../Atoms";
 import { titleCase, mapIndexed } from "../../shared/util";
 import { useBackend } from "../../hooks";

@@ -4,7 +4,7 @@ import { useDevice, useDateWindow } from "../../hooks";
 import DayColumns from "../DayColumns";
 import LeftNav from "../LeftNav";
 import RightNav from "../RightNav";
-import styles from "./.module.css";
+import styles from "./styles.module.css";
 import { getTasksForDates } from "../../shared/model";
 
 const DayGrid = ({ tasks }) => {

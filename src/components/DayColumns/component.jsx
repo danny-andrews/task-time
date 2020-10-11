@@ -1,6 +1,6 @@
 import React from "react";
 import DayColumn from "../DayColumn";
-import styles from "./.module.css";
+import styles from "./styles.module.css";
 import { parseISO } from "date-fns";
 
 const DayColumns = ({ tasksByDay }) => (

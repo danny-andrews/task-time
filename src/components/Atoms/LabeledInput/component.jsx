@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./.module.css";
+import styles from "./styles.module.css";
 import cn from "classnames";
 
 const LabeledInput = ({ label, children, className }) => (
