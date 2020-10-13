@@ -1,0 +1,17 @@
+.root {
+  margin: var(--spacing-small);
+  margin-top: 0;
+}
+
+.panel:focus {
+  outline: none;
+}
+
+.button {
+  align-items: center;
+  display: flex;
+}
+
+.icon {
+  height: 1rem;
+}

@@ -1,0 +1,30 @@
+.inner-spacing-tiny > * + * {
+  margin-top: var(--spacing-tiny);
+}
+
+.inner-spacing-small > * + * {
+  margin-top: var(--spacing-small);
+}
+
+.inner-spacing-medium > * + * {
+  margin-top: var(--spacing-medium);
+}
+
+.inner-spacing-large > * + * {
+  margin-top: var(--spacing-large);
+}
+
+.center-contents {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.border-between + .border-between {
+  border-left: var(--border-solid);
+}
+
+.with-focus:focus {
+  outline: var(--outline-focus);
+  outline-offset: 1px;
+}

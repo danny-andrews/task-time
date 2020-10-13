@@ -1,0 +1,43 @@
+.root {
+  composes: border-between from "../../css/util.module.css";
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  text-align: center;
+}
+
+/* States */
+.accent {
+  background: var(--color-accent-1);
+}
+
+.dnd-is-hovering {
+  opacity: var(--opacity-half);
+}
+
+.in-past {
+  text-decoration: line-through;
+}
+
+.blocked {
+  background: var(--blocked-gradient);
+}
+
+.header {
+  border-bottom: var(--border-solid);
+  font-weight: var(--font-weight-bold);
+  padding: var(--spacing-medium);
+}
+
+.tasks-section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  overflow-y: scroll;
+}
+
+.form {
+  border: var(--border-solid);
+  border-top: 0;
+}

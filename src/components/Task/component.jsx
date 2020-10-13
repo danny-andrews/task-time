@@ -1,61 +1,40 @@
-import React, { useEffect } from "react";
-import { DND_IDS } from "../../shared/constants";
-import cn from "classnames";
-import { useDrag } from "react-dnd";
-import styles from "./.module.css";
-import { Button, ButtonGroup } from "../Atoms";
-import { Refresh } from "../Icons";
+import React from "react";
+import taskFactory from "../Molecules/Task";
+import { useBackend } from "../../hooks";
 import { getTaskStaleness } from "../../shared/model";
 
-const Task = ({ task, onTaskClick, onRefreshClick }) => {
-  const { id, text, isImportant, difficulty } = task;
+const Task = ({ task }) => {
+  const {
+    isComplete,
+    createdAt,
+    text,
+    isImportant,
+    difficulty,
+    originalDueDate,
+    dueDate,
+  } = task;
+  const { toggleTask, refreshTask, deleteTask } = useBackend();
+  const handleTaskClick = () => toggleTask(task);
+  const handleRefreshClick = () => refreshTask(task);
+  const handleDeleteClick = () => deleteTask(task.id);
+  const handleEditClick = () => console.log("Implement edit functionality");
 
-  // Handlers
-  const handleTaskClick = () => {
-    onTaskClick(id);
-  };
+  const TaskComponent = taskFactory(dueDate, isComplete);
 
-  const handleRefreshClick = () => {
-    onRefreshClick(id);
-  };
-
-  // DnD
-  const [{ isDragging }, drag] = useDrag({
-    item: { id, type: DND_IDS.TASK },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  });
-
-  // Template Vars
-  const classes = cn(
-    styles.root,
-    styles[`difficulty-${difficulty.name.toLowerCase()}`],
-    {
-      [styles["is-dragging"]]: isDragging,
-      [styles["is-important"]]: isImportant,
-    }
-  );
-  const staleness = getTaskStaleness(task);
-  const renderStaleness = () => {
-    if (staleness <= 0) return null;
-
-    return (
-      <Button onClick={handleRefreshClick} className={styles.staleness}>
-        <div className={styles["staleness-text"]}>{staleness}d</div>
-        <Refresh className={styles.refresh} />
-      </Button>
-    );
-  };
+  const staleness = getTaskStaleness({ createdAt, originalDueDate });
 
   return (
-    <ButtonGroup as="li" className={classes} ref={drag}>
-      {renderStaleness()}
-      <Button className={styles.text} onClick={handleTaskClick}>
-        {text}
-      </Button>
-      <Button className={styles.edit}>edit</Button>
-    </ButtonGroup>
+    <TaskComponent
+      isComplete={isComplete}
+      staleness={staleness}
+      text={text}
+      isImportant={isImportant}
+      difficulty={difficulty.value}
+      onTaskClick={handleTaskClick}
+      onRefreshClick={handleRefreshClick}
+      onDeleteClick={handleDeleteClick}
+      onEditClick={handleEditClick}
+    />
   );
 };
 

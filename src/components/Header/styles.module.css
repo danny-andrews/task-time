@@ -1,0 +1,5 @@
+.root {
+  composes: center-contents from "../../css/util.module.css";
+  background: var(--color-accent-2);
+  height: var(--header-height);
+}

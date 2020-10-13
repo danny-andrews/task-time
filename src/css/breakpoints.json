@@ -1,0 +1,8 @@
+{
+  "environment-variables": {
+    "--breakpoint-phone": "600px",
+    "--breakpoint-tablet": "900px",
+    "--breakpoint-tablet-large": "1200px",
+    "--breakpoint-desktop": "1800px"
+  }
+}

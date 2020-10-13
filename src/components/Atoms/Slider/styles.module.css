@@ -1,0 +1,58 @@
+html {
+  --marker-size: 12px;
+}
+
+[data-reach-slider-input][data-orientation="horizontal"] {
+  /* stylelint-disable mavrin/stylelint-declaration-use-css-custom-properties */
+  padding: 10px 18px 26px;
+  width: 100%;
+}
+
+.input {
+  composes: with-focus from "../../../css/util.module.css";
+  cursor: pointer;
+}
+
+.container {
+  border: var(--border-solid);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-small);
+}
+
+.label {
+  margin-bottom: var(--spacing-tiny);
+}
+
+.highlight {
+  background: var(--color-text);
+}
+
+.marker {
+  border: var(--color-accent-1);
+  border-radius: 50%;
+  height: var(--marker-size);
+  width: var(--marker-size);
+
+  &[data-state="under-value"] {
+    background: var(--color-text);
+  }
+}
+
+.marker-label {
+  background: var(--color-background);
+  font-size: var(--font-size-small);
+  margin-top: 1rem;
+  user-select: none;
+  position: absolute;
+  transform: translate(calc(-50% + var(--marker-size) / 2));
+}
+
+.handle {
+  composes: with-focus from "../../../css/util.module.css";
+  background: var(--color-background);
+  border-color: var(--color-text);
+}
+
+.slider-track {
+  background: var(--color-accent-1);
+}

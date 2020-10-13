@@ -1,17 +1,33 @@
 extends:
-  - eslint:recommended
-  - plugin:react/recommended
-  - plugin:jsx-a11y/recommended
+  - "eslint:recommended"
+  - "plugin:react/all"
+  - "plugin:jsx-a11y/strict"
 env:
   jest: true
   browser: true
   es6: true
 parserOptions:
   ecmaVersion: 9
-  sourceType: module
+  sourceType: "module"
   ecmaFeatures:
     jsx: true
     objectRestSpread: true
 settings:
   react:
-    version: detect
+    version: "detect"
+rules:
+  react/prop-types: "off"
+  react/jsx-indent: "off"
+  react/forbid-component-props: "off"
+  react/jsx-indent-props: "off"
+  react/jsx-no-bind: "off"
+  react/jsx-max-props-per-line: "off"
+  react/jsx-props-no-spreading: "off"
+  react/function-component-definition: "off"
+  react/no-multi-comp: "off"
+  react/jsx-no-literals: "off"
+  react/jsx-one-expression-per-line: "off"
+  react/destructuring-assignment: "off"
+  react/jsx-max-depth: "off"
+  react/jsx-sort-props: "off"
+  jsx-a11y/label-has-for: "off"

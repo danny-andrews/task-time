@@ -1,11 +1,7 @@
-import React, { StrictMode } from "react";
+import { createElement } from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
 import "./index.css";
+import "./shared/polyfills";
 
-ReactDOM.render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-  document.getElementById("root")
-);
+ReactDOM.render(createElement(App), document.getElementById("root"));

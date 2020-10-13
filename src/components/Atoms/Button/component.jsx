@@ -1,30 +1,39 @@
 import React, { forwardRef } from "react";
 import cn from "classnames";
-import styles from "./.module.css";
+import styles from "./styles.module.css";
 
 const Button = forwardRef(
   (
-    { className, children, as = "button", variation = "primary", ...rest },
+    { className, children, variation = "primary", isDisabled = false, ...rest },
     ref
   ) => {
-    const classes = cn(className, styles[variation]);
-    const Tag = as;
+    const classes = cn(className, styles[variation], {
+      [styles.disabled]: isDisabled,
+    });
+    const tabIndex = isDisabled ? -1 : 0;
 
     return (
-      <Tag className={classes} {...rest} ref={ref}>
+      <button
+        type="button"
+        className={classes}
+        ref={ref}
+        tabIndex={tabIndex}
+        {...rest}
+      >
         {children}
-      </Tag>
+      </button>
     );
   }
 );
 
-const buttonVariationFactory = (variation) =>
-  forwardRef(({ ...props }, ref) => (
-    <Button variation={variation} {...props} ref={ref} />
-  ));
+export const IconButton = forwardRef((props, ref) => (
+  <Button variation="icon" {...props} ref={ref} />
+));
 
-export const IconButton = buttonVariationFactory("icon");
+export const SquareButton = forwardRef((props, ref) => (
+  <Button variation="square" {...props} ref={ref} />
+));
 
-export const SquareButton = buttonVariationFactory("square");
-
-export default Button;
+export const PrimaryButton = forwardRef((props, ref) => (
+  <Button {...props} ref={ref} />
+));

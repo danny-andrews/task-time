@@ -1,0 +1,23 @@
+.h1 {
+  font-size: var(--font-size-title);
+}
+
+.h2 {
+  font-size: var(--font-size-subtitle);
+}
+
+.h3 {
+  font-size: var(--font-size-title-small);
+}
+
+.h4 {
+  font-size: var(--font-size-subtitle-small);
+}
+
+.h5 {
+  font-size: var(--font-size-emphasis);
+}
+
+.h6 {
+  font-size: var(--font-size-normal);
+}

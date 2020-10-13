@@ -1,0 +1,11 @@
+.vertical-nav {
+  composes: inner-spacing-small from "../../../css/util.module.css";
+  flex: 0;
+  padding: var(--spacing-small);
+}
+
+@media (min-width: env(--breakpoint-phone)) {
+  .vertical-nav {
+    min-width: var(--nav-width);
+  }
+}

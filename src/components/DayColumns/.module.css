@@ -1,6 +1,0 @@
-.root {
-  display: flex;
-  border-right: var(--border-solid);
-  border-left: var(--border-solid);
-  flex: 1;
-}

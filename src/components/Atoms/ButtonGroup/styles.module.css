@@ -1,0 +1,23 @@
+.button {
+  &:first-child {
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+  }
+
+  &:last-child {
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  }
+}
+
+.root {
+  background: var(--color-background);
+  border: var(--border-solid);
+  border-radius: var(--border-radius);
+
+  & > .button {
+    border: none;
+  }
+
+  & > .button + .button {
+    border-left: var(--border-solid);
+  }
+}

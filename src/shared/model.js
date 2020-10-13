@@ -1,15 +1,27 @@
-import { parseISO, isBefore, differenceInDays } from "date-fns";
-import { assoc, append, propOr, reduce, pipe, map, sum, path } from "ramda";
+import { differenceInDays } from "date-fns";
+import {
+  assoc,
+  append,
+  propOr,
+  reduce,
+  pipe,
+  map,
+  sum,
+  path,
+  prop,
+} from "ramda";
 import { serializeDate } from "./dates";
+import { toObjBy } from "./util";
 
-export const getTasksByDisplayDate = reduce((acc, task) => {
-  const currentDate = Date.now();
-  const dueDate = isBefore(parseISO(task.dueDate), currentDate)
-    ? serializeDate(currentDate)
-    : task.dueDate;
-
-  return assoc(dueDate, append(task, propOr([], dueDate, acc)), acc);
-}, {});
+export const getTasksByDisplayDate = reduce(
+  (acc, task) =>
+    assoc(
+      serializeDate(task.dueDate),
+      append(task, propOr([], serializeDate(task.dueDate), acc)),
+      acc
+    ),
+  {}
+);
 
 export const getTasksForDates = (dates, tasks) =>
   dates.map((date) => ({
@@ -23,5 +35,7 @@ export const getDifficultyForTasks = pipe(
 );
 
 export const getTaskStaleness = ({ createdAt, originalDueDate }) =>
-  differenceInDays(Date.now(), parseISO(createdAt)) -
-  differenceInDays(parseISO(originalDueDate), parseISO(createdAt));
+  differenceInDays(Date.now(), createdAt) -
+  differenceInDays(originalDueDate, createdAt);
+
+export const normalizeModels = toObjBy(prop("id"));

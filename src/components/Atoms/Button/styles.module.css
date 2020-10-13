@@ -1,0 +1,77 @@
+.base {
+  cursor: pointer;
+  line-height: var(--min-touch-target-size);
+  min-height: var(--min-touch-target-size);
+  min-width: var(--min-touch-target-size);
+  padding: var(--border-width);
+  width: 100%;
+
+  /* Prevent zoom on double-tap */
+  touch-action: manipulation;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover,
+  &[data-focus-visible-added] {
+    background: var(--color-accent-1);
+  }
+
+  &:active {
+    background: var(--color-background);
+  }
+}
+
+@media (min-width: env(--breakpoint-phone)) {
+  .base {
+    line-height: normal;
+    min-height: auto;
+    min-width: auto;
+  }
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: var(--opacity-half);
+
+  &:hover,
+  &:focus {
+    background: inherit;
+  }
+}
+
+.color-primary {
+  background: var(--color-background);
+}
+
+.color-transparent {
+  background: var(--color-transparent);
+}
+
+.bordered {
+  border: var(--border-solid);
+}
+
+.rounded {
+  border-radius: var(--border-radius);
+}
+
+/* Variations */
+.primary {
+  composes: base color-primary bordered rounded;
+}
+
+.square {
+  composes: base color-primary bordered;
+}
+
+.icon {
+  composes: base color-primary rounded;
+
+  /* stylelint-disable-next-line selector-max-type */
+  & > svg {
+    vertical-align: middle;
+  }
+}

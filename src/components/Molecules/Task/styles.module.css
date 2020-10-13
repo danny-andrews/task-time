@@ -1,0 +1,67 @@
+.root {
+  align-items: stretch;
+  display: flex;
+  font-weight: var(--font-weight-bold);
+  height: 100%;
+}
+
+/* States */
+.important {
+  filter: var(--drop-shadow-important);
+}
+
+.complete {
+  opacity: var(--opacity-half);
+}
+
+.text.complete {
+  text-decoration: line-through;
+}
+
+.staleness {
+  composes: center-contents from "../../../css/util.module.css";
+}
+
+.staleness-text {
+  font-size: var(--font-size-emphasis);
+  font-weight: var(--font-weight-bold);
+}
+
+.refresh-icon {
+  display: none;
+}
+
+.icon {
+  height: 100%;
+  object-fit: cover;
+  width: 50%;
+}
+
+.refresh-icon,
+.edit-icon,
+.trash-icon {
+  composes: icon;
+}
+
+.staleness:hover .staleness-text,
+.staleness:focus .staleness-text {
+  display: none;
+}
+
+.staleness:hover .refresh-icon,
+.staleness:focus .refresh-icon {
+  display: block;
+}
+
+.staleness,
+.edit {
+  flex-basis: 15%;
+}
+
+.text {
+  flex: 1;
+}
+
+.edit {
+  text-decoration: underline;
+}

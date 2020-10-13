@@ -1,30 +1,31 @@
 import React, { useRef } from "react";
 import cn from "classnames";
 import { useDrop } from "react-dnd";
-import { isPast, isToday } from "date-fns";
+import { isToday } from "date-fns";
 import Tasks from "../Tasks";
 import TaskForm from "../TaskForm";
-import styles from "./.module.css";
+import styles from "./styles.module.css";
 import { DND_IDS } from "../../shared/constants";
-import {
-  formatHumanReadable,
-  serializeDate,
-  isPastDate,
-} from "../../shared/dates";
+import { formatHumanReadable, isPastDate } from "../../shared/dates";
 import { getDifficultyForTasks } from "../../shared/model";
-import { H, Collapsable } from "../Atoms";
+import { H, Disclosure } from "../Atoms";
 import { useBackend } from "../../hooks";
 
 const DayColumn = ({ date, tasks }) => {
-  const { updateTask, createTask } = useBackend();
+  const { createTask, moveTask } = useBackend();
 
   // Handlers
-  const handleDrop = (id) => updateTask(id, { dueDate: serializeDate(date) });
+  const handleDrop = (id) => {
+    if (isPastDate(date)) return;
+
+    moveTask(id, date);
+  };
   const handleSubmit = ({ important, ...rest }) =>
     createTask({
       ...rest,
       isImportant: important,
-      dueDate: serializeDate(date),
+      dueDate: date,
+      position: tasks.length,
     });
 
   // DnD
@@ -37,18 +38,20 @@ const DayColumn = ({ date, tasks }) => {
       isOver: monitor.isOver(),
     }),
   });
+  const isHovering = !isPastDate(date) && isOver;
 
   // Template Vars
   const isCurrentDay = isToday(date);
   const classes = cn(styles.root, {
     [styles["accent"]]: isCurrentDay,
-    [styles["dnd-is-hovering"]]: !isPastDate(date) && isOver,
   });
   const tasksSectionClasses = cn(styles["tasks-section"], {
     [styles["blocked"]]: isOver && isPastDate(date),
+    [styles["dnd-is-hovering"]]: isHovering,
   });
   const headerClasses = cn(styles.header, {
-    [styles["strikethrough"]]: isPastDate(date),
+    [styles["in-past"]]: isPastDate(date),
+    [styles["dnd-is-hovering"]]: isHovering,
   });
   const totalDifficulty = getDifficultyForTasks(tasks);
   const formRef = useRef(null);
@@ -59,13 +62,13 @@ const DayColumn = ({ date, tasks }) => {
     if (isPastDate(date)) return null;
 
     return (
-      <Collapsable buttonText="New Task" onDisplay={handleDisplay}>
+      <Disclosure buttonText="New Task" onDisplay={handleDisplay}>
         <TaskForm
           ref={formRef}
           className={styles.form}
           onSubmit={handleSubmit}
         />
-      </Collapsable>
+      </Disclosure>
     );
   };
 
@@ -78,7 +81,7 @@ const DayColumn = ({ date, tasks }) => {
         <p>Total Difficulty: {totalDifficulty}</p>
       </header>
       <div className={tasksSectionClasses}>
-        <Tasks tasks={tasks} date={date} />
+        <Tasks tasks={tasks} />
         {renderTaskForm()}
       </div>
     </li>
