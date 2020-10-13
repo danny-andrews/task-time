@@ -10,5 +10,6 @@ module.exports = {
       cssDefinitions: ["color", "length"],
       ignoreValues: ["/^0$/", "1px", "1rem"],
     },
+    "max-nesting-depth": 1,
   },
 };

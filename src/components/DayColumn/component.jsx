@@ -38,18 +38,20 @@ const DayColumn = ({ date, tasks }) => {
       isOver: monitor.isOver(),
     }),
   });
+  const isHovering = !isPastDate(date) && isOver;
 
   // Template Vars
   const isCurrentDay = isToday(date);
   const classes = cn(styles.root, {
     [styles["accent"]]: isCurrentDay,
-    [styles["dnd-is-hovering"]]: !isPastDate(date) && isOver,
   });
   const tasksSectionClasses = cn(styles["tasks-section"], {
     [styles["blocked"]]: isOver && isPastDate(date),
+    [styles["dnd-is-hovering"]]: isHovering,
   });
   const headerClasses = cn(styles.header, {
     [styles["in-past"]]: isPastDate(date),
+    [styles["dnd-is-hovering"]]: isHovering,
   });
   const totalDifficulty = getDifficultyForTasks(tasks);
   const formRef = useRef(null);

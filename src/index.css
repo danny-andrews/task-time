@@ -3,9 +3,18 @@
 @import "./css/reset.css";
 
 html {
+  --font-size-minimum: 14px;
+  --font-size-maximum: 18px;
+
   background: var(--color-background);
   color: var(--color-text);
   font-family: var(--font-stack);
+  font-size:
+    clamp(
+      var(--font-size-minimum),
+      var(--font-size-minimum) + (1 / 300) * (100vw - env(--breakpoint-phone)),
+      var(--font-size-maximum)
+    );
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

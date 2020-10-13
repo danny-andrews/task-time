@@ -7,6 +7,7 @@ import replace from "rollup-plugin-replace";
 import { terser } from "rollup-plugin-terser";
 import serve from "rollup-plugin-serve";
 import json from "@rollup/plugin-json";
+import livereload from "rollup-plugin-livereload";
 import { map, isNil } from "ramda";
 
 const htmlTemplate = ({ files }) => {
@@ -68,6 +69,7 @@ export default ({ isProd, envVars, outputDir }, config) => {
       }),
       json(),
       ...(isDev ? [serve(outputDir)] : []),
+      ...(isDev ? [livereload({ watch: "build" })] : []),
     ],
   };
 };

@@ -40,5 +40,4 @@
 .form {
   border: var(--border-solid);
   border-top: 0;
-  padding: var(--spacing-small);
 }

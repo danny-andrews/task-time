@@ -1,22 +1,23 @@
+.button {
+  &:first-child {
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+  }
+
+  &:last-child {
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  }
+}
+
 .root {
   background: var(--color-background);
   border: var(--border-solid);
   border-radius: var(--border-radius);
-}
 
-.root > .button {
-  border: none;
-  border-radius: 0;
-}
+  & > .button {
+    border: none;
+  }
 
-.button:first-child {
-  border-radius: var(--border-radius) 0 0 var(--border-radius);
-}
-
-.button:last-child {
-  border-radius: 0 var(--border-radius) var(--border-radius) 0;
-}
-
-.root > .button + .button {
-  border-left: var(--border-solid);
+  & > .button + .button {
+    border-left: var(--border-solid);
+  }
 }

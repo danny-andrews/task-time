@@ -8,6 +8,8 @@
 
 - Use my own eslint config
 - Build backend
+- Move to preact?
+- Move infrastructure to a separate package
 
 ## Polish
 

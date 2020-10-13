@@ -8,30 +8,38 @@
 
   /* Prevent zoom on double-tap */
   touch-action: manipulation;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover,
+  &[data-focus-visible-added] {
+    background: var(--color-accent-1);
+  }
+
+  &:active {
+    background: var(--color-background);
+  }
 }
 
-.base:hover,
-.base[data-focus-visible-added] {
-  background: var(--color-accent-1);
-}
-
-.base:focus {
-  outline: none;
+@media (min-width: env(--breakpoint-phone)) {
+  .base {
+    line-height: normal;
+    min-height: auto;
+    min-width: auto;
+  }
 }
 
 .disabled {
   pointer-events: none;
   cursor: default;
   opacity: var(--opacity-half);
-}
 
-.disabled:hover,
-.disabled:focus {
-  background: inherit;
-}
-
-.base:active {
-  background: var(--color-background);
+  &:hover,
+  &:focus {
+    background: inherit;
+  }
 }
 
 .color-primary {
@@ -61,17 +69,9 @@
 
 .icon {
   composes: base color-primary rounded;
-}
 
-/* stylelint-disable-next-line selector-max-type */
-.icon > svg {
-  vertical-align: middle;
-}
-
-@media (min-width: env(--breakpoint-phone)) {
-  .base {
-    line-height: normal;
-    min-height: auto;
-    min-width: auto;
+  /* stylelint-disable-next-line selector-max-type */
+  & > svg {
+    vertical-align: middle;
   }
 }
