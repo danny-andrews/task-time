@@ -1,7 +1,6 @@
-import { createElement } from "react";
-import ReactDOM from "react-dom";
+import { render } from "./shared/react";
 import App from "./components/App";
 import "./index.css";
 import "./shared/polyfills";
 
-ReactDOM.render(createElement(App), document.getElementById("root"));
+render(App, "root");
