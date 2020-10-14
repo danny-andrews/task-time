@@ -23,8 +23,7 @@
   "scripts": {
     "serve": "yarn rollup --config --watch",
     "clean": "rm -r build",
-    "build": "yarn rollup --config",
-    "build:prod": "yarn build --environment NODE_ENV:production",
+    "build": "NODE_ENV=production yarn rollup --config",
     "lint:js": "yarn eslint . --ext=js,jsx",
     "style:js": "yarn prettier . --check",
     "lint:css": "stylelint 'src/**/*.css' 'src/**/.module.css'",
@@ -50,6 +49,7 @@
     "postcss-nesting": "^7.0.1",
     "prettier": "^2.1.1",
     "rollup": "^2.29.0",
+    "rollup-plugin-analyzer": "^3.3.0",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-postcss": "^3.1.8",
     "rollup-plugin-replace": "^2.2.0",
