@@ -23,13 +23,16 @@ export default (windowSize) => {
     setStartDate(Date.now());
   };
 
-  return {
-    goToPrevDay,
-    shiftBackward,
-    goToNextDay,
-    shiftForward,
-    goToCurrentDate,
-    goToDate,
-    dateWindow,
-  };
+  return [
+    dateWindow.dates,
+    {
+      goToPrevDay,
+      shiftBackward,
+      goToNextDay,
+      shiftForward,
+      goToCurrentDate,
+      goToDate,
+      dateWindow,
+    },
+  ];
 };
