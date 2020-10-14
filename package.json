@@ -23,6 +23,7 @@
   "scripts": {
     "serve": "yarn build --watch",
     "clean": "rm -r build",
+    "ci": "yarn lint",
     "build": "yarn rollup --config",
     "build:analyze": "ANALYZE_BUILD=true yarn build:prod",
     "build:prod": "NODE_ENV=production yarn build",

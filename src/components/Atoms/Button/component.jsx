@@ -29,11 +29,14 @@ const Button = forwardRef(
 export const IconButton = forwardRef((props, ref) => (
   <Button variation="icon" {...props} ref={ref} />
 ));
+IconButton.displayName = "IconButton";
 
 export const SquareButton = forwardRef((props, ref) => (
   <Button variation="square" {...props} ref={ref} />
 ));
+SquareButton.displayName = "SquareButton";
 
 export const PrimaryButton = forwardRef((props, ref) => (
   <Button {...props} ref={ref} />
 ));
+PrimaryButton.displayName = "PrimaryButton";
