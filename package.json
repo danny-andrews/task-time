@@ -21,27 +21,17 @@
     "uuid": "^8.3.0"
   },
   "scripts": {
-    "serve": "yarn rollup --config --watch",
+    "serve": "yarn build --watch",
     "clean": "rm -r build",
+    "ci": "yarn lint",
     "build": "yarn rollup --config",
-    "build:prod": "yarn build --environment NODE_ENV:production",
+    "build:analyze": "ANALYZE_BUILD=true yarn build:prod",
+    "build:prod": "NODE_ENV=production yarn build",
     "lint:js": "yarn eslint . --ext=js,jsx",
     "style:js": "yarn prettier . --check",
     "lint:css": "stylelint 'src/**/*.css' 'src/**/.module.css'",
     "lint": "yarn lint:js; yarn style:js; yarn lint:css",
     "build-icons": "npx @svgr/cli src/components/Icons/svg --out-dir src/components/Icons"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -62,6 +52,9 @@
     "postcss-nesting": "^7.0.1",
     "prettier": "^2.1.1",
     "rollup": "^2.29.0",
+    "rollup-plugin-analyzer": "^3.3.0",
+    "rollup-plugin-brotli": "^3.0.1",
+    "rollup-plugin-entrypoint-hashmanifest": "^0.1.2",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-postcss": "^3.1.8",
     "rollup-plugin-replace": "^2.2.0",

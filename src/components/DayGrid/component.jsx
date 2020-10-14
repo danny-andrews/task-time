@@ -16,16 +16,12 @@ const DayGrid = ({ tasks }) => {
     DesktopLarge: alvvays(5),
   });
 
-  const {
-    goToPrevDay,
-    shiftBackward,
-    goToNextDay,
-    shiftForward,
-    goToCurrentDate,
-    dateWindow,
-  } = useDateWindow(dateWindowSize);
+  const [
+    dates,
+    { goToPrevDay, shiftBackward, goToNextDay, shiftForward, goToCurrentDate },
+  ] = useDateWindow(dateWindowSize);
 
-  const tasksInView = getTasksForDates(dateWindow.dates, tasks);
+  const tasksInView = getTasksForDates(dates, tasks);
 
   return (
     <section className={styles.root}>

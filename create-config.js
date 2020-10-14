@@ -8,39 +8,44 @@ import { terser } from "rollup-plugin-terser";
 import serve from "rollup-plugin-serve";
 import json from "@rollup/plugin-json";
 import livereload from "rollup-plugin-livereload";
+import analyze from "rollup-plugin-analyzer";
+import brotli from "rollup-plugin-brotli";
 import { map, isNil } from "ramda";
 
-const htmlTemplate = ({ files }) => {
+const htmlTemplate = ({ files, publicPath }) => {
   return `
-    <!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <meta charset="utf-8" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1"
-        />
-        <meta name="description" content="Task Time - TODO List" />
-        <title>Task Time</title>
-        ${files.js
-          .map(({ fileName }) => `<script src="./${fileName}" defer></script>`)
-          .join("\n")}
-        ${files.css
-          .map(
-            ({ fileName }) =>
-              `<link rel="stylesheet" type="text/css" href="./${fileName}"></link>`
-          )
-          .join("\n")}
-      </head>
-      <body>
-        <noscript>You need to enable JavaScript to run this app.</noscript>
-        <main id="root"></main>
-      </body>
-    </html>
-  `;
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <meta name="description" content="Task Time - TODO List" />
+    <title>Task Time</title>
+    ${files.css
+      .map(
+        ({ fileName }) =>
+          `<link rel="stylesheet" type="text/css" href="${publicPath}/${fileName}"/>`
+      )
+      .join("\n")}
+    ${files.js
+      .map(
+        ({ fileName }) =>
+          `<script src="${publicPath}/${fileName}" defer></script>`
+      )
+      .join("\n")}
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <main id="root"></main>
+  </body>
+</html>
+`.trim();
 };
 
-export default ({ isProd, envVars, outputDir }, config) => {
+export default ({ isProd, envVars, outputDir, analyzeBuild }, config) => {
   const isDev = !isProd;
   const hashAssets = isProd;
   const minifyAssets = isProd;
@@ -68,8 +73,10 @@ export default ({ isProd, envVars, outputDir }, config) => {
         template: htmlTemplate,
       }),
       json(),
+      ...(analyzeBuild ? [analyze({ summaryOnly: true })] : []),
+      ...(isProd ? [brotli()] : []),
       ...(isDev ? [serve(outputDir)] : []),
-      ...(isDev ? [livereload({ watch: "build" })] : []),
+      ...(isDev ? [livereload({ watch: outputDir })] : []),
     ],
   };
 };
