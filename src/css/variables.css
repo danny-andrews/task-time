@@ -91,7 +91,6 @@ html {
     --color-border: var(--color-white);
     --color-accent-1: var(--color-dark-grey-1);
     --color-accent-2: var(--color-dark-grey-2);
-    --color-attention: var(--color-white);
     --color-focus: var(--color-yellow);
   }
 }
