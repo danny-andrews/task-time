@@ -9,6 +9,7 @@ import serve from "rollup-plugin-serve";
 import json from "@rollup/plugin-json";
 import livereload from "rollup-plugin-livereload";
 import analyze from "rollup-plugin-analyzer";
+import brotli from "rollup-plugin-brotli";
 import { map, isNil } from "ramda";
 
 const htmlTemplate = ({ files, publicPath }) => {
@@ -44,7 +45,7 @@ const htmlTemplate = ({ files, publicPath }) => {
 `.trim();
 };
 
-export default ({ isProd, envVars, outputDir }, config) => {
+export default ({ isProd, envVars, outputDir, analyzeBuild }, config) => {
   const isDev = !isProd;
   const hashAssets = isProd;
   const minifyAssets = isProd;
@@ -72,8 +73,10 @@ export default ({ isProd, envVars, outputDir }, config) => {
         template: htmlTemplate,
       }),
       json(),
+      ...(analyzeBuild ? [analyze({ summaryOnly: true })] : []),
+      ...(isProd ? [brotli()] : []),
       ...(isDev ? [serve(outputDir)] : []),
-      ...(isDev ? [livereload({ watch: "build" })] : []),
+      ...(isDev ? [livereload({ watch: outputDir })] : []),
     ],
   };
 };
