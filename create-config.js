@@ -79,6 +79,15 @@ export default ({ isProd, envVars, outputDir, analyzeBuild }, config) => {
       postcss({
         autoModules: true,
         extract: true,
+        modules: {
+          // Chances of collision for a 7-digit, base52 string is less than one
+          // in a million (~0.00005%), assuming you have no more than 1000
+          // distinct class names in your css. And if you do, shame on you.
+          // https://en.wikipedia.org/wiki/Birthday_problem#Cast_as_a_collision_problem
+          generateScopedName: isProd
+            ? "[hash:base52:7]"
+            : "[folder]_[local]_[hash:base52:2]",
+        },
         minimize: minifyAssets,
       }),
       html({

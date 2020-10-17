@@ -6,8 +6,9 @@ const RightNav = ({
   onRightArrowClick,
   onDoubleRightArrowClick,
   numDaysInView,
+  className,
 }) => (
-  <VerticalNav>
+  <VerticalNav className={className}>
     <IconButton onClick={onRightArrowClick} aria-label="Shift forward one day">
       <RightArrow />
     </IconButton>

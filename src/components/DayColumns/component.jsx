@@ -1,14 +1,19 @@
 import React from "react";
+import { parseISO } from "date-fns";
+import cn from "classnames";
 import DayColumn from "../DayColumn";
 import styles from "./styles.module.css";
-import { parseISO } from "date-fns";
 
-const DayColumns = ({ tasksByDay }) => (
-  <ol className={styles.root}>
-    {tasksByDay.map(({ date, tasks }) => (
-      <DayColumn key={date} tasks={tasks} date={parseISO(date)} />
-    ))}
-  </ol>
-);
+const DayColumns = ({ className, tasksByDay }) => {
+  const classnames = cn(styles.root, className);
+
+  return (
+    <ol className={classnames}>
+      {tasksByDay.map(({ date, tasks }) => (
+        <DayColumn key={date} tasks={tasks} date={parseISO(date)} />
+      ))}
+    </ol>
+  );
+};
 
 export default DayColumns;

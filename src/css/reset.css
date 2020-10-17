@@ -1,6 +1,9 @@
 /* stylelint-disable selector-max-type */
 html {
   box-sizing: border-box;
+
+  /* WCAG 2.1 Section 1.4.8 */
+  line-height: 1.5;
 }
 
 * {

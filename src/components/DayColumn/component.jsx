@@ -42,9 +42,7 @@ const DayColumn = ({ date, tasks }) => {
 
   // Template Vars
   const isCurrentDay = isToday(date);
-  const classes = cn(styles.root, {
-    [styles["accent"]]: isCurrentDay,
-  });
+  const classes = cn(styles.root, { [styles["accent"]]: isCurrentDay });
   const tasksSectionClasses = cn(styles["tasks-section"], {
     [styles["blocked"]]: isOver && isPastDate(date),
     [styles["dnd-is-hovering"]]: isHovering,
@@ -52,6 +50,7 @@ const DayColumn = ({ date, tasks }) => {
   const headerClasses = cn(styles.header, {
     [styles["in-past"]]: isPastDate(date),
     [styles["dnd-is-hovering"]]: isHovering,
+    [styles["accent"]]: isCurrentDay,
   });
   const totalDifficulty = getDifficultyForTasks(tasks);
   const formRef = useRef(null);
@@ -63,11 +62,7 @@ const DayColumn = ({ date, tasks }) => {
 
     return (
       <Disclosure buttonText="New Task" onDisplay={handleDisplay}>
-        <TaskForm
-          ref={formRef}
-          className={styles.form}
-          onSubmit={handleSubmit}
-        />
+        <TaskForm ref={formRef} onSubmit={handleSubmit} />
       </Disclosure>
     );
   };
@@ -78,7 +73,9 @@ const DayColumn = ({ date, tasks }) => {
         <H level={2} styleLevel={4}>
           {formatHumanReadable(date)}
         </H>
-        <p>Total Difficulty: {totalDifficulty}</p>
+        <p>
+          Challenge Level: <em>{totalDifficulty}</em>
+        </p>
       </header>
       <div className={tasksSectionClasses}>
         <Tasks tasks={tasks} />

@@ -2,23 +2,25 @@ html {
   /* Base Colors (don't use directly) */
   --color-white: hsl(0, 0%, 100%);
   --color-black: hsl(0, 0%, 0%);
+  --color-grey: hsl(0, 0%, 50%);
+  --color-grey-lighter-1: hsl(0, 0%, 70%);
+  --color-grey-lighter-2: hsl(0, 0%, 90%);
+  --color-grey-darker-1: hsl(0, 0%, 30%);
+  --color-grey-darker-2: hsl(0, 0%, 20%);
   --color-green: hsl(120, 100%, 25%);
   --color-yellow: hsl(58, 95%, 45%);
   --color-red: hsl(0, 100%, 50%);
   --color-blue: hsl(240, 100%, 50%);
   --color-light-blue: hsl(212, 100%, 40%);
-  --color-light-grey-1: hsl(0, 0%, 90%);
-  --color-light-grey-2: hsl(0, 0%, 70%);
-  --color-dark-grey-1: hsl(0, 0%, 20%);
-  --color-dark-grey-2: hsl(0, 0%, 30%);
   --color-transparent: hsla(0, 0%, 100%, 0);
 
   /* Color Scheme (use these) */
   --color-text: var(--color-black);
+  --color-text-light: var(--color-accent-2);
   --color-background: var(--color-white);
   --color-border: var(--color-accent-2);
-  --color-accent-1: var(--color-light-grey-1);
-  --color-accent-2: var(--color-light-grey-2);
+  --color-accent-1: var(--color-grey-lighter-2);
+  --color-accent-2: var(--color-grey-lighter-1);
   --color-attention: var(--color-red);
   --color-warning: var(--color-yellow);
   --color-error: var(--color-attention);
@@ -37,8 +39,8 @@ html {
   /* Sizing */
   --spacing-tiny: 0.25rem;
   --spacing-small: 0.5rem;
-  --spacing-medium: 0.75rem;
-  --spacing-large: 1rem;
+  --spacing-medium: 1rem;
+  --spacing-large: 2rem;
   --min-touch-target-size: 44px;
   --input-height: 32px;
 
@@ -47,7 +49,7 @@ html {
   --border-dashed: 1px dashed var(--color-border);
   --border-solid: var(--border-width) solid var(--color-border);
   --border-radius: 0.25rem;
-  --drop-shadow-important: drop-shadow(-4px 4px 4px var(--color-attention));
+  --drop-shadow-important: drop-shadow(-5px 5px 3px var(--color-attention));
   --outline-focus: 2px dashed var(--color-focus);
 
   /* Fonts */
@@ -74,14 +76,13 @@ html {
   /* Font Weights */
   --font-weight-normal: 400;
   --font-weight-bold: 600;
-  --font-weight-bolder: 900;
 
   /* Opacity */
   --opacity-half: 0.5;
 
   /* Other */
-  --header-height: 4rem;
   --nav-width: 3rem;
+  --header-height: 44px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -89,8 +90,8 @@ html {
     --color-text: var(--color-white);
     --color-background: var(--color-black);
     --color-border: var(--color-white);
-    --color-accent-1: var(--color-dark-grey-1);
-    --color-accent-2: var(--color-dark-grey-2);
+    --color-accent-1: var(--color-grey-darker-2);
+    --color-accent-2: var(--color-grey-darker-1);
     --color-focus: var(--color-yellow);
   }
 }

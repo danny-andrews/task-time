@@ -1,6 +1,5 @@
 .root {
-  border-left: var(--border-solid);
-  border-right: var(--border-solid);
   display: flex;
   flex: 1;
+  padding: var(--spacing-large) var(--spacing-small) 0 var(--spacing-small);
 }

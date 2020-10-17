@@ -24,3 +24,8 @@ body,
 #root {
   height: 100%;
 }
+
+em {
+  font-style: normal;
+  font-weight: var(--font-weight-bold);
+}

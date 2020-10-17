@@ -7,9 +7,10 @@ const LeftNav = ({
   onDoubleLeftArrowClick,
   onHomeClick,
   numDaysInView,
+  className,
 }) => {
   return (
-    <VerticalNav>
+    <VerticalNav className={className}>
       <IconButton
         onClick={onLeftArrowClick}
         aria-label="Shift backward one day"

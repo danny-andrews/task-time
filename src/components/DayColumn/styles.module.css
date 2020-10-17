@@ -4,19 +4,20 @@
   flex: 1;
   flex-direction: column;
   text-align: center;
+
+  &.accent {
+    background: var(--color-accent-1);
+    box-shadow: 0 0 8px 6px var(--color-background) inset;
+  }
 }
 
 /* States */
-.accent {
-  background: var(--color-accent-1);
-}
-
 .dnd-is-hovering {
   opacity: var(--opacity-half);
 }
 
 .in-past {
-  text-decoration: line-through;
+  color: var(--color-text-light);
 }
 
 .blocked {
@@ -25,8 +26,7 @@
 
 .header {
   border-bottom: var(--border-solid);
-  font-weight: var(--font-weight-bold);
-  padding: var(--spacing-medium);
+  padding: var(--spacing-small);
 }
 
 .tasks-section {
@@ -35,9 +35,4 @@
   height: 100%;
   justify-content: space-between;
   overflow-y: scroll;
-}
-
-.form {
-  border: var(--border-solid);
-  border-top: 0;
 }

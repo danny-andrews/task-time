@@ -4,8 +4,3 @@
   padding: var(--spacing-small);
   text-align: left;
 }
-
-.input-group {
-  display: flex;
-  justify-content: space-evenly;
-}

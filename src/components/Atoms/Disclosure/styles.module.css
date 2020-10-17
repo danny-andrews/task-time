@@ -3,8 +3,13 @@
   margin-top: 0;
 }
 
-.panel:focus {
-  outline: none;
+.panel {
+  border: var(--border-solid);
+  border-top: 0;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .button {

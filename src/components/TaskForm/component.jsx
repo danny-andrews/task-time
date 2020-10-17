@@ -1,6 +1,5 @@
 import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import { Formik, Form } from "formik";
-import cn from "classnames";
 import { assoc } from "ramda";
 import styles from "./styles.module.css";
 import { TextInput, Checkbox, PrimaryButton, Slider } from "../Atoms";
@@ -12,7 +11,7 @@ const sliderMarkersFromDifficulties = mapIndexed(({ name }, i) => ({
   label: titleCase(name),
 }));
 
-const TaskForm = ({ onSubmit, className }, ref) => {
+const TaskForm = ({ onSubmit }, ref) => {
   const { data: difficulties = [] } = useBackend().useDifficulties();
 
   useImperativeHandle(ref, () => ({
@@ -35,12 +34,11 @@ const TaskForm = ({ onSubmit, className }, ref) => {
     difficulty: 0,
     important: false,
   };
-  const classes = cn(styles.form, className);
   const sliderMarkers = sliderMarkersFromDifficulties(difficulties);
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      <Form className={classes}>
+      <Form className={styles.form}>
         <TextInput innerRef={textRef} label="Text" name="text" required />
 
         <Slider
