@@ -15,6 +15,7 @@
     background: var(--color-accent-1);
     outline: var(--outline-focus);
     outline-offset: 1px;
+    z-index: 1;
   }
 
   &:active {
