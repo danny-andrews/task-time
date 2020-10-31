@@ -1,5 +1,6 @@
 .button {
   border-radius: 0;
+  min-height: auto;
 
   &:first-child {
     border-radius: var(--border-radius) 0 0 var(--border-radius);
@@ -14,6 +15,8 @@
   background: var(--color-background);
   border: var(--border-solid);
   border-radius: var(--border-radius);
+  min-height: var(--min-touch-target-size);
+  min-width: var(--min-touch-target-size);
 
   & > .button {
     border: none;

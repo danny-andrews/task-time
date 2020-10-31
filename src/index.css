@@ -10,16 +10,6 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  /* https://css-tricks.com/simplified-fluid-typography/ */
-  font-size:
-    clamp(
-      1rem,
-      calc(4vw / 3),
-      1.5rem
-    );
-}
-
 html,
 body,
 #root {

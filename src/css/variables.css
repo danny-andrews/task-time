@@ -41,7 +41,7 @@ html {
   --spacing-small: 0.5rem;
   --spacing-medium: 1rem;
   --spacing-large: 2rem;
-  --min-touch-target-size: 44px;
+  --min-touch-target-size: 40px;
   --input-height: 32px;
 
   /* Borders */
@@ -81,7 +81,6 @@ html {
   --opacity-half: 0.5;
 
   /* Other */
-  --nav-width: 3rem;
   --header-height: 44px;
 }
 

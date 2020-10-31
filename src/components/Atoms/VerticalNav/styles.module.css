@@ -3,9 +3,3 @@
   flex: 0;
   padding: var(--spacing-large) var(--spacing-small) 0 var(--spacing-small);
 }
-
-@media (min-width: env(--breakpoint-phone)) {
-  .root {
-    min-width: var(--nav-width);
-  }
-}

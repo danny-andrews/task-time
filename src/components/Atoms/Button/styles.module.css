@@ -1,6 +1,5 @@
 .base {
   cursor: pointer;
-  line-height: var(--min-touch-target-size);
   min-height: var(--min-touch-target-size);
   min-width: var(--min-touch-target-size);
   width: 100%;
