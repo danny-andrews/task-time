@@ -10,7 +10,7 @@ import { useBackend, useDevice, useDateWindow } from "../../hooks";
 
 const Index = () => {
   const { useTasks } = useBackend();
-  const { data = [] } = useTasks();
+  const data = useTasks();
   const tasks = getTasksByDisplayDate(data);
 
   const dateWindowSize = useDevice(500).case({

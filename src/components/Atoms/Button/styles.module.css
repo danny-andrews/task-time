@@ -3,7 +3,6 @@
   line-height: var(--min-touch-target-size);
   min-height: var(--min-touch-target-size);
   min-width: var(--min-touch-target-size);
-  padding: var(--border-width);
   width: 100%;
 
   /* Prevent zoom on double-tap */
@@ -42,6 +41,10 @@
   }
 }
 
+.padded {
+  padding: var(--spacing-tiny) var(--spacing-small);
+}
+
 .color-primary {
   background: var(--color-background);
 }
@@ -60,11 +63,11 @@
 
 /* Variations */
 .primary {
-  composes: base color-primary bordered rounded;
+  composes: base color-primary bordered rounded padded;
 }
 
 .square {
-  composes: base color-primary bordered;
+  composes: base color-primary bordered padded;
 }
 
 .icon {

@@ -23,7 +23,7 @@ const LeftNav = ({
       >
         <DoubleLeftArrow />
       </IconButton>
-      <IconButton onClick={onHomeClick} aria-label="Shift to today">
+      <IconButton onClick={onHomeClick} aria-label="Go to today">
         <Home />
       </IconButton>
     </VerticalNav>

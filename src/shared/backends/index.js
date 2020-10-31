@@ -1,1 +1,1 @@
-export { default as LocalStorageBackend } from "./local-storage";
+export { default as SyncBackend } from "./sync";

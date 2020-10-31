@@ -61,14 +61,16 @@ export default ({ isProd, envVars, outputDir, analyzeBuild }, config) => {
     JSON.stringify
   )(envVars);
   const publicPath = isProd ? "task-time" : "";
+  const output = config.output || [];
+  const plugins = config.plugins || [];
 
   return {
     ...config,
     output: {
-      format: "umd",
+      format: "iife",
       dir: outputDir,
       entryFileNames: hashAssets ? "[name]-[hash].js" : "[name].js",
-      ...config.output,
+      ...output,
     },
     plugins: [
       ...(isNil(envVars) ? [] : [replace(envVarObj)]),
@@ -99,6 +101,7 @@ export default ({ isProd, envVars, outputDir, analyzeBuild }, config) => {
       ...(isProd ? [brotli()] : []),
       ...(isDev ? [serve(outputDir)] : []),
       ...(isDev ? [livereload({ watch: outputDir })] : []),
+      ...plugins,
     ],
   };
 };

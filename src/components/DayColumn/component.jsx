@@ -7,12 +7,11 @@ import TaskForm from "../TaskForm";
 import styles from "./styles.module.css";
 import { DND_IDS } from "../../shared/constants";
 import { formatHumanReadable, isPastDate } from "../../shared/dates";
-import { getDifficultyForTasks } from "../../shared/model";
 import { H, Disclosure } from "../Atoms";
 import { useBackend } from "../../hooks";
 
 const DayColumn = ({ date, tasks }) => {
-  const { createTask, moveTask } = useBackend();
+  const { createTask, moveTask, getDifficultyForTasks } = useBackend();
 
   // Handlers
   const handleDrop = (id) => {

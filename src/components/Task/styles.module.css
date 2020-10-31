@@ -19,7 +19,7 @@
 }
 
 .staleness {
-  composes: center-contents from "../../../css/util.module.css";
+  composes: center-contents from "../../css/util.module.css";
 }
 
 .staleness-text {

@@ -1,56 +1,86 @@
 import { useContext } from "react";
-import { useQuery, queryCache } from "react-query";
-import { QUERY_IDS } from "../shared/constants";
+import { parseISO } from "date-fns";
+import { map, sum, pipe, identity } from "ramda";
 import { BackendContext } from "../shared/contexts";
 import { serializeDate } from "../shared/dates";
-import { parseISO } from "date-fns";
-import { map } from "ramda";
+import useObservable from "./use-observable";
 
-const deserializeTasks = map((task) => ({
+const deserializeTask = (task) => ({
   ...task,
   createdAt: parseISO(task.createdAt),
   originalDueDate: parseISO(task.originalDueDate),
   dueDate: parseISO(task.dueDate),
-}));
+});
+
+const EntityTypes = {
+  DIFFICULTIES: {
+    key: "difficulties",
+    deserialize: identity,
+  },
+  TASKS: {
+    key: "tasks",
+    deserialize: deserializeTask,
+  },
+};
 
 export default () => {
-  const backend = useContext(BackendContext);
+  const {
+    getEntities,
+    getEntity,
+    createEntity,
+    updateEntity,
+    deleteEntity,
+  } = useContext(BackendContext);
 
-  const useDifficulties = () =>
-    useQuery(QUERY_IDS.DIFFICULTIES, backend.getDifficulties, {
-      cacheTime: Infinity,
+  const getEntities_ = ({ key, deserialize }) =>
+    getEntities(key).map(map(deserialize));
+
+  const getDifficulties = () => getEntities_(EntityTypes.DIFFICULTIES);
+  const getTasks = () => getEntities_(EntityTypes.TASKS);
+  const getDifficulty = (id) => getEntity(EntityTypes.DIFFICULTIES.key, id);
+
+  const useTasks = () => useObservable([], getTasks());
+
+  const useDifficulties = () => useObservable([], getDifficulties());
+
+  const createTask = ({ text, dueDate, isImportant, difficulty, position }) =>
+    createEntity("tasks", {
+      createdAt: serializeDate(Date.now()),
+      originalDueDate: serializeDate(dueDate),
+      text,
+      dueDate: serializeDate(dueDate),
+      isComplete: false,
+      difficulty,
+      isImportant,
+      position,
     });
 
-  const useTasks = () =>
-    useQuery(QUERY_IDS.TASKS, () => backend.getTasks().then(deserializeTasks));
+  const updateTask = (id, updates) => updateEntity("tasks", id, updates);
 
-  const updateTask = (...args) =>
-    backend.updateTask(...args).then(() => {
-      queryCache.invalidateQueries(QUERY_IDS.TASKS);
-    });
-
-  const deleteTask = (...args) =>
-    backend.deleteTask(...args).then(() => {
-      queryCache.invalidateQueries(QUERY_IDS.TASKS);
-    });
-
-  const createTask = (...args) =>
-    backend.createTask(...args).then(() => {
-      queryCache.invalidateQueries(QUERY_IDS.TASKS);
-    });
+  const deleteTask = (id) => deleteEntity("tasks", id);
 
   const toggleTask = (task) =>
     updateTask(task.id, { isComplete: !task.isComplete });
 
   const refreshTask = (task) =>
-    updateTask(task.id, { originalDueDate: serializeDate(task.dueDate) });
+    updateTask(task.id, {
+      originalDueDate: serializeDate(task.dueDate),
+    });
 
   const moveTask = (id, newDueDate) =>
     updateTask(id, { dueDate: serializeDate(newDueDate) });
 
+  const getDifficultyForTasks = pipe(
+    map((task) => getDifficulty(task.difficulty).value),
+    sum
+  );
+
   return {
-    useDifficulties,
+    getDifficultyForTasks,
+    getDifficulties,
+    getDifficulty,
     useTasks,
+    useDifficulties,
     updateTask,
     deleteTask,
     createTask,

@@ -2,10 +2,10 @@ import React, { StrictMode } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Index from "../../routes/Index";
-import { LocalStorageBackend } from "../../shared/backends";
+import { SyncBackend } from "../../shared/backends";
 import { BackendContext } from "../../shared/contexts";
 
-const backend = LocalStorageBackend();
+const backend = SyncBackend();
 
 const App = () => (
   <StrictMode>
