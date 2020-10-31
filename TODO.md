@@ -1,6 +1,5 @@
 ## Bugs
 
-- Fix button focus styles on mobile.
 - Fix issue where composed classes are being duplicated in resulting bundle.
 - Fix staleness calculation to use whole days rather than difference in days,
   which calculates based on time.

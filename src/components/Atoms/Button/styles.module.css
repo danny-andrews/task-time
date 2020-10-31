@@ -11,13 +11,20 @@
     outline: none;
   }
 
-  &:hover,
   &[data-focus-visible-added] {
     background: var(--color-accent-1);
+    outline: var(--outline-focus);
+    outline-offset: 1px;
   }
 
   &:active {
     background: var(--color-background);
+  }
+}
+
+@media (hover: hover) {
+  .base:hover:not(:active) {
+    background: var(--color-accent-1);
   }
 }
 
