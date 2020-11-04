@@ -9,7 +9,7 @@ export default createConfig(
     envVars: {
       NODE_ENV: env,
     },
-    outputDir: "build",
+    outputDir: "task-time",
     analyzeBuild: Boolean(process.env.ANALYZE_BUILD),
   },
   {
