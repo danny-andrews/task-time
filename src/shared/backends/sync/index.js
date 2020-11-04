@@ -18,6 +18,7 @@ export default () => {
       yEntities.observe(() => {
         emitter.emit(Array.from(yEntities.values()));
       });
+      emitter.emit(Array.from(yEntities.values()));
     });
   };
 
