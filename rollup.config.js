@@ -10,7 +10,7 @@ export default createConfig(
     envVars: {
       NODE_ENV: env,
       SYNC_WEBSOCKET_URL: isProd
-        ? "ws://dannyandrews.net/task-time/.netlify/backend/sync/:3004"
+        ? "ws://task-time-backend.herokuapp.com:3004"
         : "ws://localhost:3004",
     },
     outputDir: "task-time",
