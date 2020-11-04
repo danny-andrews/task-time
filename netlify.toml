@@ -1,3 +1,4 @@
 [build]
   publish = "task-time/"
   command = "yarn build:prod"
+  functions = "functions"
