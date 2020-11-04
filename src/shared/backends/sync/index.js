@@ -1,14 +1,14 @@
+/* global process */
 import * as Y from "yjs";
 import { WebsocketProvider } from "y-websocket";
 import { v4 as uuidv4 } from "uuid";
 import Kefir from "kefir";
 
 const TEST_USER_ID = "test-user-1234";
-const BACKEND_URL = "ws://192.168.1.42:3004";
 
 export default () => {
   const doc = new Y.Doc();
-  new WebsocketProvider(BACKEND_URL, TEST_USER_ID, doc);
+  new WebsocketProvider(process.env.SYNC_WEBSOCKET_URL, TEST_USER_ID, doc);
 
   const getEntity = (type, id) => doc.getMap(type).get(id);
 

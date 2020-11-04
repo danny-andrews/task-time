@@ -5,9 +5,9 @@
   "scripts": {
     "build": "yarn rollup --config",
     "build:analyze": "ANALYZE_BUILD=true yarn build:prod",
-    "build:clean": "rm -r build",
+    "build:clean": "rm -r task-time",
     "build:icons": "npx @svgr/cli src/components/Icons/svg --out-dir src/components/Icons",
-    "build:prod": "yarn build:clean; NODE_ENV=production yarn build; ls -lh build",
+    "build:prod": "NODE_ENV=production yarn build",
     "ci": "yarn lint",
     "lint": "yarn lint:js; yarn lint:css",
     "lint:css": "stylelint 'src/**/*.css' 'src/**/.module.css'",
