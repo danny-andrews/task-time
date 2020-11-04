@@ -1,11 +1,11 @@
 const WebSocket = require("ws");
 const http = require("http");
-const wss = new WebSocket.Server({ noServer: true });
 const utils = require("y-websocket/bin/utils.js");
 const faunadb = require("faunadb");
 const Y = require("yjs");
 
 const q = faunadb.query;
+const wss = new WebSocket.Server({ noServer: true });
 
 exports.handler = async () => {
   const port = process.env.PORT || 3004;
