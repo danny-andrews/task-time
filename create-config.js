@@ -60,6 +60,7 @@ export default ({ isProd, envVars, outputDir, analyzeBuild }, config) => {
     (key) => `process.env.${key}`,
     JSON.stringify
   )(envVars);
+  const publicPath = isProd ? "task-time" : "";
 
   return {
     ...config,
@@ -82,6 +83,7 @@ export default ({ isProd, envVars, outputDir, analyzeBuild }, config) => {
       }),
       html({
         template: htmlTemplate,
+        publicPath,
       }),
       json(),
       ...(analyzeBuild ? [analyze({ summaryOnly: true })] : []),
