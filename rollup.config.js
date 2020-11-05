@@ -10,7 +10,7 @@ export default createConfig(
     envVars: {
       NODE_ENV: env,
       SYNC_WEBSOCKET_URL: isProd
-        ? "ws://task-time-backend.herokuapp.com:3004"
+        ? "wss://task-time-backend.herokuapp.com:4616"
         : "ws://localhost:3004",
     },
     outputDir: "task-time",
