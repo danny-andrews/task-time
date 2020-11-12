@@ -19,4 +19,5 @@
 
 .icon {
   height: 1rem;
+  margin-right: var(--spacing-tiny);
 }

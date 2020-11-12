@@ -13,7 +13,7 @@ const Disclosure = ({ buttonText, children, onDisplay = noop }) => {
   const [isOpen, setIsOpen] = useState(false);
   const panelRef = useRef(null);
 
-  // All this logic is needed because the only way to bring up the virtual
+  // HACK: All this logic is needed because the only way to bring up the virtual
   // keyboard on mobile devices is to focus an element within a click handler,
   // initiated by a user action (not simulated via JavaScript). For more
   // information: https://stackoverflow.com/a/15133808/2433572.

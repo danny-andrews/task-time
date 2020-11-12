@@ -3,7 +3,7 @@ import { useBackend } from "../../hooks";
 import { getTaskStaleness } from "../../shared/model";
 import taskFactory from "./component.jsx";
 
-const Task = ({ task }) => {
+const Task = ({ task, className }) => {
   const {
     isComplete,
     createdAt,
@@ -26,6 +26,7 @@ const Task = ({ task }) => {
 
   return (
     <TaskComponent
+      className={className}
       isComplete={isComplete}
       staleness={staleness}
       text={text}

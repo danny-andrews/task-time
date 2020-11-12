@@ -3,6 +3,7 @@
 - Fix issue where composed classes are being duplicated in resulting bundle.
 - Fix staleness calculation to use whole days rather than difference in days,
   which calculates based on time.
+- Fix drag-and-drop in FireFox
 
 ## Features
 
@@ -13,6 +14,7 @@
 
 ## Polish
 
+- Hide warnings about cyclic dependencies in rollup build.
 - Replace isImportant checkbox with switch.
 - Add custom error messaging to task form rather than relying on html built-in.
 - Implement loading states.

@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import cn from "classnames";
 import { useDrop } from "react-dnd";
-import { isToday } from "date-fns";
+import { isToday, isEqual } from "date-fns";
 import Tasks from "../Tasks";
 import TaskForm from "../TaskForm";
 import styles from "./styles.module.css";
@@ -28,16 +28,20 @@ const DayColumn = ({ date, tasks }) => {
     });
 
   // DnD
-  const [{ isOver }, drop] = useDrop({
+  const [{ isOver, canDrop }, drop] = useDrop({
     accept: DND_IDS.TASK,
     drop: (item) => {
       handleDrop(item.id);
     },
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-    }),
+    canDrop: (item) => !isEqual(item.dueDate, date) && !isPastDate(date),
+    collect: (monitor) => {
+      return {
+        isOver: monitor.isOver(),
+        canDrop: monitor.canDrop(),
+      };
+    },
   });
-  const isHovering = !isPastDate(date) && isOver;
+  const isHovering = isOver && canDrop;
 
   // Template Vars
   const isCurrentDay = isToday(date);
@@ -73,7 +77,7 @@ const DayColumn = ({ date, tasks }) => {
           {formatHumanReadable(date)}
         </H>
         <p>
-          Challenge Level: <em>{totalDifficulty}</em>
+          Total Difficulty: <em>{totalDifficulty}</em>
         </p>
       </header>
       <div className={tasksSectionClasses}>

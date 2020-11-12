@@ -1,5 +1,5 @@
 .root {
-  composes: inner-spacing-medium from "../../css/util.module.css";
+  composes: inner-spacing-small from "../../css/util.module.css";
   overflow-y: scroll;
   padding: var(--spacing-medium);
 }
@@ -7,3 +7,9 @@
 .dragging {
   opacity: var(--opacity-half);
 }
+
+/* stylelint-disable */
+.ax-hover-styles button:hover {
+  background: inherit !important;
+}
+/* stylelint-enable */

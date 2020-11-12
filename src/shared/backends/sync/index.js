@@ -3,23 +3,43 @@ import * as Y from "yjs";
 import { WebsocketProvider } from "y-websocket";
 import { v4 as uuidv4 } from "uuid";
 import Kefir from "kefir";
+import { setMany, createMap } from "./util";
 
-const TEST_USER_ID = "test-user-1234";
+const TEST_USER_ID = "test-user-3";
 
 export default () => {
   const doc = new Y.Doc();
-  new WebsocketProvider(process.env.SYNC_WEBSOCKET_URL, TEST_USER_ID, doc);
+  const websocketProvider = new WebsocketProvider(
+    process.env.SYNC_WEBSOCKET_URL,
+    TEST_USER_ID,
+    doc,
+    { connect: false }
+  );
+  websocketProvider.connect();
 
-  const getEntity = (type, id) => doc.getMap(type).get(id);
+  const getYEntity = (type, id) =>
+    doc
+      .getArray(type)
+      .toArray()
+      .find((entity) => entity.get("id") === id);
+
+  const getEntity = (type, id) => {
+    const yEntity = getYEntity(type, id);
+
+    return Kefir.stream((emitter) => {
+      yEntity.observe(() => {
+        emitter.emit(yEntity.toJSON());
+      });
+    }).toProperty(() => yEntity.toJSON());
+  };
 
   const getEntities = (type) => {
-    const yEntities = doc.getMap(type);
+    const yEntities = doc.getArray(type);
     return Kefir.stream((emitter) => {
-      yEntities.observe(() => {
-        emitter.emit(Array.from(yEntities.values()));
+      yEntities.observeDeep(() => {
+        emitter.emit(yEntities.toJSON());
       });
-      emitter.emit(Array.from(yEntities.values()));
-    });
+    }).toProperty(() => yEntities.toJSON());
   };
 
   const createEntity = (type, attrs) => {
@@ -28,21 +48,28 @@ export default () => {
       ...attrs,
       id,
     };
+    const yEntity = createMap(entity);
 
-    doc.getMap(type).set(id, entity);
+    doc.getArray(type).push([yEntity]);
 
-    return entity;
+    return yEntity.toJSON();
   };
 
   const updateEntity = (type, id, updates) => {
-    const existingEntity = doc.getMap(type).get(id);
-    const updatedEntity = { ...existingEntity, ...updates };
-    doc.getMap(type).set(id, updatedEntity);
-    return updatedEntity;
+    const existingEntity = getYEntity(type, id);
+
+    setMany(updates, existingEntity);
+
+    return getYEntity(type, id).toJSON();
   };
 
   const deleteEntity = (type, id) => {
-    doc.getMap(type).delete(id);
+    const yArray = doc.getArray(type);
+    const index = yArray
+      .toArray()
+      .findIndex((entity) => entity.get("id") === id);
+
+    yArray.delete(index);
   };
 
   return {

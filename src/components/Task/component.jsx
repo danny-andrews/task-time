@@ -16,6 +16,7 @@ const Task = ({
   isDisabled = false,
   disableRefresh = false,
   secondaryAction,
+  className,
 
   // Task values
   text,
@@ -28,7 +29,7 @@ const Task = ({
   onTaskClick,
   onRefreshClick,
 }) => {
-  const classes = cn(styles.root, {
+  const classes = cn(styles.root, className, {
     [styles["complete"]]: isComplete,
     [styles["important"]]: isImportant,
   });

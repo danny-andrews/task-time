@@ -12,7 +12,7 @@ const sliderMarkersFromDifficulties = mapIndexed(({ name }, i) => ({
 }));
 
 const TaskForm = ({ onSubmit }, ref) => {
-  const difficulties = useBackend().useDifficulties();
+  const difficulties = useBackend().getDifficulties();
 
   useImperativeHandle(ref, () => ({
     focus: () => {

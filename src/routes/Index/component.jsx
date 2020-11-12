@@ -1,6 +1,6 @@
 import React from "react";
 import { always as alvvays } from "ramda";
-import { getTasksByDisplayDate, getTasksForDates } from "../../shared/model";
+import { getTasksForDates } from "../../shared/model";
 import DayColumns from "../../components/DayColumns";
 import Header from "../../components/Header";
 import styles from "./styles.module.css";
@@ -9,9 +9,8 @@ import RightNav from "../../components/RightNav";
 import { useBackend, useDevice, useDateWindow } from "../../hooks";
 
 const Index = () => {
-  const { useTasks } = useBackend();
-  const data = useTasks();
-  const tasks = getTasksByDisplayDate(data);
+  const { useTasksByDisplayDate } = useBackend();
+  const tasks = useTasksByDisplayDate();
 
   const dateWindowSize = useDevice(500).case({
     Phone: alvvays(1),
