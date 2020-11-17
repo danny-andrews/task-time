@@ -4,20 +4,15 @@
   flex: 1;
   flex-direction: column;
   text-align: center;
-
-  &.accent {
-    background: var(--color-accent-1);
-    box-shadow: 0 0 8px 6px var(--color-background) inset;
-  }
 }
 
-/* States */
-.dnd-is-hovering {
+.accent {
+  background: var(--color-accent-1);
+  box-shadow: 0 0 8px 6px var(--color-background) inset;
+}
+
+.faded {
   opacity: var(--opacity-half);
-}
-
-.in-past {
-  color: var(--color-text-light);
 }
 
 .blocked {

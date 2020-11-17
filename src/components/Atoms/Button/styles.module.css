@@ -1,4 +1,5 @@
 .base {
+  background: var(--color-background);
   cursor: pointer;
   min-height: var(--min-touch-target-size);
   min-width: var(--min-touch-target-size);
@@ -15,7 +16,9 @@
     background: var(--color-accent-1);
     outline: var(--outline-focus);
     outline-offset: 1px;
-    z-index: 1;
+
+    /* Ensure outline doesn't get cut off by buttons behind it. */
+    position: relative;
   }
 
   &:active {
@@ -23,17 +26,16 @@
   }
 }
 
-@media (hover: hover) {
-  .base:hover:not(:active) {
-    background: var(--color-accent-1);
+@media (min-width: env(--breakpoint-phone)) {
+  .base {
+    min-height: auto;
+    min-width: auto;
   }
 }
 
-@media (min-width: env(--breakpoint-phone)) {
-  .base {
-    line-height: normal;
-    min-height: auto;
-    min-width: auto;
+@media (hover: hover) {
+  .base:hover:not(:active) {
+    background: var(--color-accent-1);
   }
 }
 
@@ -52,14 +54,6 @@
   padding: var(--spacing-tiny) var(--spacing-small);
 }
 
-.color-primary {
-  background: var(--color-background);
-}
-
-.color-transparent {
-  background: var(--color-transparent);
-}
-
 .bordered {
   border: var(--border-solid);
 }
@@ -70,15 +64,15 @@
 
 /* Variations */
 .primary {
-  composes: base color-primary bordered rounded padded;
+  composes: base bordered rounded padded;
 }
 
 .square {
-  composes: base color-primary bordered padded;
+  composes: base bordered padded;
 }
 
 .icon {
-  composes: base color-primary rounded;
+  composes: base rounded;
 
   /* stylelint-disable-next-line selector-max-type */
   & > svg {

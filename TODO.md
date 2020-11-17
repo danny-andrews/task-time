@@ -1,16 +1,16 @@
 ## Bugs
 
-- Fix issue where composed classes are being duplicated in resulting bundle.
+- Fix move functionality.
+- Fix drag-and-drop in FireFox
 - Fix staleness calculation to use whole days rather than difference in days,
   which calculates based on time.
-- Fix drag-and-drop in FireFox
 
 ## Features
 
 - Add Go-to-date button in left nav.
 - Add edit functionality.
-- Add reorder functionality.
 - Add new todos to top of list.
+- Add keyboard support for reordering and moving tasks.
 
 ## Polish
 
@@ -27,7 +27,7 @@
 
 ## Infrastructure
 
-- Deploy backend.
 - Use my own eslint config.
 - Move infrastructure to a separate package.
 - Add basic tests
+- Fix issue where composed classes are being duplicated in resulting bundle.

@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import cn from "classnames";
 import { useDrag, useDrop } from "react-dnd";
 import { move } from "ramda";
+import { isEqual } from "date-fns";
 import Task from "../Task";
 import styles from "./styles.module.css";
 import { DND_IDS } from "../../shared/constants";
@@ -49,11 +50,10 @@ const DraggableTask = ({
     },
     canDrop: (item) => {
       if (!ref.current) return false;
-      const oldIndex = item.index;
-      const newIndex = index;
 
       // Don't replace items with themselves
-      if (oldIndex === newIndex) return false;
+      if (isEqual(item.dueDate, task.dueDate) && item.index === index)
+        return false;
 
       return true;
     },

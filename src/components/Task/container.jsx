@@ -1,7 +1,7 @@
 import React from "react";
 import { useBackend } from "../../hooks";
 import { getTaskStaleness } from "../../shared/model";
-import taskFactory from "./component.jsx";
+import taskComponentFactory from "./component.jsx";
 
 const Task = ({ task, className }) => {
   const {
@@ -19,10 +19,10 @@ const Task = ({ task, className }) => {
   const handleDeleteClick = () => deleteTask(task.id);
   const handleEditClick = () => console.log("Implement edit functionality");
 
-  const TaskComponent = taskFactory(dueDate, isComplete);
+  const TaskComponent = taskComponentFactory(dueDate, isComplete);
 
   const staleness = getTaskStaleness({ createdAt, originalDueDate });
-  const difficulty = getDifficulty(difficultyId);
+  const difficulty = getDifficulty(difficultyId).value;
 
   return (
     <TaskComponent
@@ -31,7 +31,7 @@ const Task = ({ task, className }) => {
       staleness={staleness}
       text={text}
       isImportant={isImportant}
-      difficulty={difficulty.value}
+      difficulty={difficulty}
       onTaskClick={handleTaskClick}
       onRefreshClick={handleRefreshClick}
       onDeleteClick={handleDeleteClick}

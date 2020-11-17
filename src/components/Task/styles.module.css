@@ -14,7 +14,7 @@
   opacity: var(--opacity-half);
 }
 
-.text.complete {
+.strike-through {
   text-decoration: line-through;
 }
 

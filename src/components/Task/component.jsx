@@ -5,11 +5,11 @@ import { PrimaryButton, IconButton, ButtonGroup } from "../Atoms";
 import { Refresh, Edit, Trash } from "../Icons";
 import { isPastDate } from "../../shared/dates";
 
-// Base height of component (to be used as rem value)
+// Base height of component (to be used as rem value).
 const BASE_HEIGHT = 2.5;
 
 // Base task component. This isn't meant to be used directly, hence why it is
-// not exported. A task can be in one of three states, Incomplete, Complete, and
+// not exported. A task can be in one of three states: Incomplete, Complete, and
 // Locked. These are codified in variation components defined below.
 const Task = ({
   // Render control
@@ -33,12 +33,15 @@ const Task = ({
     [styles["complete"]]: isComplete,
     [styles["important"]]: isImportant,
   });
-  const textClasses = cn(styles.text, { [styles["complete"]]: isComplete });
+  const textClasses = cn(styles.text, {
+    [styles["strike-through"]]: isComplete,
+  });
+  const height = difficulty * BASE_HEIGHT;
 
   // I'm normally against inline styles, but I'm making an exception here
   // because the css value really is completely dynamic.
   const style = {
-    height: `${difficulty * BASE_HEIGHT}rem`,
+    height: `${height}rem`,
   };
 
   const renderStaleness = () => {
@@ -78,7 +81,7 @@ export const LockedTask = (props) => (
   <Task isDisabled disableRefresh secondaryAction={null} {...props} />
 );
 
-export const CompletedTask = ({ onDeleteClick, ...rest }) => (
+export const CompletedActiveTask = ({ onDeleteClick, ...rest }) => (
   <Task
     disableRefresh
     secondaryAction={
@@ -116,5 +119,5 @@ export default (dueDate, isComplete) =>
   isPastDate(dueDate)
     ? LockedTask
     : isComplete
-    ? CompletedTask
+    ? CompletedActiveTask
     : IncompleteTask;

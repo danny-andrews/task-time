@@ -13,25 +13,11 @@ import { useBackend } from "../../hooks";
 const DayColumn = ({ date, tasks }) => {
   const { createTask, moveTask, getDifficultyForTasks } = useBackend();
 
-  // Handlers
-  const handleDrop = (id) => {
-    if (isPastDate(date)) return;
-
-    moveTask(id, date);
-  };
-  const handleSubmit = ({ important, ...rest }) =>
-    createTask({
-      ...rest,
-      isImportant: important,
-      dueDate: date,
-      position: tasks.length,
-    });
-
   // DnD
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: DND_IDS.TASK,
     drop: (item) => {
-      handleDrop(item.id);
+      moveTask(item.id, date);
     },
     canDrop: (item) => !isEqual(item.dueDate, date) && !isPastDate(date),
     collect: (monitor) => {
@@ -41,19 +27,16 @@ const DayColumn = ({ date, tasks }) => {
       };
     },
   });
-  const isHovering = isOver && canDrop;
 
   // Template Vars
-  const isCurrentDay = isToday(date);
-  const classes = cn(styles.root, { [styles["accent"]]: isCurrentDay });
+  const isHovering = isOver && canDrop;
+  const classes = cn(styles.root, { [styles["accent"]]: isToday(date) });
   const tasksSectionClasses = cn(styles["tasks-section"], {
     [styles["blocked"]]: isOver && isPastDate(date),
-    [styles["dnd-is-hovering"]]: isHovering,
+    [styles["faded"]]: isHovering,
   });
   const headerClasses = cn(styles.header, {
-    [styles["in-past"]]: isPastDate(date),
-    [styles["dnd-is-hovering"]]: isHovering,
-    [styles["accent"]]: isCurrentDay,
+    [styles["faded"]]: isHovering || isPastDate(date),
   });
   const totalDifficulty = getDifficultyForTasks(tasks);
   const formRef = useRef(null);
@@ -62,6 +45,13 @@ const DayColumn = ({ date, tasks }) => {
   };
   const renderTaskForm = () => {
     if (isPastDate(date)) return null;
+    const handleSubmit = ({ important, ...rest }) =>
+      createTask({
+        ...rest,
+        isImportant: important,
+        dueDate: date,
+        position: tasks.length,
+      });
 
     return (
       <Disclosure buttonText="New Task" onDisplay={handleDisplay}>
