@@ -27,6 +27,7 @@
 
 ## Infrastructure
 
+- Change db providers to eliminate race condition when refreshing page.
 - Use my own eslint config.
 - Move infrastructure to a separate package.
 - Add basic tests

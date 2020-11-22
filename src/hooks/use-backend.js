@@ -39,13 +39,9 @@ const tasksByDisplayDate = pipe(
 );
 
 export default () => {
-  const {
-    getEntity,
-    getEntities,
-    createEntity,
-    updateEntity,
-    deleteEntity,
-  } = useContext(BackendContext);
+  const { getEntities, createEntity, updateEntity, deleteEntity } = useContext(
+    BackendContext
+  );
 
   const getDifficulty = (id) =>
     DIFFICULTIES.find((difficulty) => difficulty.id === id);
@@ -55,12 +51,7 @@ export default () => {
   const getEntities_ = ({ key, deserialize }) =>
     getEntities(key).map(map(deserialize));
 
-  const getEntity_ = ({ key, deserialize }, id) =>
-    getEntity(key, id).map(deserialize);
-
   const getTasks = () => getEntities_(EntityTypes.TASKS);
-
-  const getTask = (id) => getEntity_(EntityTypes.TASKS, id);
 
   const getTasksByDisplayDate = () => getTasks().map(tasksByDisplayDate);
 
@@ -102,26 +93,28 @@ export default () => {
       observable.onValue(resolve);
     });
 
-  const changeTaskPosition = (id, oldIndex, newIndex) => {
-    toPromise(getTask(id)).then((task) => {
-      const dueDate = serializeDate(task.dueDate);
-      toPromise(getTasksByDisplayDate()).then((tasksByDate) => {
-        const tasks = tasksByDate[dueDate];
-        const { left, right } =
-          oldIndex > newIndex
-            ? {
-                left: tasks[newIndex - 1] || { position: 0 },
-                right: tasks[newIndex],
-              }
-            : {
-                left: tasks[newIndex],
-                right: tasks[newIndex + 1] || {
-                  position: last(tasks).position,
-                },
-              };
-        const newPosition = (left.position + right.position) / 2;
+  const changeTaskPosition = ({ id, newDueDate, newIndex }) => {
+    const dueDate = serializeDate(newDueDate);
+    toPromise(getTasksByDisplayDate()).then((tasksByDate) => {
+      const tasks = tasksByDate[dueDate];
+      const oldIndex = tasks.findIndex((task) => task.id === id);
+      const { left, right } =
+        oldIndex > newIndex
+          ? {
+              left: tasks[newIndex - 1] || { position: 0 },
+              right: tasks[newIndex],
+            }
+          : {
+              left: tasks[newIndex],
+              right: tasks[newIndex + 1] || {
+                position: last(tasks).position,
+              },
+            };
+      const newPosition = (left.position + right.position) / 2;
 
-        updateTask(id, { position: newPosition });
+      updateTask(id, {
+        position: newPosition,
+        dueDate: serializeDate(newDueDate),
       });
     });
   };

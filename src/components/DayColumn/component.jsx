@@ -2,8 +2,9 @@ import React, { useRef } from "react";
 import cn from "classnames";
 import { useDrop } from "react-dnd";
 import { isToday, isEqual } from "date-fns";
-import Tasks from "../Tasks";
+import { isEmpty } from "ramda";
 import TaskForm from "../TaskForm";
+import Tasks from "../Tasks";
 import styles from "./styles.module.css";
 import { DND_IDS } from "../../shared/constants";
 import { formatHumanReadable, isPastDate } from "../../shared/dates";
@@ -11,32 +12,33 @@ import { H, Disclosure } from "../Atoms";
 import { useBackend } from "../../hooks";
 
 const DayColumn = ({ date, tasks }) => {
-  const { createTask, moveTask, getDifficultyForTasks } = useBackend();
+  const { createTask, getDifficultyForTasks, moveTask } = useBackend();
+  const isInPast = isPastDate(date);
 
   // DnD
-  const [{ isOver, canDrop }, drop] = useDrop({
+  const [{ isOver }, drop] = useDrop({
     accept: DND_IDS.TASK,
-    drop: (item) => {
-      moveTask(item.id, date);
-    },
-    canDrop: (item) => !isEqual(item.dueDate, date) && !isPastDate(date),
     collect: (monitor) => {
       return {
-        isOver: monitor.isOver(),
-        canDrop: monitor.canDrop(),
+        isOver: monitor.isOver({ shallow: true }),
       };
+    },
+    canDrop: () => isEmpty(tasks) && !isInPast,
+    hover: (item) => {
+      if (isEqual(item.dueDate, date)) return;
+
+      moveTask(item.id, date);
+      item.dueDate = date;
     },
   });
 
   // Template Vars
-  const isHovering = isOver && canDrop;
   const classes = cn(styles.root, { [styles["accent"]]: isToday(date) });
   const tasksSectionClasses = cn(styles["tasks-section"], {
-    [styles["blocked"]]: isOver && isPastDate(date),
-    [styles["faded"]]: isHovering,
+    [styles["blocked"]]: isOver && isInPast,
   });
   const headerClasses = cn(styles.header, {
-    [styles["faded"]]: isHovering || isPastDate(date),
+    [styles["faded"]]: isInPast,
   });
   const totalDifficulty = getDifficultyForTasks(tasks);
   const formRef = useRef(null);

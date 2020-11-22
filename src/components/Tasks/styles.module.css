@@ -4,10 +4,6 @@
   padding: var(--spacing-medium);
 }
 
-.dragging {
-  opacity: var(--opacity-half);
-}
-
 /* stylelint-disable */
 .ax-hover-styles button:hover {
   background: inherit !important;

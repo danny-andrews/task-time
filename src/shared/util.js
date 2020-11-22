@@ -16,6 +16,20 @@ export const debounce = (func, duration) => {
   };
 };
 
+export const throttle = (func, duration) => {
+  let shouldWait = false;
+
+  return (...args) => {
+    if (!shouldWait) {
+      func(...args);
+      shouldWait = true;
+      setTimeout(() => {
+        shouldWait = false;
+      }, duration);
+    }
+  };
+};
+
 export const titleCase = (str) => {
   if (str === "") return str;
 
