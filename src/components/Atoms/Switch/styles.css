@@ -1,0 +1,32 @@
+/* stylelint-disable max-nesting-depth, declaration-no-important */
+.react-toggle {
+  --border-size: 2px;
+
+  & .react-toggle-thumb {
+    background-color: var(--color-text);
+    border: var(--border-size) solid var(--color-accent-2);
+    box-shadow: none !important;
+  }
+
+  & .react-toggle-track {
+    background-color: var(--color-accent-1) !important;
+  }
+
+  &.react-toggle--checked {
+    & .react-toggle-thumb {
+      background-color: var(--color-background);
+      border: var(--border-size) solid var(--color-text);
+    }
+
+    & .react-toggle-track {
+      background-color: var(--color-text) !important;
+    }
+  }
+
+  &.react-toggle--focus {
+    & .react-toggle-thumb {
+      outline: var(--outline-focus);
+      outline-offset: var(--border-size);
+    }
+  }
+}

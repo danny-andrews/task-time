@@ -2,7 +2,7 @@ import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import { Formik, Form } from "formik";
 import { assoc } from "ramda";
 import styles from "./styles.module.css";
-import { TextInput, Checkbox, PrimaryButton, Slider } from "../Atoms";
+import { TextInput, PrimaryButton, Slider, Switch } from "../Atoms";
 import { titleCase, mapIndexed } from "../../shared/util";
 import { useBackend } from "../../hooks";
 
@@ -50,7 +50,7 @@ const TaskForm = ({ onSubmit }, ref) => {
           step={1}
         />
 
-        <Checkbox label="Important?" name="important" />
+        <Switch label="Imporant?" name="important" />
 
         <PrimaryButton type="submit">Create Task</PrimaryButton>
       </Form>

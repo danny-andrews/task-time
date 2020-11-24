@@ -15,7 +15,6 @@
 ## Polish
 
 - Hide warnings about cyclic dependencies in rollup build.
-- Replace isImportant checkbox with switch.
 - Add custom error messaging to task form rather than relying on html built-in.
 - Implement loading states.
 - Handle text wrapping in todo item.

@@ -5,4 +5,4 @@ export { default as Disclosure } from "./Disclosure";
 export { default as ButtonGroup } from "./ButtonGroup";
 export { default as Slider } from "./Slider";
 export { default as TextInput } from "./TextInput";
-export { default as Checkbox } from "./Checkbox";
+export { default as Switch } from "./Switch";
