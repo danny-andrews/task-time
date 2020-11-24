@@ -50,7 +50,7 @@ const TaskForm = ({ onSubmit }, ref) => {
           step={1}
         />
 
-        <Switch label="Imporant?" name="important" />
+        <Switch label="Important?" name="important" />
 
         <PrimaryButton type="submit">Create Task</PrimaryButton>
       </Form>
