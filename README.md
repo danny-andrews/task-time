@@ -18,8 +18,8 @@
 
 ### Build System
 
-Module bundler - rollup.js, create-config.js
-JS Transpilation - babel (check babel.config.json for plugins used)
+Module bundler - rollup.js, create-config.js  
+JS Transpilation - babel (check babel.config.json for plugins used)  
 CSS Transforms - postcss (check postcss.config.js for plugins used)
 
 ### Polyfills

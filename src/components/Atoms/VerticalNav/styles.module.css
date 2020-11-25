@@ -1,5 +1,11 @@
 .root {
   composes: inner-spacing-small from "../../../css/util.module.css";
   flex: 0;
-  padding: var(--spacing-large) var(--spacing-small) 0 var(--spacing-small);
+  padding: var(--spacing-small);
+}
+
+@media (min-width: env(--breakpoint-phone)) {
+  .root {
+    padding-top: var(--spacing-large);
+  }
 }
