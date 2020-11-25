@@ -49,7 +49,7 @@ html {
   --border-dashed: 1px dashed var(--color-border);
   --border-solid: var(--border-width) solid var(--color-border);
   --border-radius: 0.25rem;
-  --drop-shadow-important: drop-shadow(-5px 5px 3px var(--color-attention));
+  --drop-shadow-important: drop-shadow(-4px 4px 2px var(--color-attention));
   --outline-focus: 2px dashed var(--color-focus);
 
   /* Fonts */
@@ -86,6 +86,7 @@ html {
 
 @media (prefers-color-scheme: dark) {
   html {
+    --color-attention: var(--color-white);
     --color-text: var(--color-white);
     --color-background: var(--color-black);
     --color-border: var(--color-white);

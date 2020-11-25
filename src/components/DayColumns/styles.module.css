@@ -1,5 +1,14 @@
 .root {
+  border-left: var(--border-solid);
+  border-right: var(--border-solid);
   display: flex;
   flex: 1;
-  padding: var(--spacing-large) var(--spacing-small) 0 var(--spacing-small);
+}
+
+@media (min-width: env(--breakpoint-phone)) {
+  .root {
+    border-left: none;
+    border-right: none;
+    padding: var(--spacing-large) var(--spacing-large) 0 var(--spacing-large);
+  }
 }

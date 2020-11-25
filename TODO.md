@@ -4,12 +4,14 @@
 - Fix drag-and-drop in FireFox
 - Fix staleness calculation to use whole days rather than difference in days,
   which calculates based on time.
+- Fix memory leak.
 
 ## Features
 
-- Add Go-to-date button in left nav.
 - Add edit functionality.
 - Add new todos to top of list.
+- Add feature for displaying suggested difficulty in list.
+- Add Go-to-date button in left nav.
 - Add keyboard support for reordering and moving tasks.
 
 ## Polish
@@ -29,5 +31,5 @@
 - Change db providers to eliminate race condition when refreshing page.
 - Use my own eslint config.
 - Move infrastructure to a separate package.
-- Add basic tests
+- Add basic tests.
 - Fix issue where composed classes are being duplicated in resulting bundle.

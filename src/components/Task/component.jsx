@@ -36,7 +36,7 @@ const Task = ({
   const textClasses = cn(styles.text, {
     [styles["strike-through"]]: isComplete,
   });
-  const height = difficulty * BASE_HEIGHT;
+  const height = difficulty * BASE_HEIGHT + (difficulty - 1);
 
   // I'm normally against inline styles, but I'm making an exception here
   // because the css value really is completely dynamic.
