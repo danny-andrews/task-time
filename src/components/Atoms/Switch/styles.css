@@ -6,7 +6,7 @@
     background-color: var(--color-text);
     border: var(--border-size) solid var(--color-accent-2);
     box-shadow: none !important;
-    transition: left .25s ease, background-color .25s ease, border .25s ease;
+    transition: left 0.25s ease, background-color 0.25s ease, border 0.25s ease;
   }
 
   & .react-toggle-track {
