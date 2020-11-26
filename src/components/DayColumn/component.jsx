@@ -1,8 +1,7 @@
-import React, { useRef } from "react";
+import React, { useRef, forwardRef } from "react";
 import cn from "classnames";
 import { useDrop } from "react-dnd";
 import { isToday, isEqual } from "date-fns";
-import { isEmpty } from "ramda";
 import TaskForm from "../TaskForm";
 import Tasks from "../Tasks";
 import styles from "./styles.module.css";
@@ -11,42 +10,25 @@ import { formatHumanReadable, isPastDate } from "../../shared/dates";
 import { H, Disclosure } from "../Atoms";
 import { useBackend } from "../../hooks";
 
-const DayColumn = ({ date, tasks }) => {
-  const { createTask, getDifficultyForTasks, moveTask } = useBackend();
+const DayColumn = forwardRef(({ date, tasks, blocked, faded }, ref) => {
+  const { createTask, getTotalDifficulty } = useBackend();
   const isInPast = isPastDate(date);
 
-  // DnD
-  const [{ isOver }, drop] = useDrop({
-    accept: DND_IDS.TASK,
-    collect: (monitor) => {
-      return {
-        isOver: monitor.isOver({ shallow: true }),
-      };
-    },
-    canDrop: () => isEmpty(tasks) && !isInPast,
-    hover: (item) => {
-      if (isEqual(item.dueDate, date)) return;
-
-      moveTask(item.id, date);
-      item.dueDate = date;
-    },
-  });
-
-  // Template Vars
   const classes = cn(styles.root, { [styles["accent"]]: isToday(date) });
   const tasksSectionClasses = cn(styles["tasks-section"], {
-    [styles["blocked"]]: isOver && isInPast,
+    [styles["blocked"]]: blocked,
   });
   const headerClasses = cn(styles.header, {
-    [styles["faded"]]: isInPast,
+    [styles["faded"]]: faded,
   });
-  const totalDifficulty = getDifficultyForTasks(tasks);
-  const formRef = useRef(null);
-  const handleDisplay = () => {
-    formRef.current.focus();
-  };
+  const totalDifficulty = getTotalDifficulty(tasks);
+
   const renderTaskForm = () => {
-    if (isPastDate(date)) return null;
+    if (isInPast) return null;
+    const formRef = useRef(null);
+    const handleDisplay = () => {
+      formRef.current.focus();
+    };
     const handleSubmit = ({ important, ...rest }) =>
       createTask({
         ...rest,
@@ -63,7 +45,7 @@ const DayColumn = ({ date, tasks }) => {
   };
 
   return (
-    <li ref={drop} className={classes}>
+    <li ref={ref} className={classes}>
       <header className={headerClasses}>
         <H level={2} styleLevel={4}>
           {formatHumanReadable(date)}
@@ -78,6 +60,34 @@ const DayColumn = ({ date, tasks }) => {
       </div>
     </li>
   );
+});
+
+const DroppableDayColumn = ({ date, tasks }) => {
+  const { moveTask } = useBackend();
+  const isInPast = isPastDate(date);
+
+  const [{ isOver }, drop] = useDrop({
+    accept: DND_IDS.TASK,
+    collect: (monitor) => ({
+      isOver: monitor.isOver({ shallow: true }),
+    }),
+    hover: (item) => {
+      if (isEqual(item.dueDate, date)) return;
+
+      moveTask(item.id, date);
+      item.dueDate = date;
+    },
+  });
+
+  return (
+    <DayColumn
+      date={date}
+      tasks={tasks}
+      ref={drop}
+      blocked={isOver && isInPast}
+      faded={isInPast}
+    />
+  );
 };
 
-export default DayColumn;
+export default DroppableDayColumn;

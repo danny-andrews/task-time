@@ -1,9 +1,11 @@
-import { range } from "ramda";
+import * as R from "ramda";
 import { addDays, subDays } from "date-fns";
 import { serializeDate } from "./dates";
 
 const DateWindow = (startDate, size) => {
-  const dates = range(0, size).map((i) => serializeDate(addDays(startDate, i)));
+  const dates = R.range(0, size).map((i) =>
+    serializeDate(addDays(startDate, i))
+  );
 
   const nextN = (n) => DateWindow(addDays(startDate, n), size);
   const next = () => nextN(size);

@@ -15,17 +15,11 @@ const DraggableTask = ({ task, index, onTaskMove, onDragStart, onDragEnd }) => {
       id: task.id,
       dueDate: task.dueDate,
     },
-    begin: () => {
-      onDragStart();
-    },
-    end: () => {
-      onDragEnd();
-    },
-    collect: (monitor) => {
-      return {
-        draggedItem: monitor.getItem() || { id: null },
-      };
-    },
+    begin: onDragStart,
+    end: onDragEnd,
+    collect: (monitor) => ({
+      draggedItem: monitor.getItem() || { id: null },
+    }),
   });
   const isDragging = draggedItem.id === task.id;
 

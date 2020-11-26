@@ -1,5 +1,5 @@
 import React from "react";
-import { always as alvvays } from "ramda";
+import * as R from "ramda";
 import { getTasksForDates } from "../../shared/model";
 import DayColumns from "../../components/DayColumns";
 import Header from "../../components/Header";
@@ -13,11 +13,11 @@ const Index = () => {
   const tasks = useTasksByDisplayDate();
 
   const dateWindowSize = useDevice(500).case({
-    Phone: alvvays(1),
-    Tablet: alvvays(2),
-    TabletLarge: alvvays(3),
-    Desktop: alvvays(4),
-    DesktopLarge: alvvays(5),
+    Phone: R.always(1),
+    Tablet: R.always(2),
+    TabletLarge: R.always(3),
+    Desktop: R.always(4),
+    DesktopLarge: R.always(5),
   });
 
   const [

@@ -1,5 +1,5 @@
 import React, { forwardRef, Children, cloneElement } from "react";
-import { isEmpty, isNil } from "ramda";
+import * as R from "ramda";
 import cn from "classnames";
 import styles from "./styles.module.css";
 
@@ -14,7 +14,7 @@ const ButtonGroup = (
 
     return cloneElement(child, {
       className: cn(styles.button, childProps.className),
-      isDisabled: isNil(childProps.isDisabled)
+      isDisabled: R.isNil(childProps.isDisabled)
         ? isDisabled
         : childProps.isDisabled,
     });
@@ -23,7 +23,7 @@ const ButtonGroup = (
   return (
     <Tag ref={ref} className={classes} style={style}>
       {Children.toArray(children)
-        .filter((child) => !isEmpty(child))
+        .filter((child) => !R.isEmpty(child))
         .map(transformChild)}
     </Tag>
   );

@@ -1,8 +1,9 @@
 import { useContext } from "react";
-import { parseISO } from "date-fns";
-import { map, sum, pipe, reduce, assoc, append, propOr, last } from "ramda";
+import * as R from "ramda";
 import { BackendContext } from "../shared/contexts";
 import { serializeDate } from "../shared/dates";
+import { curry2, curry3 } from "../shared/util";
+import { getTasksByDueDate, TaskModel } from "../shared/model";
 import useObservable from "./use-observable";
 
 const DIFFICULTIES = [
@@ -11,49 +12,30 @@ const DIFFICULTIES = [
   { id: "HARD", name: "hard", value: 3 },
 ];
 
-const deserializeTask = (task) => ({
-  ...task,
-  createdAt: parseISO(task.createdAt),
-  originalDueDate: parseISO(task.originalDueDate),
-  dueDate: parseISO(task.dueDate),
-});
-
-const EntityTypes = {
-  TASKS: {
-    key: "tasks",
-    deserialize: deserializeTask,
-  },
-};
-
-const tasksByDisplayDate = pipe(
-  reduce(
-    (acc, task) =>
-      assoc(
-        serializeDate(task.dueDate),
-        append(task, propOr([], serializeDate(task.dueDate), acc)),
-        acc
-      ),
-    {}
-  ),
-  map((tasks) => tasks.sort((a, b) => a.position - b.position))
-);
-
 export default () => {
-  const { getEntities, createEntity, updateEntity, deleteEntity } = useContext(
-    BackendContext
+  const backend = useContext(BackendContext);
+
+  const getEntities = ({ key, deserialize }) =>
+    backend.getEntities(key).map(R.map(deserialize));
+
+  const createEntity = curry2(({ key, serialize }, entity) =>
+    backend.createEntity(key, serialize(entity))
   );
+
+  const updateEntity = curry3(({ key, serialize }, id, updates) =>
+    backend.updateEntity(key, id, serialize(updates))
+  );
+
+  const deleteEntity = curry2(({ key }, id) => backend.deleteEntity(key, id));
 
   const getDifficulty = (id) =>
     DIFFICULTIES.find((difficulty) => difficulty.id === id);
 
   const getDifficulties = () => DIFFICULTIES;
 
-  const getEntities_ = ({ key, deserialize }) =>
-    getEntities(key).map(map(deserialize));
+  const getTasks = () => getEntities(TaskModel);
 
-  const getTasks = () => getEntities_(EntityTypes.TASKS);
-
-  const getTasksByDisplayDate = () => getTasks().map(tasksByDisplayDate);
+  const getTasksByDisplayDate = () => getTasks().map(getTasksByDueDate);
 
   const useTasks = () => useObservable([], getTasks());
 
@@ -61,32 +43,28 @@ export default () => {
     useObservable([], getTasksByDisplayDate());
 
   const createTask = ({ text, dueDate, isImportant, difficulty, position }) =>
-    createEntity(EntityTypes.TASKS.key, {
-      createdAt: serializeDate(Date.now()),
-      originalDueDate: serializeDate(dueDate),
+    createEntity(TaskModel, {
+      createdAt: Date.now(),
+      originalDueDate: dueDate,
       text,
-      dueDate: serializeDate(dueDate),
+      dueDate: dueDate,
       isComplete: false,
       difficulty,
       isImportant,
       position: position + 1,
     });
 
-  const updateTask = (id, updates) =>
-    updateEntity(EntityTypes.TASKS.key, id, updates);
+  const updateTask = updateEntity(TaskModel);
 
-  const deleteTask = (id) => deleteEntity(EntityTypes.TASKS.key, id);
+  const deleteTask = deleteEntity(TaskModel);
 
   const toggleTask = (task) =>
     updateTask(task.id, { isComplete: !task.isComplete });
 
   const refreshTask = (task) =>
-    updateTask(task.id, {
-      originalDueDate: serializeDate(task.dueDate),
-    });
+    updateTask(task.id, { originalDueDate: task.dueDate });
 
-  const moveTask = (id, newDueDate) =>
-    updateTask(id, { dueDate: serializeDate(newDueDate) });
+  const moveTask = (id, newDueDate) => updateTask(id, { dueDate: newDueDate });
 
   const toPromise = (observable) =>
     new Promise((resolve) => {
@@ -107,27 +85,25 @@ export default () => {
           : {
               left: tasks[newIndex],
               right: tasks[newIndex + 1] || {
-                position: last(tasks).position,
+                position: R.last(tasks).position,
               },
             };
       const newPosition = (left.position + right.position) / 2;
 
       updateTask(id, {
         position: newPosition,
-        dueDate: serializeDate(newDueDate),
+        dueDate: newDueDate,
       });
     });
   };
 
-  const getDifficultyForTasks = (tasks) => {
-    return pipe(
-      map((task) => getDifficulty(task.difficulty).value),
-      sum
-    )(tasks);
-  };
+  const getTotalDifficulty = R.pipe(
+    R.map((task) => getDifficulty(task.difficulty).value),
+    R.sum
+  );
 
   return {
-    getDifficultyForTasks,
+    getTotalDifficulty,
     getDifficulties,
     getDifficulty,
     useTasks,

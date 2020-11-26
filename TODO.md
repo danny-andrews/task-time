@@ -9,8 +9,7 @@
 ## Features
 
 - Add edit functionality.
-- Add new todos to top of list.
-- Add feature for displaying suggested difficulty in list.
+- Add feature for displaying target total difficulty in list.
 - Add Go-to-date button in left nav.
 - Add keyboard support for reordering and moving tasks.
 
@@ -24,7 +23,7 @@
 
 ## Refactoring
 
-- Inject current day through React context.
+- Wrap yDoc to return kefir atoms instead of plain observables.
 
 ## Infrastructure
 

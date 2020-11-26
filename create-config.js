@@ -10,7 +10,7 @@ import json from "@rollup/plugin-json";
 import livereload from "rollup-plugin-livereload";
 import analyze from "rollup-plugin-analyzer";
 import brotli from "rollup-plugin-brotli";
-import { map, isNil, pipe, toPairs, fromPairs } from "ramda";
+import * as R from "ramda";
 
 const htmlTemplate = ({ files, publicPath }) => {
   return `
@@ -46,10 +46,10 @@ const htmlTemplate = ({ files, publicPath }) => {
 };
 
 const mapObj = (transformKey, transformValue) =>
-  pipe(
-    toPairs,
-    map(([key, value]) => [transformKey(key), transformValue(value)]),
-    fromPairs
+  R.pipe(
+    R.toPairs,
+    R.map(([key, value]) => [transformKey(key), transformValue(value)]),
+    R.fromPairs
   );
 
 export default ({ isProd, envVars, outputDir, analyzeBuild }, config) => {
@@ -73,7 +73,7 @@ export default ({ isProd, envVars, outputDir, analyzeBuild }, config) => {
       ...output,
     },
     plugins: [
-      ...(isNil(envVars) ? [] : [replace(envVarObj)]),
+      ...(R.isNil(envVars) ? [] : [replace(envVarObj)]),
       commonjs(),
       resolve({ browser: true }),
       babel({ babelHelpers: "bundled", exclude: "node_modules/**" }),

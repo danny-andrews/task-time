@@ -13,7 +13,7 @@ export default (debounceTime = 0) => {
     const handleResize = () => {
       setWindowSize(getSize());
     };
-    const handleResizeDebounced = debounce(handleResize, debounceTime);
+    const handleResizeDebounced = debounce(debounceTime, handleResize);
 
     window.addEventListener("resize", handleResizeDebounced);
 

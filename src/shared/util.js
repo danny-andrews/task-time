@@ -1,8 +1,15 @@
-import { map, addIndex, always, pipe, fromPairs, toPairs } from "ramda";
+import * as R from "ramda";
 
-export const mapIndexed = addIndex(map);
+// List
+export const mapIndexed = R.addIndex(R.map);
 
-export const debounce = (func, duration) => {
+// Function
+export const curry2 = R.curryN(2);
+export const curry3 = R.curryN(3);
+
+export const noop = R.always;
+
+export const debounce = (duration, func) => {
   let timeout;
 
   return (...args) => {
@@ -16,44 +23,20 @@ export const debounce = (func, duration) => {
   };
 };
 
-export const throttle = (func, duration) => {
-  let shouldWait = false;
-
-  return (...args) => {
-    if (!shouldWait) {
-      func(...args);
-      shouldWait = true;
-      setTimeout(() => {
-        shouldWait = false;
-      }, duration);
-    }
-  };
-};
-
-export const titleCase = (str) => {
-  if (str === "") return str;
-
-  return str[0].toUpperCase() + str.slice(1).toLowerCase();
-};
-
-export const assert = (predicate, message) => {
-  if (!predicate) throw new Error(message);
-};
-
-let counter = 0;
-export const uniqueId = (prefix = "") => `${prefix}${counter++}`;
-
-export const noop = always;
-
+// Object
 export const toObjBy = (fn) =>
-  pipe(
-    map((val) => [fn(val), val]),
-    fromPairs
+  R.pipe(
+    R.map((val) => [fn(val), val]),
+    R.fromPairs
   );
 
 export const mapObj = (transformKey, transformValue) =>
-  pipe(
-    toPairs,
-    map(([key, value]) => [transformKey(key), transformValue(value)]),
-    fromPairs
+  R.pipe(
+    R.toPairs,
+    R.map(([key, value]) => [transformKey(key), transformValue(value)]),
+    R.fromPairs
   );
+
+// Other
+let counter = 0;
+export const uniqueId = (prefix = "") => `${prefix}${counter++}`;

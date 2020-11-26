@@ -7,15 +7,11 @@ import { useBackend } from "../../hooks";
 const Tasks = ({ tasks }) => {
   const { changeTaskPosition } = useBackend();
 
-  const handleTaskMove = ({ id, newIndex, newDueDate }) => {
-    changeTaskPosition({ id, newIndex, newDueDate });
-  };
-  const [dragInProgress, setDragInProgress] = useState(false);
-
   // HACK: Remove hover styles for draggable items while dragging is in progress
   // in order to get around a browser bug.
   // See https://bugs.chromium.org/p/chromium/issues/detail?id=410328#c5 for
   // more info.
+  const [dragInProgress, setDragInProgress] = useState(false);
   const classes = cn(styles.root, {
     [styles["ax-hover-styles"]]: dragInProgress,
   });
@@ -27,7 +23,7 @@ const Tasks = ({ tasks }) => {
           key={task.id}
           task={task}
           index={i}
-          onTaskMove={handleTaskMove}
+          onTaskMove={changeTaskPosition}
           onDragStart={() => setDragInProgress(true)}
           onDragEnd={() => setDragInProgress(false)}
         />
