@@ -24,5 +24,15 @@ export default createConfig(
       },
     },
     external: ["crypto"],
+    onwarn: (warning) => {
+      const IGNORED_CIRCULAR = ["node_modules/lib0"];
+      if (
+        warning.code === "CIRCULAR_DEPENDENCY" &&
+        IGNORED_CIRCULAR.some((d) => warning.importer.includes(d))
+      ) {
+        return;
+      }
+      throw Error(warning.message);
+    },
   }
 );
