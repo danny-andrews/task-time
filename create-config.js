@@ -55,7 +55,6 @@ const mapObj = (transformKey, transformValue) =>
 export default ({ isProd, envVars, outputDir, analyzeBuild }, config) => {
   const isDev = !isProd;
   const hashAssets = isProd;
-  const minifyAssets = isProd;
   const envVarObj = mapObj(
     (key) => `process.env.${key}`,
     JSON.stringify
@@ -77,10 +76,11 @@ export default ({ isProd, envVars, outputDir, analyzeBuild }, config) => {
       commonjs(),
       resolve({ browser: true }),
       babel({ babelHelpers: "bundled", exclude: "node_modules/**" }),
-      ...(minifyAssets ? [terser()] : []),
+      ...(isProd ? [terser()] : []),
       postcss({
         autoModules: true,
         extract: true,
+        minimize: true,
         modules: {
           // Chances of collision for a 6-digit, base52 string is less than one
           // in a million (~0.01%), assuming you have no more than 2000 distinct
@@ -89,7 +89,6 @@ export default ({ isProd, envVars, outputDir, analyzeBuild }, config) => {
             ? "[hash:base52:6]"
             : "[folder]_[local]_[hash:base52:2]",
         },
-        minimize: minifyAssets,
       }),
       html({
         template: htmlTemplate,
