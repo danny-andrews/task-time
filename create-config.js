@@ -9,7 +9,6 @@ import serve from "rollup-plugin-serve";
 import json from "@rollup/plugin-json";
 import livereload from "rollup-plugin-livereload";
 import analyze from "rollup-plugin-analyzer";
-import brotli from "rollup-plugin-brotli";
 import * as R from "ramda";
 
 const htmlTemplate = ({ files, publicPath }) => {
@@ -96,7 +95,6 @@ export default ({ isProd, envVars, outputDir, analyzeBuild }, config) => {
       }),
       json(),
       ...(analyzeBuild ? [analyze({ summaryOnly: true })] : []),
-      ...(isProd ? [brotli()] : []),
       ...(isDev ? [serve(outputDir)] : []),
       ...(isDev ? [livereload({ watch: outputDir })] : []),
       ...plugins,
