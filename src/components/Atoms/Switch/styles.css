@@ -4,7 +4,7 @@
 
   & .react-toggle-thumb {
     background-color: var(--color-text);
-    border: var(--border-size) solid var(--color-accent-2);
+    border: var(--border-size) solid var(--color-accent-1);
     box-shadow: none !important;
     transition: left 0.25s ease, background-color 0.25s ease, border 0.25s ease;
   }

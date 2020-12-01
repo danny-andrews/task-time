@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
+import flyd from "flyd";
 
 export default (initialValue, observable) => {
   const [value, setValue] = useState(initialValue);
 
   useEffect(() => {
-    const cb = (newValue) => {
+    const result = flyd.on((newValue) => {
       setValue(newValue);
-    };
-    observable.onValue(cb);
+    }, observable);
 
-    return () => observable.offValue(cb);
+    return () => result.end(true);
   }, []);
 
   return value;

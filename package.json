@@ -20,6 +20,7 @@
     "classnames": "^2.2.6",
     "constant-case": "^3.0.3",
     "date-fns": "^2.15.0",
+    "flyd": "^0.2.8",
     "focus-visible": "^5.1.0",
     "formik": "^2.1.5",
     "kefir": "^3.8.7",

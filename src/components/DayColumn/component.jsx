@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef } from "react";
+import React, { useRef, forwardRef, useContext } from "react";
 import cn from "classnames";
 import { useDrop } from "react-dnd";
 import { isToday, isEqual } from "date-fns";
@@ -8,10 +8,10 @@ import styles from "./styles.module.css";
 import { DND_IDS } from "../../shared/constants";
 import { formatHumanReadable, isPastDate } from "../../shared/dates";
 import { H, Disclosure } from "../Atoms";
-import { useBackend } from "../../hooks";
+import { PersistenceContext } from "../../shared/contexts";
 
 const DayColumn = forwardRef(({ date, tasks, blocked, faded }, ref) => {
-  const { createTask, getTotalDifficulty } = useBackend();
+  const { createTask, getTotalDifficulty } = useContext(PersistenceContext);
   const isInPast = isPastDate(date);
 
   const classes = cn(styles.root, { [styles["accent"]]: isToday(date) });
@@ -63,7 +63,7 @@ const DayColumn = forwardRef(({ date, tasks, blocked, faded }, ref) => {
 });
 
 const DroppableDayColumn = ({ date, tasks }) => {
-  const { moveTask } = useBackend();
+  const { moveTask } = useContext(PersistenceContext);
   const isInPast = isPastDate(date);
 
   const [{ isOver }, drop] = useDrop({

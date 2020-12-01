@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import cn from "classnames";
 import DraggableTask from "../DraggableTask";
 import styles from "./styles.module.css";
-import { useBackend } from "../../hooks";
+import { PersistenceContext } from "../../shared/contexts";
 
 const Tasks = ({ tasks }) => {
-  const { changeTaskPosition } = useBackend();
+  const { changeTaskPosition } = useContext(PersistenceContext);
 
   // HACK: Remove hover styles for draggable items while dragging is in progress
   // in order to get around a browser bug.

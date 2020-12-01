@@ -1,7 +1,7 @@
-import React from "react";
-import { useBackend } from "../../hooks";
+import React, { useContext } from "react";
 import { getTaskStaleness } from "../../shared/model";
 import taskComponentFactory from "./component.jsx";
+import { PersistenceContext } from "../../shared/contexts";
 
 const Task = ({ task, className }) => {
   const {
@@ -13,7 +13,9 @@ const Task = ({ task, className }) => {
     originalDueDate,
     dueDate,
   } = task;
-  const { toggleTask, refreshTask, deleteTask, getDifficulty } = useBackend();
+  const { toggleTask, refreshTask, deleteTask, getDifficulty } = useContext(
+    PersistenceContext
+  );
   const handleTaskClick = () => toggleTask(task);
   const handleRefreshClick = () => refreshTask(task);
   const handleDeleteClick = () => deleteTask(task.id);

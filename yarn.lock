@@ -2667,6 +2667,13 @@ flatted@^2.0.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-2.0.2.tgz#4575b21e2bcee7434aa9be662f4b7b5f9c2b5138"
   integrity sha512-r5wGx7YeOwNWNlCA0wQ86zKyDLMQr+/RB8xy74M4hTphfmjlijTSSXGuH8rnvKZnfT9i+75zmd8jcKdMR4O6jA==
 
+flyd@^0.2.8:
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/flyd/-/flyd-0.2.8.tgz#26b606a051431ec275dd7ca2cb5fb61756fcd7f1"
+  integrity sha512-PVr++d+cOkf//kVIm66aTgmmrHNAhqNH9TIZQzunrVL9GaW7pMFTuLcaGkTV9z4bkvVWPB1VGuxjGFFfQUZNwA==
+  dependencies:
+    ramda "^0.25.0"
+
 focus-visible@^5.1.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/focus-visible/-/focus-visible-5.2.0.tgz#3a9e41fccf587bd25dcc2ef045508284f0a4d6b3"
@@ -4643,6 +4650,11 @@ ramda@^0.24.0:
   version "0.24.1"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.24.1.tgz#c3b7755197f35b8dc3502228262c4c91ddb6b857"
   integrity sha1-w7d1UZfzW43DUCIoJixMkd22uFc=
+
+ramda@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
+  integrity sha512-GXpfrYVPwx3K7RQ6aYT8KPS8XViSXUVJT1ONhoKPE9VAleW42YE+U+8VEyGWt41EnEQW7gwecYJriTI0pKoecQ==
 
 ramda@^0.27.0:
   version "0.27.1"

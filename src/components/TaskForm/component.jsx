@@ -1,11 +1,16 @@
-import React, { forwardRef, useImperativeHandle, useRef } from "react";
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useContext,
+} from "react";
 import { Formik, Form } from "formik";
 import * as R from "ramda";
 import { titleCase } from "title-case";
 import styles from "./styles.module.css";
 import { TextInput, PrimaryButton, Slider, Switch } from "../Atoms";
 import { mapIndexed } from "../../shared/util";
-import { useBackend } from "../../hooks";
+import { PersistenceContext } from "../../shared/contexts";
 
 const sliderMarkersFromDifficulties = mapIndexed(({ name }, i) => ({
   value: i,
@@ -13,7 +18,7 @@ const sliderMarkersFromDifficulties = mapIndexed(({ name }, i) => ({
 }));
 
 const TaskForm = ({ onSubmit }, ref) => {
-  const difficulties = useBackend().getDifficulties();
+  const difficulties = useContext(PersistenceContext).getDifficulties();
 
   // HACK: We must call `focus` imperatively because the only way to bring up
   // the virtual keyboard on mobile devices is to focus an element within a

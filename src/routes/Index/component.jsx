@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import * as R from "ramda";
 import { getTasksForDates } from "../../shared/model";
 import DayColumns from "../../components/DayColumns";
@@ -6,10 +6,11 @@ import Header from "../../components/Header";
 import styles from "./styles.module.css";
 import LeftNav from "../../components/LeftNav";
 import RightNav from "../../components/RightNav";
-import { useBackend, useDevice, useDateWindow } from "../../hooks";
+import { useDevice, useDateWindow } from "../../hooks";
+import { PersistenceContext } from "../../shared/contexts";
 
 const Index = () => {
-  const { useTasksByDisplayDate } = useBackend();
+  const { useTasksByDisplayDate } = useContext(PersistenceContext);
   const tasks = useTasksByDisplayDate();
 
   const dateWindowSize = useDevice(500).case({

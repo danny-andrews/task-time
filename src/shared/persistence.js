@@ -1,10 +1,8 @@
-import { useContext } from "react";
 import * as R from "ramda";
-import { BackendContext } from "../shared/contexts";
-import { serializeDate } from "../shared/dates";
-import { curry2, curry3 } from "../shared/util";
-import { getTasksByDueDate, TaskModel } from "../shared/model";
-import useObservable from "./use-observable";
+import { serializeDate } from "./dates";
+import { curry2, curry3 } from "./util";
+import { getTasksByDueDate, TaskModel } from "./model";
+import useObservable from "../hooks/use-observable";
 
 const DIFFICULTIES = [
   { id: "EASY", name: "easy", value: 1 },
@@ -12,9 +10,7 @@ const DIFFICULTIES = [
   { id: "HARD", name: "hard", value: 3 },
 ];
 
-export default () => {
-  const backend = useContext(BackendContext);
-
+export default (backend) => {
   const getEntities = ({ key, deserialize }) =>
     backend.getEntities(key).map(R.map(deserialize));
 
@@ -66,34 +62,28 @@ export default () => {
 
   const moveTask = (id, newDueDate) => updateTask(id, { dueDate: newDueDate });
 
-  const toPromise = (observable) =>
-    new Promise((resolve) => {
-      observable.onValue(resolve);
-    });
-
   const changeTaskPosition = ({ id, newDueDate, newIndex }) => {
     const dueDate = serializeDate(newDueDate);
-    toPromise(getTasksByDisplayDate()).then((tasksByDate) => {
-      const tasks = tasksByDate[dueDate];
-      const oldIndex = tasks.findIndex((task) => task.id === id);
-      const { left, right } =
-        oldIndex > newIndex
-          ? {
-              left: tasks[newIndex - 1] || { position: 0 },
-              right: tasks[newIndex],
-            }
-          : {
-              left: tasks[newIndex],
-              right: tasks[newIndex + 1] || {
-                position: R.last(tasks).position,
-              },
-            };
-      const newPosition = (left.position + right.position) / 2;
+    const tasksByDate = getTasksByDisplayDate()();
+    const tasks = tasksByDate[dueDate];
+    const oldIndex = tasks.findIndex((task) => task.id === id);
+    const { left, right } =
+      oldIndex > newIndex
+        ? {
+            left: tasks[newIndex - 1] || { position: 0 },
+            right: tasks[newIndex],
+          }
+        : {
+            left: tasks[newIndex],
+            right: tasks[newIndex + 1] || {
+              position: R.last(tasks).position,
+            },
+          };
+    const newPosition = (left.position + right.position) / 2;
 
-      updateTask(id, {
-        position: newPosition,
-        dueDate: newDueDate,
-      });
+    updateTask(id, {
+      position: newPosition,
+      dueDate: newDueDate,
     });
   };
 

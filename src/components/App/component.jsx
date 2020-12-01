@@ -3,17 +3,19 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Index from "../../routes/Index";
 import { SyncBackend } from "../../shared/backends";
-import { BackendContext } from "../../shared/contexts";
+import { PersistenceContext } from "../../shared/contexts";
+import CreatePersistence from "../../shared/persistence";
 
 const backend = SyncBackend();
+const persistence = CreatePersistence(backend);
 
 const App = () => (
   <StrictMode>
-    <BackendContext.Provider value={backend}>
+    <PersistenceContext.Provider value={persistence}>
       <DndProvider backend={HTML5Backend}>
         <Index />
       </DndProvider>
-    </BackendContext.Provider>
+    </PersistenceContext.Provider>
   </StrictMode>
 );
 

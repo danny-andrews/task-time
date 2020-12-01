@@ -2,7 +2,7 @@
 import * as Y from "yjs";
 import { WebsocketProvider } from "y-websocket";
 import { v4 as uuidv4 } from "uuid";
-import Kefir from "kefir";
+import flyd from "flyd";
 import { setMany, createMap } from "./util";
 
 const TEST_USER_ID = "test-user-3";
@@ -25,21 +25,22 @@ export default () => {
 
   const getEntity = (type, id) => {
     const yEntity = getYEntity(type, id);
+    const property = flyd.stream(yEntity.toJSON());
+    yEntity.observe(() => {
+      property(yEntity.toJSON());
+    });
 
-    return Kefir.stream((emitter) => {
-      yEntity.observe(() => {
-        emitter.emit(yEntity.toJSON());
-      });
-    }).toProperty(() => yEntity.toJSON());
+    return property;
   };
 
   const getEntities = (type) => {
     const yEntities = doc.getArray(type);
-    return Kefir.stream((emitter) => {
-      yEntities.observeDeep(() => {
-        emitter.emit(yEntities.toJSON());
-      });
-    }).toProperty(() => yEntities.toJSON());
+    const property = flyd.stream(yEntities.toJSON());
+    yEntities.observeDeep(() => {
+      property(yEntities.toJSON());
+    });
+
+    return property;
   };
 
   const createEntity = (type, attrs) => {
