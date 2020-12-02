@@ -9,7 +9,9 @@ export default (initialValue, observable) => {
       setValue(newValue);
     }, observable);
 
-    return () => result.end(true);
+    return () => {
+      result.end(true);
+    };
   }, []);
 
   return value;

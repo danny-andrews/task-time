@@ -29,14 +29,11 @@ export default (backend) => {
 
   const getDifficulties = () => DIFFICULTIES;
 
-  const getTasks = () => getEntities(TaskModel);
+  const tasks = getEntities(TaskModel);
 
-  const getTasksByDisplayDate = () => getTasks().map(getTasksByDueDate);
+  const tasksByDisplayDate = tasks.map(getTasksByDueDate);
 
-  const useTasks = () => useObservable([], getTasks());
-
-  const useTasksByDisplayDate = () =>
-    useObservable([], getTasksByDisplayDate());
+  const useTasksByDisplayDate = () => useObservable([], tasksByDisplayDate);
 
   const createTask = ({ text, dueDate, isImportant, difficulty, position }) =>
     createEntity(TaskModel, {
@@ -64,7 +61,7 @@ export default (backend) => {
 
   const changeTaskPosition = ({ id, newDueDate, newIndex }) => {
     const dueDate = serializeDate(newDueDate);
-    const tasksByDate = getTasksByDisplayDate()();
+    const tasksByDate = tasksByDisplayDate();
     const tasks = tasksByDate[dueDate];
     const oldIndex = tasks.findIndex((task) => task.id === id);
     const { left, right } =
@@ -96,7 +93,6 @@ export default (backend) => {
     getTotalDifficulty,
     getDifficulties,
     getDifficulty,
-    useTasks,
     useTasksByDisplayDate,
     updateTask,
     deleteTask,
