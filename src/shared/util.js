@@ -23,6 +23,19 @@ export const debounce = (duration, func) => {
   };
 };
 
+export const throttle = (duration, func) => {
+  let shouldWait = false;
+  return (...args) => {
+    if (!shouldWait) {
+      func(...args);
+      shouldWait = true;
+      setTimeout(() => {
+        shouldWait = false;
+      }, duration);
+    }
+  };
+};
+
 // Object
 export const toObjBy = (fn) =>
   R.pipe(
