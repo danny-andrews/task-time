@@ -1,6 +1,9 @@
 .root {
   composes: inner-spacing-small from "../../../css/util.module.css";
+  display: flex;
   flex: 0;
+  flex-direction: column;
+  justify-content: center;
   padding: var(--spacing-small);
 }
 
