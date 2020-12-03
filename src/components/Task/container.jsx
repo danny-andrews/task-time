@@ -45,7 +45,7 @@ const Task = ({ task, className }) => {
   };
   const handleSave = ({ text }) => {
     setIsEditing(false);
-    updateTask(task.id, { text });
+    updateTask(task.id, { text: text.trim() });
   };
 
   const TaskComponent = taskComponentFactory({
