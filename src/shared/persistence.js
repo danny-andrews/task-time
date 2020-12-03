@@ -1,5 +1,5 @@
 import * as R from "ramda";
-import { serializeDate } from "./dates";
+import { serializeDate, isPastDate } from "./dates";
 import { curry2, curry3 } from "./util";
 import { getTasksByDueDate, TaskModel } from "./model";
 import useObservable from "../hooks/use-observable";
@@ -29,7 +29,17 @@ export default (backend) => {
 
   const getDifficulties = () => DIFFICULTIES;
 
-  const tasks = getEntities(TaskModel);
+  const updateTask = updateEntity(TaskModel);
+
+  const rolloverOverdueTasks = R.map((task) => {
+    if (!task.isComplete && isPastDate(task.dueDate)) {
+      updateTask(task.id, { dueDate: new Date() });
+    }
+
+    return task;
+  });
+
+  const tasks = getEntities(TaskModel).map(rolloverOverdueTasks);
 
   const tasksByDisplayDate = tasks.map(getTasksByDueDate);
 
@@ -37,7 +47,7 @@ export default (backend) => {
 
   const createTask = ({ text, dueDate, isImportant, difficulty, position }) =>
     createEntity(TaskModel, {
-      createdAt: Date.now(),
+      createdAt: new Date(),
       originalDueDate: dueDate,
       text,
       dueDate: dueDate,
@@ -46,8 +56,6 @@ export default (backend) => {
       isImportant,
       position: position + 1,
     });
-
-  const updateTask = updateEntity(TaskModel);
 
   const deleteTask = deleteEntity(TaskModel);
 
