@@ -6,4 +6,5 @@ export { default as Home } from "./Home.jsx";
 export { default as LeftArrow } from "./LeftArrow.jsx";
 export { default as Refresh } from "./Refresh.jsx";
 export { default as RightArrow } from "./RightArrow.jsx";
+export { default as Save } from "./Save.jsx";
 export { default as Trash } from "./Trash.jsx";

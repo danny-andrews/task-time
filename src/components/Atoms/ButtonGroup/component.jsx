@@ -14,9 +14,9 @@ const ButtonGroup = (
 
     return cloneElement(child, {
       className: cn(styles.button, childProps.className),
-      isDisabled: R.isNil(childProps.isDisabled)
-        ? isDisabled
-        : childProps.isDisabled,
+      ...((R.isNil(childProps.isDisabled) ? isDisabled : childProps.isDisabled)
+        ? { isDisabled: true }
+        : {}),
     });
   };
 

@@ -40,7 +40,8 @@
 
 .refresh-icon,
 .edit-icon,
-.trash-icon {
+.trash-icon,
+.save-icon {
   composes: icon;
 }
 
@@ -55,7 +56,7 @@
 }
 
 .staleness,
-.edit {
+.secondary {
   flex-basis: 15%;
 }
 
@@ -63,6 +64,16 @@
   flex: 1;
 }
 
-.edit {
+.secondary {
   text-decoration: underline;
+}
+
+.form {
+  align-items: center;
+  display: flex;
+  padding: 0 var(--spacing-tiny);
+}
+
+.form-el {
+  width: 100%;
 }

@@ -4,7 +4,14 @@ import styles from "./styles.module.css";
 
 const Button = forwardRef(
   (
-    { className, children, variation = "primary", isDisabled = false, ...rest },
+    {
+      className,
+      children,
+      variation = "primary",
+      type = "button",
+      isDisabled = false,
+      ...rest
+    },
     ref
   ) => {
     const classes = cn(className, styles[variation], {
@@ -14,7 +21,7 @@ const Button = forwardRef(
 
     return (
       <button
-        type="button"
+        type={type}
         className={classes}
         ref={ref}
         tabIndex={tabIndex}

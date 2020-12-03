@@ -1,23 +1,17 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import cn from "classnames";
 import styles from "./styles.module.css";
-import { PrimaryButton, IconButton, ButtonGroup } from "../Atoms";
-import { Refresh, Edit, Trash } from "../Icons";
-import { isPastDate } from "../../shared/dates";
+import { PrimaryButton, IconButton, ButtonGroup, TextInput } from "../Atoms";
+import { Refresh, Edit, Trash, Save } from "../Icons";
+import { Formik, Form } from "formik";
 
 // Base height of component (to be used as rem value).
 const BASE_HEIGHT = 2.5;
 
-// Base task component. This isn't meant to be used directly, hence why it is
-// not exported. A task can be in one of three states: Incomplete, Complete, and
+// Base task component. This isn't meant to be used directly, hence it is not
+// exported. A task can be in one of three states: Incomplete, Complete, and
 // Locked. These are codified in variation components defined below.
 const Task = ({
-  // Render control
-  isDisabled = false,
-  disableRefresh = false,
-  secondaryAction,
-  className,
-
   // Task values
   text,
   difficulty,
@@ -28,22 +22,22 @@ const Task = ({
   // Events
   onTaskClick,
   onRefreshClick,
+
+  // Render control
+  isDisabled = false,
+  disableRefresh = false,
+  primaryAction = (
+    <PrimaryButton
+      aria-label="Complete Task"
+      className={cn(styles.text, { [styles["strike-through"]]: isComplete })}
+      onClick={onTaskClick}
+    >
+      {text}
+    </PrimaryButton>
+  ),
+  secondaryAction,
+  className,
 }) => {
-  const classes = cn(styles.root, className, {
-    [styles["complete"]]: isComplete,
-    [styles["important"]]: isImportant,
-  });
-  const textClasses = cn(styles.text, {
-    [styles["strike-through"]]: isComplete,
-  });
-  const height = difficulty * BASE_HEIGHT + (difficulty - 1);
-
-  // I'm normally against inline styles, but I'm making an exception here
-  // because the css value really is completely dynamic.
-  const style = {
-    height: `${height}rem`,
-  };
-
   const renderStaleness = () => {
     if (staleness <= 0) return null;
 
@@ -63,15 +57,18 @@ const Task = ({
   };
 
   return (
-    <ButtonGroup style={style} className={classes} isDisabled={isDisabled}>
+    <ButtonGroup
+      style={{
+        height: `${difficulty * BASE_HEIGHT + (difficulty - 1)}rem`,
+      }}
+      className={cn(styles.root, className, {
+        [styles["complete"]]: isComplete,
+        [styles["important"]]: isImportant,
+      })}
+      isDisabled={isDisabled}
+    >
       {renderStaleness()}
-      <PrimaryButton
-        aria-label="Complete Task"
-        className={textClasses}
-        onClick={onTaskClick}
-      >
-        {text}
-      </PrimaryButton>
+      {primaryAction}
       {secondaryAction}
     </ButtonGroup>
   );
@@ -86,24 +83,22 @@ export const CompletedActiveTask = ({ onDeleteClick, ...rest }) => (
     disableRefresh
     secondaryAction={
       <IconButton
-        className={styles.edit}
+        className={styles.secondary}
         onClick={onDeleteClick}
         aria-label="Delete task"
       >
         <Trash className={styles["trash-icon"]} />
       </IconButton>
     }
-    onSecondaryActionClick={onDeleteClick}
     {...rest}
   />
 );
 
 export const IncompleteTask = ({ onEditClick, ...rest }) => (
   <Task
-    onSecondaryActionClick={onEditClick}
     secondaryAction={
       <IconButton
-        className={styles.edit}
+        className={styles.secondary}
         onClick={onEditClick}
         aria-label="Edit task"
       >
@@ -114,10 +109,35 @@ export const IncompleteTask = ({ onEditClick, ...rest }) => (
   />
 );
 
-// Factory for getting the proper task variation component for given task data.
-export default (dueDate, isComplete) =>
-  isPastDate(dueDate)
-    ? LockedTask
-    : isComplete
-    ? CompletedActiveTask
-    : IncompleteTask;
+export const EditingTask = ({ onSave, ...rest }) => {
+  const textRef = useRef();
+  useEffect(() => {
+    textRef.current.focus();
+  }, []);
+
+  return (
+    <Formik initialValues={{ text: rest.text }} onSubmit={onSave}>
+      <Form className={styles["form-el"]}>
+        <Task
+          primaryAction={
+            <TextInput
+              innerRef={textRef}
+              name="text"
+              className={cn(styles.text, styles.form)}
+            />
+          }
+          secondaryAction={
+            <IconButton
+              className={styles.secondary}
+              aria-label="Save task"
+              type="submit"
+            >
+              <Save className={styles["save-icon"]} />
+            </IconButton>
+          }
+          {...rest}
+        />
+      </Form>
+    </Formik>
+  );
+};

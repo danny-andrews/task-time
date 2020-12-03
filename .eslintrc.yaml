@@ -31,3 +31,4 @@ rules:
   react/jsx-max-depth: "off"
   react/jsx-sort-props: "off"
   jsx-a11y/label-has-for: "off"
+  react/button-has-type: "off"
