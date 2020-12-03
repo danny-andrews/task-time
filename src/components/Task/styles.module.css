@@ -60,7 +60,7 @@
   flex-basis: 15%;
 }
 
-.text {
+.primary {
   flex: 1;
 }
 
@@ -72,8 +72,5 @@
   align-items: center;
   display: flex;
   padding: 0 var(--spacing-tiny);
-}
-
-.form-el {
   width: 100%;
 }

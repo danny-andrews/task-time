@@ -29,7 +29,7 @@ const Task = ({
   primaryAction = (
     <PrimaryButton
       aria-label="Complete Task"
-      className={cn(styles.text, { [styles["strike-through"]]: isComplete })}
+      className={cn(styles.primary, { [styles["strike-through"]]: isComplete })}
       onClick={onTaskClick}
     >
       {text}
@@ -117,14 +117,12 @@ export const EditingTask = ({ onSave, ...rest }) => {
 
   return (
     <Formik initialValues={{ text: rest.text }} onSubmit={onSave}>
-      <Form className={styles["form-el"]}>
+      <Form>
         <Task
           primaryAction={
-            <TextInput
-              innerRef={textRef}
-              name="text"
-              className={cn(styles.text, styles.form)}
-            />
+            <div className={cn(styles.primary, styles.form)}>
+              <TextInput innerRef={textRef} name="text" />
+            </div>
           }
           secondaryAction={
             <IconButton
