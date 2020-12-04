@@ -13,7 +13,7 @@ const Index = () => {
   const { useTasksByDisplayDate } = useContext(PersistenceContext);
   const tasks = useTasksByDisplayDate();
 
-  const dateWindowSize = useDevice(500).case({
+  const numDaysInView = useDevice(500).case({
     Phone: R.always(1),
     Tablet: R.always(2),
     TabletLarge: R.always(3),
@@ -24,7 +24,7 @@ const Index = () => {
   const [
     dates,
     { goToPrevDay, shiftBackward, goToNextDay, shiftForward, goToCurrentDate },
-  ] = useDateWindow(dateWindowSize);
+  ] = useDateWindow(numDaysInView);
   const tasksInView = getTasksForDates(dates, tasks);
 
   return (
@@ -35,14 +35,14 @@ const Index = () => {
         onLeftArrowClick={goToPrevDay}
         onDoubleLeftArrowClick={shiftBackward}
         onHomeClick={goToCurrentDate}
-        numDaysInView={dateWindowSize}
+        numDaysInView={numDaysInView}
       />
       <DayColumns className={styles["main"]} tasksByDay={tasksInView} />
       <RightNav
         className={styles["right-nav"]}
         onRightArrowClick={goToNextDay}
         onDoubleRightArrowClick={shiftForward}
-        numDaysInView={dateWindowSize}
+        numDaysInView={numDaysInView}
       />
     </section>
   );

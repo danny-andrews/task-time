@@ -12,12 +12,14 @@ const RightNav = ({
     <IconButton onClick={onRightArrowClick} aria-label="Shift forward one day">
       <RightArrow />
     </IconButton>
-    <IconButton
-      onClick={onDoubleRightArrowClick}
-      aria-label={`Shift forward ${numDaysInView} days`}
-    >
-      <DoubleRightArrow />
-    </IconButton>
+    {numDaysInView > 1 && (
+      <IconButton
+        onClick={onDoubleRightArrowClick}
+        aria-label={`Shift forward ${numDaysInView} days`}
+      >
+        <DoubleRightArrow />
+      </IconButton>
+    )}
   </VerticalNav>
 );
 
