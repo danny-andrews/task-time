@@ -39,7 +39,7 @@ export const getTasksByDueDate = R.pipe(
 export const getTasksForDates = (dates, tasks) =>
   dates.map((date) => ({
     date,
-    tasks: R.propOr([], date, tasks),
+    tasks: R.propOr([], serializeDate(date), tasks),
   }));
 
 export const getTaskStaleness = ({ createdAt, originalDueDate }) =>
