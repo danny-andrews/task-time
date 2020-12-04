@@ -2,7 +2,7 @@ import Type from "union-type";
 import { constantCase } from "constant-case";
 import * as R from "ramda";
 import useWindowSize from "./use-window-size";
-import { mapObj } from "../shared/util";
+import { mapObj } from "../shared";
 import breakpoints from "../css/breakpoints.json";
 
 const transformVariable = R.pipe(R.replace(/--breakpoint-/, ""), constantCase);

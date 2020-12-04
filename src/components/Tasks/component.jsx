@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import cn from "classnames";
 import DraggableTask from "../DraggableTask";
 import styles from "./styles.module.css";
-import { PersistenceContext } from "../../shared/contexts";
+import { PersistenceContext } from "../../shared";
 
 const Tasks = ({ tasks }) => {
   const { changeTaskPosition } = useContext(PersistenceContext);

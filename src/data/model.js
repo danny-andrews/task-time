@@ -1,6 +1,6 @@
 import { differenceInDays, parseISO } from "date-fns";
 import * as R from "ramda";
-import { serializeDate } from "./dates";
+import { serializeDate } from "../shared";
 
 const DATE_FIELDS = new Set(["createdAt", "originalDueDate", "dueDate"]);
 export const TaskModel = {

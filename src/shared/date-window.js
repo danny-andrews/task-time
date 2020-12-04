@@ -1,6 +1,6 @@
 import * as R from "ramda";
 import { addDays, subDays } from "date-fns";
-import { serializeDate } from "./dates";
+import { serializeDate } from "./date";
 
 const DateWindow = (startDate, size) => {
   const dates = R.range(0, size).map((i) =>

@@ -9,8 +9,7 @@ import * as R from "ramda";
 import { titleCase } from "title-case";
 import styles from "./styles.module.css";
 import { TextInput, PrimaryButton, Slider, Switch } from "../Atoms";
-import { mapIndexed } from "../../shared/util";
-import { PersistenceContext } from "../../shared/contexts";
+import { mapIndexed, PersistenceContext } from "../../shared";
 
 const sliderMarkersFromDifficulties = mapIndexed(({ name }, i) => ({
   value: i,

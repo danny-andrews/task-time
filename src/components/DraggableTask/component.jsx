@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 import { useDrag, useDrop } from "react-dnd";
 import { isEqual } from "date-fns";
 import Task from "../Task";
-import { DND_IDS } from "../../shared/constants";
+import { DND_IDS } from "../../shared";
 
 const DraggableTask = ({ task, index, onTaskMove, onDragStart, onDragEnd }) => {
   const ref = useRef(null);

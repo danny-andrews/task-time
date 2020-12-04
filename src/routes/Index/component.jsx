@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import * as R from "ramda";
-import { getTasksForDates } from "../../shared/model";
+import { getTasksForDates } from "../../data/model";
 import DayColumns from "../../components/DayColumns";
 import Header from "../../components/Header";
 import styles from "./styles.module.css";
 import LeftNav from "../../components/LeftNav";
 import RightNav from "../../components/RightNav";
 import { useDevice, useDateWindow } from "../../hooks";
-import { PersistenceContext } from "../../shared/contexts";
+import { PersistenceContext } from "../../shared";
 
 const Index = () => {
   const { useTasksByDisplayDate } = useContext(PersistenceContext);

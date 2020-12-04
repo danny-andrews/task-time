@@ -1,6 +1,5 @@
 import * as R from "ramda";
-import { serializeDate, isPastDate } from "./dates";
-import { curry2, curry3 } from "./util";
+import { serializeDate, isPastDate } from "../shared";
 import { getTasksByDueDate, TaskModel } from "./model";
 import useObservable from "../hooks/use-observable";
 
@@ -14,15 +13,17 @@ export default (backend) => {
   const getEntities = ({ key, deserialize }) =>
     backend.getEntities(key).map(R.map(deserialize));
 
-  const createEntity = curry2(({ key, serialize }, entity) =>
+  const createEntity = R.curryN(2, ({ key, serialize }, entity) =>
     backend.createEntity(key, serialize(entity))
   );
 
-  const updateEntity = curry3(({ key, serialize }, id, updates) =>
+  const updateEntity = R.curryN(2, ({ key, serialize }, id, updates) =>
     backend.updateEntity(key, id, serialize(updates))
   );
 
-  const deleteEntity = curry2(({ key }, id) => backend.deleteEntity(key, id));
+  const deleteEntity = R.curryN(2, ({ key }, id) =>
+    backend.deleteEntity(key, id)
+  );
 
   const getDifficulty = (id) =>
     DIFFICULTIES.find((difficulty) => difficulty.id === id);

@@ -2,20 +2,6 @@
 
 ## Development Notes
 
-### Directory Structure
-
-- components - All top-level, app-specific React components.
-  - components/Atoms - All basic components. Basically, anything generic which could be pulled out into a style-guide someday.
-- css - Css files. Duh.
-- hooks - React hooks.
-- routes - Route components.
-- shared - Catch all for utility code.
-  - shared/backends - Pluggable backends to be injected via BackendContext.
-  - shared/util.js - Generic code. Basically anything that operates on plain data structures.
-  - shared/contexts.js - React contexts.
-  - shared/dates.js - Date-related functions.
-  - shared/model.js - App-specific code. Mainly calulations based on current app state.
-
 ### Build System
 
 Module bundler - rollup.js, create-config.js  

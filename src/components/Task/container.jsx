@@ -1,13 +1,12 @@
 import React, { useContext, useState } from "react";
-import { getTaskStaleness } from "../../shared/model";
+import { getTaskStaleness } from "../../data/model";
 import {
   LockedTask,
   CompletedActiveTask,
   IncompleteTask,
   EditingTask,
 } from "./component.jsx";
-import { PersistenceContext } from "../../shared/contexts";
-import { isPastDate } from "../../shared/dates";
+import { PersistenceContext, isPastDate } from "../../shared";
 
 // Factory for getting the proper task variation component for given task data.
 const taskComponentFactory = ({ dueDate, isComplete, isEditing }) =>

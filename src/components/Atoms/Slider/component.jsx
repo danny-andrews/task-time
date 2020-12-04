@@ -9,7 +9,7 @@ import {
 import { useField } from "formik";
 import "@reach/slider/styles.css";
 import styles from "./styles.module.css";
-import { uniqueId } from "../../../shared/util";
+import { uniqueId } from "../../../shared";
 
 const Slider = ({ markers, label, className, ...props }) => {
   const [{ value }, , { setValue }] = useField(props.name);

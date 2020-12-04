@@ -5,10 +5,13 @@ import { isToday, isEqual } from "date-fns";
 import TaskForm from "../TaskForm";
 import Tasks from "../Tasks";
 import styles from "./styles.module.css";
-import { DND_IDS } from "../../shared/constants";
-import { formatHumanReadable, isPastDate } from "../../shared/dates";
+import {
+  DND_IDS,
+  formatHumanReadable,
+  isPastDate,
+  PersistenceContext,
+} from "../../shared";
 import { H, Disclosure } from "../Atoms";
-import { PersistenceContext } from "../../shared/contexts";
 
 const DayColumn = forwardRef(({ date, tasks, blocked, faded }, ref) => {
   const { createTask, getTotalDifficulty } = useContext(PersistenceContext);

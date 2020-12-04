@@ -1,6 +1,6 @@
-import { render } from "./shared/react";
+import { render } from "./shared";
 import App from "./components/App";
 import "./index.css";
-import "./shared/polyfills";
+import "./polyfills";
 
 render(App, "root");

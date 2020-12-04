@@ -7,7 +7,7 @@ import {
 import styles from "./styles.module.css";
 import { SquareButton } from "../Button";
 import { DownArrow, RightArrow } from "../../Icons";
-import { noop } from "../../../shared/util";
+import { noop } from "../../../shared";
 
 const Disclosure = ({ buttonText, children, onDisplay = noop }) => {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { debounce } from "../shared/util";
+import { debounce } from "../shared";
 
 export default (debounceTime = 0) => {
   const [windowSize, setWindowSize] = useState({ width: null, height: null });

@@ -4,9 +4,6 @@ import * as R from "ramda";
 export const mapIndexed = R.addIndex(R.map);
 
 // Function
-export const curry2 = R.curryN(2);
-export const curry3 = R.curryN(3);
-
 export const noop = R.always;
 
 export const debounce = (duration, func) => {

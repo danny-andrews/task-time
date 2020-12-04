@@ -1,5 +1,5 @@
 import { useState } from "react";
-import DateWindow from "../shared/date-window";
+import { DateWindow } from "../shared";
 
 export default (windowSize) => {
   const [startDate, setStartDate] = useState(Date.now());
