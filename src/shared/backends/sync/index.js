@@ -1,6 +1,7 @@
 /* global process */
 import * as Y from "yjs";
 import { WebsocketProvider } from "y-websocket";
+import { IndexeddbPersistence } from "y-indexeddb";
 import { v4 as uuidv4 } from "uuid";
 import flyd from "flyd";
 import { setMany, createMap } from "./util";
@@ -16,6 +17,11 @@ export default () => {
     { connect: false }
   );
   websocketProvider.connect();
+
+  const indexeddbProvider = new IndexeddbPersistence("task-time", doc);
+  indexeddbProvider.whenSynced.then(() => {
+    console.log("loaded data from indexed db");
+  });
 
   const getYEntity = (type, id) =>
     doc

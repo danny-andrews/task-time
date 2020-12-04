@@ -3498,7 +3498,7 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
-lib0@^0.2.28, lib0@^0.2.31, lib0@^0.2.33:
+lib0@^0.2.12, lib0@^0.2.28, lib0@^0.2.31, lib0@^0.2.33:
   version "0.2.34"
   resolved "https://registry.yarnpkg.com/lib0/-/lib0-0.2.34.tgz#c4479f5f2083894687fcfa9d0b9d9935e35ea008"
   integrity sha512-cqsVIMPgFlDtgQcpkt7HOY6W3sbYPIe3qxMnbRSwHTgiQancgm+TRDPx28mC6GUZ6lG6Nr0bIWf4Nog6dWUNUg==
@@ -4967,11 +4967,6 @@ rollup-plugin-analyzer@^3.3.0:
   resolved "https://registry.yarnpkg.com/rollup-plugin-analyzer/-/rollup-plugin-analyzer-3.3.0.tgz#52fb30465ae927d9c078b6ec90c578cfb9164fc2"
   integrity sha512-zUPGitW4usmZcVa0nKecRvw3odtXgnxdCben9Hx1kxVoR3demek8RU9tmRG/R35hnRPQTb7wEsYEe3GUcjxIMA==
 
-rollup-plugin-brotli@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-brotli/-/rollup-plugin-brotli-3.0.1.tgz#78430c49127195ee1f567e76c958034734e1d58f"
-  integrity sha512-xP21AvgRuiFSqVWjgmSC5hQjHl4MtZveyKfCGCmmXbiLtSa6Ocf/Rgx/V4xXMoXALsw3J+snu/b94d4YxcJIHA==
-
 rollup-plugin-livereload@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-livereload/-/rollup-plugin-livereload-2.0.0.tgz#d3928d74e8cf2ae4286c5dd46b770fd3f3b82313"
@@ -5918,6 +5913,13 @@ xtend@^4.0.0, xtend@^4.0.1, xtend@^4.0.2, xtend@~4.0.0:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.2.tgz#bb72779f5fa465186b1f438f674fa347fdb5db54"
   integrity sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==
+
+y-indexeddb@^9.0.5:
+  version "9.0.5"
+  resolved "https://registry.yarnpkg.com/y-indexeddb/-/y-indexeddb-9.0.5.tgz#a162526add738a456b7185a6a5626534609ee132"
+  integrity sha512-40VxkqPoK2VxE1vMosS5MfwlHQOvaeLEN89dIkjh7URjZny6bDQOl4yKldaDv9ZosZgYEPyWuWTF3Z92RZ1y+A==
+  dependencies:
+    lib0 "^0.2.12"
 
 y-leveldb@^0.1.0:
   version "0.1.0"
