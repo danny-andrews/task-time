@@ -18,10 +18,7 @@ export default () => {
   );
   websocketProvider.connect();
 
-  const indexeddbProvider = new IndexeddbPersistence("task-time", doc);
-  indexeddbProvider.whenSynced.then(() => {
-    console.log("loaded data from indexed db");
-  });
+  new IndexeddbPersistence("task-time", doc);
 
   const getYEntity = (type, id) =>
     doc
