@@ -13,7 +13,6 @@ import { uniqueId } from "../../../shared/util";
 
 const Slider = ({ markers, label, className, ...props }) => {
   const [{ value }, , { setValue }] = useField(props.name);
-  const handleChange = (newValue) => setValue(newValue);
   const labelId = uniqueId(`${props.name}-`);
 
   return (
@@ -24,7 +23,7 @@ const Slider = ({ markers, label, className, ...props }) => {
       <div className={styles.container}>
         <SliderInput
           value={value}
-          onChange={handleChange}
+          onChange={setValue}
           className={styles.input}
           aria-labelledby={labelId}
           {...props}

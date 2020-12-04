@@ -13,25 +13,21 @@ const Button = forwardRef(
       ...rest
     },
     ref
-  ) => {
-    const classes = cn(className, styles[variation], {
-      [styles.disabled]: isDisabled,
-    });
-    const tabIndex = isDisabled ? -1 : 0;
-
-    return (
-      <button
-        type={type}
-        className={classes}
-        ref={ref}
-        tabIndex={tabIndex}
-        {...rest}
-      >
-        {children}
-      </button>
-    );
-  }
+  ) => (
+    <button
+      type={type}
+      className={cn(className, styles[variation], {
+        [styles.disabled]: isDisabled,
+      })}
+      ref={ref}
+      tabIndex={isDisabled ? -1 : 0}
+      {...rest}
+    >
+      {children}
+    </button>
+  )
 );
+Button.displayName = "Button";
 
 export const IconButton = forwardRef((props, ref) => (
   <Button variation="icon" {...props} ref={ref} />

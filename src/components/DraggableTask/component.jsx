@@ -57,12 +57,8 @@ const DraggableTask = ({ task, index, onTaskMove, onDragStart, onDragEnd }) => {
     drag(drop(ref));
   }
 
-  const classes = cn({
-    [styles.dragging]: isDragging,
-  });
-
   return (
-    <li className={classes} ref={ref}>
+    <li className={cn({ [styles.dragging]: isDragging })} ref={ref}>
       <Task key={task.id} task={task} />
     </li>
   );

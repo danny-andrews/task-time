@@ -12,12 +12,13 @@ const Tasks = ({ tasks }) => {
   // See https://bugs.chromium.org/p/chromium/issues/detail?id=410328#c5 for
   // more info.
   const [dragInProgress, setDragInProgress] = useState(false);
-  const classes = cn(styles.root, {
-    [styles["ax-hover-styles"]]: dragInProgress,
-  });
 
   return (
-    <ol className={classes}>
+    <ol
+      className={cn(styles.root, {
+        [styles["ax-hover-styles"]]: dragInProgress,
+      })}
+    >
       {tasks.map((task, i) => (
         <DraggableTask
           key={task.id}

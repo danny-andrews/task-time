@@ -1,9 +1,10 @@
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import cn from "classnames";
+import { Formik, Form } from "formik";
 import styles from "./styles.module.css";
 import { PrimaryButton, IconButton, ButtonGroup, TextInput } from "../Atoms";
 import { Refresh, Edit, Trash, Save } from "../Icons";
-import { Formik, Form } from "formik";
+import { useFocus } from "../../hooks";
 
 // Base height of component (to be used as rem value).
 const BASE_HEIGHT = 2.5;
@@ -110,10 +111,7 @@ export const IncompleteTask = ({ onEditClick, ...rest }) => (
 );
 
 export const EditingTask = ({ onSave, ...rest }) => {
-  const textRef = useRef();
-  useEffect(() => {
-    textRef.current.focus();
-  }, []);
+  const textRef = useFocus();
 
   return (
     <Formik initialValues={{ text: rest.text }} onSubmit={onSave}>

@@ -12,19 +12,10 @@ import { PersistenceContext } from "../../shared/contexts";
 
 const DayColumn = forwardRef(({ date, tasks, blocked, faded }, ref) => {
   const { createTask, getTotalDifficulty } = useContext(PersistenceContext);
-  const isInPast = isPastDate(date);
-
-  const classes = cn(styles.root, { [styles["accent"]]: isToday(date) });
-  const tasksSectionClasses = cn(styles["tasks-section"], {
-    [styles["blocked"]]: blocked,
-  });
-  const headerClasses = cn(styles.header, {
-    [styles["faded"]]: faded,
-  });
-  const totalDifficulty = getTotalDifficulty(tasks);
 
   const renderTaskForm = () => {
-    if (isInPast) return null;
+    if (isPastDate(date)) return null;
+
     const formRef = useRef(null);
     const handleDisplay = () => {
       formRef.current.focus();
@@ -45,22 +36,30 @@ const DayColumn = forwardRef(({ date, tasks, blocked, faded }, ref) => {
   };
 
   return (
-    <li ref={ref} className={classes}>
-      <header className={headerClasses}>
+    <li
+      ref={ref}
+      className={cn(styles.root, { [styles["accent"]]: isToday(date) })}
+    >
+      <header className={cn(styles.header, { [styles["faded"]]: faded })}>
         <H level={2} styleLevel={4}>
           {formatHumanReadable(date)}
         </H>
         <p>
-          Total Difficulty: <em>{totalDifficulty}</em>
+          Total Difficulty: <em>{getTotalDifficulty(tasks)}</em>
         </p>
       </header>
-      <div className={tasksSectionClasses}>
+      <div
+        className={cn(styles["tasks-section"], {
+          [styles["blocked"]]: blocked,
+        })}
+      >
         <Tasks tasks={tasks} />
         {renderTaskForm()}
       </div>
     </li>
   );
 });
+DayColumn.displayName = "DayColumn";
 
 const DroppableDayColumn = ({ date, tasks }) => {
   const { moveTask } = useContext(PersistenceContext);

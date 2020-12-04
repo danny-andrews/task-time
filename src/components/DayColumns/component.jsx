@@ -4,16 +4,12 @@ import cn from "classnames";
 import DayColumn from "../DayColumn";
 import styles from "./styles.module.css";
 
-const DayColumns = ({ className, tasksByDay }) => {
-  const classnames = cn(styles.root, className);
-
-  return (
-    <ol className={classnames}>
-      {tasksByDay.map(({ date, tasks }) => (
-        <DayColumn key={date} tasks={tasks} date={parseISO(date)} />
-      ))}
-    </ol>
-  );
-};
+const DayColumns = ({ className, tasksByDay }) => (
+  <ol className={cn(styles.root, className)}>
+    {tasksByDay.map(({ date, tasks }) => (
+      <DayColumn key={date} tasks={tasks} date={parseISO(date)} />
+    ))}
+  </ol>
+);
 
 export default DayColumns;

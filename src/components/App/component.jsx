@@ -6,8 +6,7 @@ import { SyncBackend } from "../../shared/backends";
 import { PersistenceContext } from "../../shared/contexts";
 import CreatePersistence from "../../shared/persistence";
 
-const backend = SyncBackend();
-const persistence = CreatePersistence(backend);
+const persistence = CreatePersistence(SyncBackend());
 
 const App = () => (
   <StrictMode>

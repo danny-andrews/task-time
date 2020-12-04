@@ -4,11 +4,9 @@ import cn from "classnames";
 import styles from "./styles.module.css";
 
 const ButtonGroup = (
-  { className, style, children, isDisabled, as = "div" },
+  { className, children, isDisabled, as = "div", Tag = as, ...rest },
   ref
 ) => {
-  const classes = cn(className, styles.root);
-  const Tag = as;
   const transformChild = (child) => {
     const childProps = child.props;
 
@@ -21,7 +19,7 @@ const ButtonGroup = (
   };
 
   return (
-    <Tag ref={ref} className={classes} style={style}>
+    <Tag ref={ref} className={cn(className, styles.root)} {...rest}>
       {Children.toArray(children)
         .filter((child) => !R.isEmpty(child))
         .map(transformChild)}
