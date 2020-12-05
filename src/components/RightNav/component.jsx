@@ -1,12 +1,13 @@
 import React from "react";
 import { VerticalNav, IconButton } from "../Atoms";
-import { RightArrow, DoubleRightArrow } from "../Icons";
+import { RightArrow, DoubleRightArrow, Home } from "../Icons";
 
 const RightNav = ({
   onRightArrowClick,
   onDoubleRightArrowClick,
   numDaysInView,
   className,
+  onHomeClick,
 }) => (
   <VerticalNav className={className}>
     <IconButton onClick={onRightArrowClick} aria-label="Shift forward one day">
@@ -20,6 +21,9 @@ const RightNav = ({
         <DoubleRightArrow />
       </IconButton>
     )}
+    <IconButton onClick={onHomeClick} aria-label="Go to today">
+      <Home />
+    </IconButton>
   </VerticalNav>
 );
 

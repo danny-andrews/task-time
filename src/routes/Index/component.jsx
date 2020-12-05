@@ -6,6 +6,7 @@ import Header from "../../components/Header";
 import styles from "./styles.module.css";
 import LeftNav from "../../components/LeftNav";
 import RightNav from "../../components/RightNav";
+import BottomNav from "../../components/BottomNav";
 import { useDevice, useDateWindow } from "../../hooks";
 import { PersistenceContext } from "../../shared";
 
@@ -21,10 +22,11 @@ const Index = () => {
     DesktopLarge: R.always(5),
   });
 
+  const dateWindow = useDateWindow(numDaysInView);
   const [
     dates,
     { goToPrevDay, shiftBackward, goToNextDay, shiftForward, goToCurrentDate },
-  ] = useDateWindow(numDaysInView);
+  ] = dateWindow;
   const tasksInView = getTasksForDates(dates, tasks);
 
   return (
@@ -34,15 +36,25 @@ const Index = () => {
         className={styles["left-nav"]}
         onLeftArrowClick={goToPrevDay}
         onDoubleLeftArrowClick={shiftBackward}
-        onHomeClick={goToCurrentDate}
         numDaysInView={numDaysInView}
       />
-      <DayColumns className={styles["main"]} tasksByDay={tasksInView} />
+      <DayColumns
+        className={styles["main"]}
+        tasksByDay={tasksInView}
+        dateWindow={dateWindow}
+      />
       <RightNav
         className={styles["right-nav"]}
         onRightArrowClick={goToNextDay}
         onDoubleRightArrowClick={shiftForward}
+        onHomeClick={goToCurrentDate}
         numDaysInView={numDaysInView}
+      />
+      <BottomNav
+        className={styles["bottom-nav"]}
+        onLeftArrowClick={goToPrevDay}
+        onRightArrowClick={goToNextDay}
+        onHomeClick={goToCurrentDate}
       />
     </section>
   );

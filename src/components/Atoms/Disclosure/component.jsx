@@ -8,12 +8,12 @@ import styles from "./styles.module.css";
 import { SquareButton } from "../Button";
 import { DownArrow, RightArrow } from "../../Icons";
 
-const Disclosure = ({ buttonText, children }) => {
+const Disclosure = ({ buttonText, children, className }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className={styles.root}>
-      <ReachDisclosure open={isOpen} className={styles.root}>
+    <div className={className}>
+      <ReachDisclosure open={isOpen}>
         <DisclosureButton
           onClick={() => setIsOpen(!isOpen)}
           as={SquareButton}

@@ -1,11 +1,10 @@
 import React from "react";
 import { VerticalNav, IconButton } from "../Atoms";
-import { Home, LeftArrow, DoubleLeftArrow } from "../Icons";
+import { LeftArrow, DoubleLeftArrow } from "../Icons";
 
 const LeftNav = ({
   onLeftArrowClick,
   onDoubleLeftArrowClick,
-  onHomeClick,
   numDaysInView,
   className,
 }) => (
@@ -21,9 +20,6 @@ const LeftNav = ({
         <DoubleLeftArrow />
       </IconButton>
     )}
-    <IconButton onClick={onHomeClick} aria-label="Go to today">
-      <Home />
-    </IconButton>
   </VerticalNav>
 );
 

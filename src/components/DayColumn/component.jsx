@@ -28,18 +28,20 @@ const DayColumn = forwardRef(({ date, tasks, blocked, faded }, ref) => {
       });
 
     return (
-      <Disclosure buttonText="New Task">
+      <Disclosure buttonText="New Task" className={styles.disclosure}>
         <TaskForm onSubmit={handleSubmit} />
       </Disclosure>
     );
   };
 
   return (
-    <li
-      ref={ref}
-      className={cn(styles.root, { [styles["accent"]]: isToday(date) })}
-    >
-      <header className={cn(styles.header, { [styles["faded"]]: faded })}>
+    <li ref={ref} className={styles.root}>
+      <header
+        className={cn(styles.header, {
+          [styles["faded"]]: faded,
+          [styles["accent"]]: isToday(date),
+        })}
+      >
         <H level={2} styleLevel={4}>
           {formatHumanReadable(date)}
         </H>

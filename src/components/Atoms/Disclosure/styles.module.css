@@ -1,8 +1,3 @@
-.root {
-  margin: var(--spacing-small);
-  margin-top: 0;
-}
-
 .panel {
   border: var(--border-solid);
   border-top: 0;
