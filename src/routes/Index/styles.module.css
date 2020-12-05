@@ -1,5 +1,5 @@
 .root {
-  --nav-width: calc(var(--min-touch-target-size) + 2 * var(--spacing-small));
+  --nav-width: calc(var(--min-touch-target-size) + 2 * var(--spacing-tiny));
 
   display: grid;
   height: 100%;
