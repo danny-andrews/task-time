@@ -19,10 +19,6 @@ const DayColumn = forwardRef(({ date, tasks, blocked, faded }, ref) => {
   const renderTaskForm = () => {
     if (isPastDate(date)) return null;
 
-    const formRef = useRef(null);
-    const handleDisplay = () => {
-      formRef.current.focus();
-    };
     const handleSubmit = ({ important, ...rest }) =>
       createTask({
         ...rest,
@@ -32,8 +28,8 @@ const DayColumn = forwardRef(({ date, tasks, blocked, faded }, ref) => {
       });
 
     return (
-      <Disclosure buttonText="New Task" onDisplay={handleDisplay}>
-        <TaskForm ref={formRef} onSubmit={handleSubmit} />
+      <Disclosure buttonText="New Task">
+        <TaskForm onSubmit={handleSubmit} />
       </Disclosure>
     );
   };
