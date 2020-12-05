@@ -120,11 +120,9 @@ export const EditingTask = ({ onSave, ...rest }) => {
       <Form>
         <Task
           primaryAction={
-            <TextInput
-              className={cn(styles.primary, styles.form)}
-              innerRef={textRef}
-              name="text"
-            />
+            <div className={cn(styles.primary, styles.form)}>
+              <TextInput innerRef={textRef} name="text" />
+            </div>
           }
           secondaryAction={
             <IconButton
