@@ -28,6 +28,7 @@
 }
 
 .header {
+  composes: inner-spacing-small from "../../css/util.module.css";
   border-bottom: var(--border-solid);
   padding: var(--spacing-small);
 }

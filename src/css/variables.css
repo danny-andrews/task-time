@@ -81,7 +81,7 @@ html {
   --opacity-half: 0.5;
 
   /* Other */
-  --header-height: 44px;
+  --header-height: 36px;
 }
 
 @media (prefers-color-scheme: dark) {
