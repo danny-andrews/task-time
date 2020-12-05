@@ -7,7 +7,7 @@
     "header header header"
     "left-nav main right-nav";
   grid-template-columns: var(--nav-width) 1fr var(--nav-width);
-  grid-template-rows: var(--header-height) calc(100vh - var(--header-height));
+  grid-template-rows: var(--header-height) calc(100% - var(--header-height));
 }
 
 .header {
