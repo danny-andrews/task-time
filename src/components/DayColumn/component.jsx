@@ -1,7 +1,7 @@
 import React, { forwardRef, useContext } from "react";
 import cn from "classnames";
 import { useDrop } from "react-dnd";
-import { isToday, isEqual } from "date-fns";
+import { isToday, isSameDay } from "date-fns";
 import TaskForm from "../TaskForm";
 import Tasks from "../Tasks";
 import styles from "./styles.module.css";
@@ -72,7 +72,7 @@ const DroppableDayColumn = ({ date, tasks }) => {
       isOver: monitor.isOver({ shallow: true }),
     }),
     hover: (item) => {
-      if (isEqual(item.dueDate, date)) return;
+      if (isSameDay(item.dueDate, date)) return;
 
       moveTask(item.id, date);
       item.dueDate = date;

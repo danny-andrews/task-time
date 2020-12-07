@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import cn from "classnames";
 import styles from "./styles.module.css";
 import { useDrag, useDrop } from "react-dnd";
-import { isEqual } from "date-fns";
+import { isSameDay } from "date-fns";
 import Task from "../Task";
 import { DND_IDS } from "../../shared";
 
@@ -32,7 +32,7 @@ const DraggableTask = ({ task, index, onTaskMove, onDragStart, onDragEnd }) => {
       if (!ref.current) return false;
       const dragIndex = item.index;
       const hoverIndex = index;
-      if (dragIndex === hoverIndex && isEqual(task.dueDate, item.dueDate))
+      if (dragIndex === hoverIndex && isSameDay(task.dueDate, item.dueDate))
         return;
 
       const hoverBoundingRect = ref.current.getBoundingClientRect();
