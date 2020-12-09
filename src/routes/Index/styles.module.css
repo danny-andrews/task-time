@@ -18,7 +18,11 @@
       "left-nav main right-nav"
       "bottom-nav bottom-nav bottom-nav";
     grid-template-columns: var(--nav-width) 1fr var(--nav-width);
-    grid-template-rows: var(--header-height) 1fr 0;
+    grid-template-rows:
+      var(--header-height)
+      /* Using 1fr here breaks the task scrolling section. */
+      calc(100% - var(--header-height))
+      0;
   }
 
   .bottom-nav { display: none; }
