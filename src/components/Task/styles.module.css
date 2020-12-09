@@ -20,11 +20,6 @@
 
 .staleness {
   composes: center-contents from "../../css/util.module.css";
-  font-size: var(--font-size-small);
-}
-
-.staleness-text {
-  font-size: var(--font-size-emphasis);
   font-weight: var(--font-weight-bold);
 }
 
