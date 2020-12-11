@@ -24,7 +24,7 @@ const DayColumn = forwardRef(({ date, tasks, blocked, faded }, ref) => {
         ...rest,
         isImportant: important,
         dueDate: date,
-        position: tasks.length,
+        index: tasks.length,
       });
 
     return (
@@ -74,7 +74,7 @@ const DroppableDayColumn = ({ date, tasks }) => {
     hover: (item) => {
       if (isSameDay(item.dueDate, date)) return;
 
-      moveTask(item.id, date);
+      moveTask({ id: item.id, newDueDate: date, newIndex: tasks.length });
       item.dueDate = date;
     },
   });

@@ -46,7 +46,7 @@ export default (backend) => {
 
   const useTasksByDisplayDate = () => useObservable([], tasksByDisplayDate);
 
-  const createTask = ({ text, dueDate, isImportant, difficulty, position }) =>
+  const createTask = ({ text, dueDate, isImportant, difficulty, index }) =>
     createEntity(TaskModel, {
       createdAt: new Date(),
       originalDueDate: dueDate,
@@ -55,7 +55,7 @@ export default (backend) => {
       isComplete: false,
       difficulty,
       isImportant,
-      position: position + 1,
+      position: index + 1,
     });
 
   const deleteTask = deleteEntity(TaskModel);
@@ -66,12 +66,8 @@ export default (backend) => {
   const refreshTask = (task) =>
     updateTask(task.id, { originalDueDate: task.dueDate });
 
-  const moveTask = (id, newDueDate) => updateTask(id, { dueDate: newDueDate });
-
   const changeTaskPosition = ({ id, newDueDate, newIndex }) => {
-    const dueDate = serializeDate(newDueDate);
-    const tasksByDate = tasksByDisplayDate();
-    const tasks = tasksByDate[dueDate];
+    const tasks = tasksByDisplayDate()[serializeDate(newDueDate)];
     const oldIndex = tasks.findIndex((task) => task.id === id);
     const { left, right } =
       oldIndex > newIndex
@@ -82,16 +78,21 @@ export default (backend) => {
         : {
             left: tasks[newIndex],
             right: tasks[newIndex + 1] || {
-              position: R.last(tasks).position,
+              position: R.last(tasks).position + 1,
             },
           };
-    const newPosition = (left.position + right.position) / 2;
 
     updateTask(id, {
-      position: newPosition,
+      position: (left.position + right.position) / 2,
       dueDate: newDueDate,
     });
   };
+
+  const moveTask = ({ id, newDueDate, newIndex }) =>
+    updateTask(id, {
+      dueDate: newDueDate,
+      position: newIndex + 1,
+    });
 
   const getTotalDifficulty = R.pipe(
     R.map((task) => getDifficulty(task.difficulty).value),
