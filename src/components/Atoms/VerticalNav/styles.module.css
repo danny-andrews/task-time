@@ -6,9 +6,3 @@
   justify-content: center;
   padding: var(--spacing-tiny);
 }
-
-@media (min-width: env(--breakpoint-phone)) {
-  .root {
-    padding-top: var(--spacing-large);
-  }
-}

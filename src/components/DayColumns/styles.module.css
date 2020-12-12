@@ -1,10 +1,1 @@
-.root {
-  display: flex;
-  flex: 1;
-}
-
-@media (min-width: env(--breakpoint-phone)) {
-  .root {
-    padding-top: var(--spacing-large);
-  }
-}
+.root { display: flex; }

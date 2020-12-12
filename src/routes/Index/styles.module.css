@@ -13,15 +13,17 @@
 
 @media (min-width: env(--breakpoint-phone)) {
   .root {
+    --header-area-height: calc(var(--header-height) + var(--spacing-large));
+
     grid-template-areas:
       "header header header"
       "left-nav main right-nav"
       "bottom-nav bottom-nav bottom-nav";
     grid-template-columns: var(--nav-width) 1fr var(--nav-width);
     grid-template-rows:
-      var(--header-height)
+      var(--header-area-height)
       /* Using 1fr here breaks the task scrolling section. */
-      calc(100% - var(--header-height))
+      calc(100% - var(--header-area-height))
       0;
   }
 
