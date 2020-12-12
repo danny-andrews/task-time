@@ -1,7 +1,12 @@
 .root {
   composes: inner-spacing-medium from "../../css/util.module.css";
+  height: 100%;
   overflow-y: scroll;
   padding: var(--spacing-medium);
+}
+
+.blocked {
+  background: var(--blocked-gradient);
 }
 
 /* stylelint-disable */

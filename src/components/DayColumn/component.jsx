@@ -13,7 +13,25 @@ import {
 } from "../../shared";
 import { H, Disclosure } from "../Atoms";
 
-const DayColumn = forwardRef(({ date, tasks, blocked, faded }, ref) => {
+const Header = ({ date, difficulty }) => {
+  return (
+    <header
+      className={cn(styles.header, {
+        [styles["faded"]]: isPastDate(date),
+        [styles["accent"]]: isToday(date),
+      })}
+    >
+      <H level={2} styleLevel={4}>
+        {formatHumanReadable(date)}
+      </H>
+      <p>
+        Difficulty: <em>{difficulty}</em>
+      </p>
+    </header>
+  );
+};
+
+const DayColumn = forwardRef(({ date, tasks, blocked }, ref) => {
   const { createTask, getTotalDifficulty } = useContext(PersistenceContext);
 
   const renderTaskForm = () => {
@@ -36,27 +54,9 @@ const DayColumn = forwardRef(({ date, tasks, blocked, faded }, ref) => {
 
   return (
     <li ref={ref} className={styles.root}>
-      <header
-        className={cn(styles.header, {
-          [styles["faded"]]: faded,
-          [styles["accent"]]: isToday(date),
-        })}
-      >
-        <H level={2} styleLevel={4}>
-          {formatHumanReadable(date)}
-        </H>
-        <p>
-          Total Difficulty: <em>{getTotalDifficulty(tasks)}</em>
-        </p>
-      </header>
-      <div
-        className={cn(styles["tasks-section"], {
-          [styles["blocked"]]: blocked,
-        })}
-      >
-        <Tasks tasks={tasks} />
-        {renderTaskForm()}
-      </div>
+      <Header date={date} difficulty={getTotalDifficulty(tasks)} />
+      <Tasks isBlocked={blocked} tasks={tasks} />
+      {renderTaskForm()}
     </li>
   );
 });
@@ -85,7 +85,6 @@ const DroppableDayColumn = ({ date, tasks }) => {
       tasks={tasks}
       ref={drop}
       blocked={isOver && isInPast}
-      faded={isInPast}
     />
   );
 };

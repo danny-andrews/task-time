@@ -5,39 +5,18 @@
   flex-direction: column;
   text-align: center;
 
-  &:first-child {
-    border-left: var(--border-solid);
-  }
-
-  &:last-child {
-    border-right: var(--border-solid);
-  }
+  &:first-child { border-left: var(--border-solid); }
+  &:last-child { border-right: var(--border-solid); }
 }
 
-.accent {
-  background: var(--color-accent-1);
-}
+.accent { background: var(--color-accent-1); }
 
-.faded {
-  opacity: var(--opacity-half);
-}
-
-.blocked {
-  background: var(--blocked-gradient);
-}
+.faded { opacity: var(--opacity-half); }
 
 .header {
   composes: inner-spacing-small from "../../css/util.module.css";
   border-bottom: var(--border-solid);
   padding: var(--spacing-small);
-}
-
-.tasks-section {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: space-between;
-  overflow-y: scroll;
 }
 
 @media (min-width: env(--breakpoint-phone)) {
