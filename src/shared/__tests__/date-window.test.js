@@ -1,41 +1,50 @@
 import DateWindow from "../date-window";
+import { serializeDate } from "../date";
 import { parseISO } from "date-fns";
+import t from "tap";
 
-it("runs", () => {
-  const dateWindow = DateWindow(parseISO("2020-07-17"), 3);
-  expect(dateWindow.dates).toEqual(["2020-07-17", "2020-07-18", "2020-07-19"]);
-});
+t.test(
+  "returns range of dates of length n starting at a given date",
+  async (is) => {
+    const dateWindow = DateWindow(parseISO("2020-07-17"), 3);
+    is.same(dateWindow.dates.map(serializeDate), [
+      "2020-07-17",
+      "2020-07-18",
+      "2020-07-19",
+    ]);
+  }
+);
 
-it("shiftForward shifts date range forward by `size`", () => {
+t.test("next shifts date range forward by `size`", async (is) => {
   const dateWindow = DateWindow(parseISO("2020-07-17"), 3);
-  expect(dateWindow.shiftForward().dates).toEqual([
+  is.same(dateWindow.next().dates.map(serializeDate), [
     "2020-07-20",
     "2020-07-21",
     "2020-07-22",
   ]);
 });
 
-it("shiftForward1 shifts date range forward by 1", () => {
+t.test("incr shifts date range forward by 1", async (is) => {
   const dateWindow = DateWindow(parseISO("2020-07-17"), 3);
-  expect(dateWindow.shiftForward1().dates).toEqual([
+  is.same(dateWindow.incr().dates.map(serializeDate), [
     "2020-07-18",
     "2020-07-19",
     "2020-07-20",
   ]);
 });
 
-it("shiftBackward shifts date range backward by `size`", () => {
+t.test("prev shifts date range backward by `size`", async (is) => {
   const dateWindow = DateWindow(parseISO("2020-07-17"), 3);
-  expect(dateWindow.shiftBackward().dates).toEqual([
+  is.same(dateWindow.prev().dates.map(serializeDate), [
     "2020-07-14",
     "2020-07-15",
     "2020-07-16",
   ]);
 });
 
-it("shiftForward1 shifts date range backward by 1", () => {
+t.test("decr shifts date range backward by 1", async (is) => {
   const dateWindow = DateWindow(parseISO("2020-07-17"), 3);
-  expect(dateWindow.shiftBackward1().dates).toEqual([
+  is.same(dateWindow.decr().dates.map(serializeDate), [
     "2020-07-16",
     "2020-07-17",
     "2020-07-18",
