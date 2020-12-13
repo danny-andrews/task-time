@@ -11,7 +11,7 @@
 
 .accent { background: var(--color-accent-1); }
 
-.faded { opacity: var(--opacity-half); }
+.faded { composes: opaque from "../../css/util.module.css"; }
 
 .header {
   composes: inner-spacing-small from "../../css/util.module.css";

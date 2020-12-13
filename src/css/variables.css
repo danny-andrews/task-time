@@ -77,9 +77,6 @@ html {
   --font-weight-normal: 400;
   --font-weight-bold: 600;
 
-  /* Opacity */
-  --opacity-half: 0.5;
-
   /* Other */
   --header-height: 36px;
   --recommended-difficulty: 1;

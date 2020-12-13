@@ -28,3 +28,7 @@
   outline: var(--outline-focus);
   outline-offset: 1px;
 }
+
+.opaque {
+  opacity: 0.5;
+}

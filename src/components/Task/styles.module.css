@@ -3,7 +3,7 @@
   display: flex;
   font-weight: var(--font-weight-bold);
   height: 100%;
-  opacity: .8;
+  opacity: 0.75;
 }
 
 /* States */
@@ -12,7 +12,7 @@
 }
 
 .complete {
-  opacity: var(--opacity-half);
+  composes: opaque from "../../css/util.module.css";
 }
 
 .strike-through {

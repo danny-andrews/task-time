@@ -7,8 +7,9 @@ module.exports = {
       { importFrom: ["./src/css/variables.css"] },
     ],
     "mavrin/stylelint-declaration-use-css-custom-properties": {
-      cssDefinitions: ["color", "length", "linestyle"],
-      ignoreValues: ["/^0$/", "1px", "1rem", "auto", "1fr"],
+      cssDefinitions: ["color", "length"],
+      ignoreValues: ["/^0$/", "/^1$/", "1px", "1rem", "1fr"],
+      ignoreProperties: ["grid-template-columns"],
     },
     "max-nesting-depth": 1,
     "declaration-block-no-redundant-longhand-properties": [
