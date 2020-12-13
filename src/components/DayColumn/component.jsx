@@ -33,6 +33,7 @@ const Header = ({ date, difficulty }) => {
 
 const DayColumn = forwardRef(({ date, tasks, blocked }, ref) => {
   const { createTask, getTotalDifficulty } = useContext(PersistenceContext);
+  const isInPast = isPastDate(date);
 
   const renderTaskForm = () => {
     if (isPastDate(date)) return null;
@@ -55,7 +56,7 @@ const DayColumn = forwardRef(({ date, tasks, blocked }, ref) => {
   return (
     <li ref={ref} className={styles.root}>
       <Header date={date} difficulty={getTotalDifficulty(tasks)} />
-      <Tasks isBlocked={blocked} tasks={tasks} />
+      <Tasks isInPast={isInPast} isBlocked={blocked} tasks={tasks} />
       {renderTaskForm()}
     </li>
   );

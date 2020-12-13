@@ -4,7 +4,7 @@ import DraggableTask from "../DraggableTask";
 import styles from "./styles.module.css";
 import { PersistenceContext } from "../../shared";
 
-const Tasks = ({ isBlocked, tasks }) => {
+const Tasks = ({ isBlocked, isInPast, tasks }) => {
   const { changeTaskPosition } = useContext(PersistenceContext);
 
   // HACK: Remove hover styles for draggable items while dragging is in progress
@@ -18,6 +18,7 @@ const Tasks = ({ isBlocked, tasks }) => {
       className={cn(styles.root, {
         [styles["ax-hover-styles"]]: dragInProgress,
         [styles["blocked"]]: isBlocked,
+        [styles["in-past"]]: isInPast,
       })}
     >
       {tasks.map((task, i) => (
