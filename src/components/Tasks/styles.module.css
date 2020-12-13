@@ -1,8 +1,30 @@
 .root {
+  --outer-spacing: var(--spacing-medium);
+
   composes: inner-spacing-medium from "../../css/util.module.css";
   height: 100%;
+  margin-bottom: var(--outer-spacing);
   overflow-y: scroll;
-  padding: var(--spacing-medium);
+  padding-left: var(--outer-spacing);
+  padding-right: var(--outer-spacing);
+  padding-top: var(--outer-spacing);
+  position: relative;
+}
+
+.root::after {
+  border: var(--border-dashed);
+  content: "";
+  left: calc(var(--outer-spacing) / 2);
+  position: absolute;
+  right: calc(var(--outer-spacing) / 2);
+  top:
+    calc(
+      var(--recommended-difficulty) * var(--min-touch-target-size)
+      + (var(--recommended-difficulty) - 1) * var(--spacing-medium)
+      + 1.5 * var(--outer-spacing)
+      - 1px
+    );
+  z-index: -1;
 }
 
 .blocked {

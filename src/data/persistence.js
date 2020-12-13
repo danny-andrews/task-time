@@ -1,5 +1,6 @@
 import * as R from "ramda";
-import { serializeDate, isPastDate } from "../shared";
+import { parseISO } from "date-fns";
+import { serializeDate, isPastDate, median } from "../shared";
 import { getTasksByDueDate, TaskModel } from "./model";
 import useObservable from "../hooks/use-observable";
 
@@ -99,10 +100,23 @@ export default (backend) => {
     R.sum
   );
 
+  const recommendedDifficulty = tasksByDisplayDate.map(
+    R.pipe(
+      R.toPairs,
+      R.filter(([date]) => isPastDate(parseISO(date))),
+      R.map(([, tasks]) => getTotalDifficulty(tasks)),
+      (a) => (a.length > 0 ? Math.floor(median(a)) : 6)
+    )
+  );
+
+  const useRecommendedDifficulty = () =>
+    useObservable([], recommendedDifficulty);
+
   return {
     getTotalDifficulty,
     getDifficulties,
     getDifficulty,
+    useRecommendedDifficulty,
     useTasksByDisplayDate,
     updateTask,
     deleteTask,

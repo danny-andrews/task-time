@@ -5,9 +5,6 @@ import styles from "./styles.module.css";
 import { PrimaryButton, IconButton, ButtonGroup, TextInput } from "../Atoms";
 import { Refresh, Edit, Trash, Save } from "../Icons";
 
-// Base height of component (to be used as rem value).
-const BASE_HEIGHT = 2.5;
-
 // Base task component. This isn't meant to be used directly, hence it is not
 // exported. A task can be in one of three states: Incomplete, Complete, and
 // Locked. These are codified in variation components defined below.
@@ -59,7 +56,7 @@ const Task = ({
   return (
     <ButtonGroup
       style={{
-        height: `${difficulty * BASE_HEIGHT + (difficulty - 1)}rem`,
+        height: `calc(${difficulty} * var(--min-touch-target-size) + (${difficulty} - 1) * var(--spacing-medium))`,
       }}
       className={cn(styles.root, className, {
         [styles["complete"]]: isComplete,

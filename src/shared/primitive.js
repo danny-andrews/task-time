@@ -1,5 +1,22 @@
 import * as R from "ramda";
 
+// Math
+export const isOdd = (num) => num % 2 === 1;
+
+export const div = (x, y) => Math.floor(x / y);
+
+export const median = (numbers) => {
+  if (numbers.length === 0) {
+    throw new Error("Can't find the median of an empty list!");
+  }
+
+  const sortedNumbers = numbers.sort((a, b) => a - b);
+  const length = sortedNumbers.length;
+  return isOdd(length)
+    ? sortedNumbers[div(length, 2)]
+    : (sortedNumbers[length / 2 - 1] + sortedNumbers[length / 2]) / 2;
+};
+
 // List
 export const mapIndexed = R.addIndex(R.map);
 

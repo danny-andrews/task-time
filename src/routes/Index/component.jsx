@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import * as R from "ramda";
 import { getTasksForDates } from "../../data/model";
 import DayColumns from "../../components/DayColumns";
@@ -11,8 +11,11 @@ import { useDevice, useDateWindow } from "../../hooks";
 import { PersistenceContext } from "../../shared";
 
 const Index = () => {
-  const { useTasksByDisplayDate } = useContext(PersistenceContext);
+  const { useTasksByDisplayDate, useRecommendedDifficulty } = useContext(
+    PersistenceContext
+  );
   const tasks = useTasksByDisplayDate();
+  const recommendedDifficulty = useRecommendedDifficulty();
 
   const numDaysInView = useDevice(500).case({
     Phone: R.always(1),
@@ -28,6 +31,12 @@ const Index = () => {
     { goToPrevDay, shiftBackward, goToNextDay, shiftForward, goToCurrentDate },
   ] = dateWindow;
   const tasksInView = getTasksForDates(dates, tasks);
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      "--recommended-difficulty",
+      recommendedDifficulty
+    );
+  }, [recommendedDifficulty]);
 
   return (
     <section className={styles.root}>

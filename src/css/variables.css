@@ -82,6 +82,7 @@ html {
 
   /* Other */
   --header-height: 36px;
+  --recommended-difficulty: 1;
 }
 
 @media (prefers-color-scheme: dark) {
