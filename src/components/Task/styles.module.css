@@ -29,9 +29,10 @@
 }
 
 .icon {
-  height: 75%;
-  object-fit: cover;
-  width: 50%;
+  --icon-size: 1.25rem;
+
+  height: var(--icon-size);
+  width: var(--icon-size);
 }
 
 .refresh-icon,
