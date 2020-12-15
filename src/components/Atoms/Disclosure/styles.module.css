@@ -1,6 +1,7 @@
 .panel {
-  border: var(--border-solid);
-  border-top: 0;
+  border-bottom: var(--border-solid);
+  border-left: var(--border-solid);
+  border-right: var(--border-solid);
 
   &:focus {
     outline: none;

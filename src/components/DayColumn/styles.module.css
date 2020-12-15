@@ -5,13 +5,22 @@
   flex-direction: column;
   text-align: center;
 
-  &:first-child { border-left: var(--border-solid); }
-  &:last-child { border-right: var(--border-solid); }
+  &:first-child {
+    border-left: var(--border-solid);
+  }
+
+  &:last-child {
+    border-right: var(--border-solid);
+  }
 }
 
-.accent { background: var(--color-accent-1); }
+.accent {
+  background: var(--color-accent-1);
+}
 
-.faded { composes: opaque from "../../css/util.module.css"; }
+.faded {
+  composes: opaque from "../../css/util.module.css";
+}
 
 .header {
   composes: inner-spacing-small from "../../css/util.module.css";
@@ -21,7 +30,6 @@
 
 @media (min-width: env(--breakpoint-phone)) {
   .disclosure {
-    margin: var(--spacing-small);
-    margin-top: 0;
+    margin: 0 var(--spacing-small) var(--spacing-small) var(--spacing-small);
   }
 }

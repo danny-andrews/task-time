@@ -12,17 +12,19 @@
     outline: none;
   }
 
+  &:active {
+    background: var(--color-background);
+  }
+
+  /* HACK: the "focus-visible" polyfill adds this data-* attribute. */
   &[data-focus-visible-added] {
     background: var(--color-accent-1);
     outline: var(--outline-focus);
     outline-offset: 1px;
 
-    /* Ensure outline doesn't get cut off by buttons behind it. */
+    /* Force focus-visible elements to the top of the vertical stacking order.
+    Mainly used to prevent outline from being obscured by adjacent buttons. */
     position: relative;
-  }
-
-  &:active {
-    background: var(--color-background);
   }
 }
 

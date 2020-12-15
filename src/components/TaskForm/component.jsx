@@ -33,7 +33,7 @@ const TaskForm = ({ onSubmit }) => {
       }}
       onSubmit={handleSubmit}
     >
-      <Form className={styles.form}>
+      <Form className={styles.root}>
         <TextInput innerRef={textRef} label="Text" name="text" required />
 
         <Slider

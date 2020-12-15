@@ -1,6 +1,7 @@
 .root {
+  --input-height: 32px;
+
   composes: with-focus from "../../../css/util.module.css";
-  background: var(--color-background);
   border: var(--border-solid);
   border-radius: var(--border-radius);
   height: var(--input-height);

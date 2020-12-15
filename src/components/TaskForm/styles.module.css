@@ -1,6 +1,5 @@
-.form {
+.root {
   composes: inner-spacing-medium from "../../css/util.module.css";
-  background: var(--color-background);
   padding: var(--spacing-small);
   text-align: left;
 }
