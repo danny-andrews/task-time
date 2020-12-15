@@ -77,7 +77,9 @@ export default ({ backend, now = () => new Date() }) => {
     updateTaskWith(id, (task) => ({ ...task, originalDueDate: task.dueDate }));
 
   const changeTaskPosition = ({ id, newDueDate, newIndex }) => {
-    const tasks = tasksByDisplayDate()[serializeDate(newDueDate)];
+    const tasks = tasksByDisplayDate()[serializeDate(newDueDate)] || [
+      { position: 0 },
+    ];
     const oldIndex = tasks.findIndex((task) => task.id === id);
     const { left, right } =
       oldIndex > newIndex
@@ -109,7 +111,9 @@ export default ({ backend, now = () => new Date() }) => {
   // Difficulties
   const getDifficulty = (id) =>
     DIFFICULTIES.find((difficulty) => difficulty.id === id);
+
   const getDifficulties = () => DIFFICULTIES;
+
   const getTotalDifficulty = R.pipe(
     R.map((task) => getDifficulty(task.difficulty).value),
     R.sum
@@ -120,8 +124,10 @@ export default ({ backend, now = () => new Date() }) => {
       R.toPairs,
       R.filter(([date]) => isPastDate(parseISO(date), now())),
       R.map(([, tasks]) => getTotalDifficulty(tasks)),
-      (difficulties) =>
-        difficulties.length > 0 ? Math.floor(median(difficulties)) : 6
+      (difficulties) => (R.isEmpty(difficulties) ? [0] : difficulties),
+      median,
+      Math.floor,
+      R.max(3)
     )
   );
 
