@@ -36,8 +36,8 @@ const Task = ({ task, className }) => {
     getDifficulty,
     updateTask,
   } = useContext(PersistenceContext);
-  const handleTaskClick = () => toggleTask(task);
-  const handleRefreshClick = () => refreshTask(task);
+  const handleTaskClick = () => toggleTask(task.id);
+  const handleRefreshClick = () => refreshTask(task.id);
   const handleDeleteClick = () => deleteTask(task.id);
   const handleEditClick = () => {
     setIsEditing(true);

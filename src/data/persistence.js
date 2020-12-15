@@ -1,5 +1,6 @@
 import * as R from "ramda";
 import { parseISO } from "date-fns";
+import flyd from "flyd";
 import { serializeDate, isPastDate, median } from "../shared";
 import { getTasksByDueDate, TaskModel } from "./model";
 import useObservable from "../hooks/use-observable";
@@ -10,62 +11,77 @@ const DIFFICULTIES = [
   { id: "HARD", name: "hard", value: 3 },
 ];
 
-export default (backend) => {
-  const getEntities = ({ key, deserialize }) =>
-    backend.getEntities(key).map(R.map(deserialize));
-
-  const createEntity = R.curryN(2, ({ key, serialize }, entity) =>
-    backend.createEntity(key, serialize(entity))
+export default ({ backend, now = () => new Date() }) => {
+  const get = R.curryN(2, ({ key, deserialize }, id) =>
+    backend.get(key, id).map(deserialize)
   );
 
-  const updateEntity = R.curryN(2, ({ key, serialize }, id, updates) =>
-    backend.updateEntity(key, id, serialize(updates))
+  const getAll = ({ key, deserialize }) =>
+    backend.getAll(key).map(R.map(deserialize));
+
+  const create = R.curryN(2, ({ key, serialize }, entity) => {
+    const { id } = backend.create(key, serialize(entity));
+    return { ...entity, id };
+  });
+
+  const updateWith = R.curryN(
+    3,
+    ({ key, serialize, deserialize }, id, updater) =>
+      backend.update(key, id, R.pipe(deserialize, updater, serialize))
   );
 
-  const deleteEntity = R.curryN(2, ({ key }, id) =>
-    backend.deleteEntity(key, id)
+  const update = R.curryN(3, (model, id, updates) =>
+    updateWith(model, id, R.mergeLeft(updates))
   );
+
+  const remove = R.curryN(2, ({ key }, id) => backend.remove(key, id));
+
+  const getTask = get(TaskModel);
+
+  const rolloverOverdueTasks = R.map((task) => {
+    if (!task.isComplete && isPastDate(task.dueDate, now())) {
+      updateTask(task.id, { dueDate: now() });
+    }
+
+    return task;
+  });
+
+  const tasks = getAll(TaskModel);
+
+  const tasksByDisplayDate = tasks.map(getTasksByDueDate);
+
+  flyd.on((newTasks) => {
+    rolloverOverdueTasks(newTasks);
+  }, tasks);
 
   const getDifficulty = (id) =>
     DIFFICULTIES.find((difficulty) => difficulty.id === id);
 
   const getDifficulties = () => DIFFICULTIES;
 
-  const updateTask = updateEntity(TaskModel);
+  const updateTask = update(TaskModel);
 
-  const rolloverOverdueTasks = R.map((task) => {
-    if (!task.isComplete && isPastDate(task.dueDate)) {
-      updateTask(task.id, { dueDate: new Date() });
-    }
-
-    return task;
-  });
-
-  const tasks = getEntities(TaskModel).map(rolloverOverdueTasks);
-
-  const tasksByDisplayDate = tasks.map(getTasksByDueDate);
-
-  const useTasksByDisplayDate = () => useObservable([], tasksByDisplayDate);
+  const updateTaskWith = updateWith(TaskModel);
 
   const createTask = ({ text, dueDate, isImportant, difficulty, index }) =>
-    createEntity(TaskModel, {
-      createdAt: new Date(),
+    create(TaskModel, {
+      createdAt: now(),
       originalDueDate: dueDate,
       text,
-      dueDate: dueDate,
+      dueDate,
       isComplete: false,
       difficulty,
       isImportant,
       position: index + 1,
     });
 
-  const deleteTask = deleteEntity(TaskModel);
+  const deleteTask = remove(TaskModel);
 
-  const toggleTask = (task) =>
-    updateTask(task.id, { isComplete: !task.isComplete });
+  const toggleTask = (id) =>
+    updateTaskWith(id, (task) => ({ ...task, isComplete: !task.isComplete }));
 
-  const refreshTask = (task) =>
-    updateTask(task.id, { originalDueDate: task.dueDate });
+  const refreshTask = (id) =>
+    updateTaskWith(id, (task) => ({ ...task, originalDueDate: task.dueDate }));
 
   const changeTaskPosition = ({ id, newDueDate, newIndex }) => {
     const tasks = tasksByDisplayDate()[serializeDate(newDueDate)];
@@ -103,7 +119,7 @@ export default (backend) => {
   const recommendedDifficulty = tasksByDisplayDate.map(
     R.pipe(
       R.toPairs,
-      R.filter(([date]) => isPastDate(parseISO(date))),
+      R.filter(([date]) => isPastDate(parseISO(date), now())),
       R.map(([, tasks]) => getTotalDifficulty(tasks)),
       (a) => (a.length > 0 ? Math.floor(median(a)) : 6)
     )
@@ -112,12 +128,15 @@ export default (backend) => {
   const useRecommendedDifficulty = () =>
     useObservable([], recommendedDifficulty);
 
+  const useTasksByDisplayDate = () => useObservable([], tasksByDisplayDate);
+
   return {
-    getTotalDifficulty,
-    getDifficulties,
+    // Difficulties
     getDifficulty,
-    useRecommendedDifficulty,
-    useTasksByDisplayDate,
+    getDifficulties,
+    getTotalDifficulty,
+    // Tasks
+    getTask,
     updateTask,
     deleteTask,
     createTask,
@@ -125,5 +144,13 @@ export default (backend) => {
     refreshTask,
     moveTask,
     changeTaskPosition,
+    // Custom Hooks.
+    useTasksByDisplayDate,
+    useRecommendedDifficulty,
+    // Exposed for testing because I don't want to go through the rigamarole
+    // required to test hooks.
+    tasksByDisplayDate,
+    tasks,
+    recommendedDifficulty,
   };
 };

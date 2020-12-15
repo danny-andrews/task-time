@@ -4,6 +4,7 @@ import { WebsocketProvider } from "y-websocket";
 import { IndexeddbPersistence } from "y-indexeddb";
 import { v4 as uuidv4 } from "uuid";
 import flyd from "flyd";
+import R from "ramda";
 import { setMany, createMap } from "./util";
 
 const TEST_USER_ID = "test-user-3";
@@ -26,7 +27,7 @@ export default () => {
       .toArray()
       .find((entity) => entity.get("id") === id);
 
-  const getEntity = (type, id) => {
+  const get = (type, id) => {
     const yEntity = getYEntity(type, id);
     const property = flyd.stream(yEntity.toJSON());
     yEntity.observe(() => {
@@ -36,7 +37,7 @@ export default () => {
     return property;
   };
 
-  const getEntities = (type) => {
+  const getAll = (type) => {
     const yEntities = doc.getArray(type);
     const property = flyd.stream(yEntities.toJSON());
     yEntities.observeDeep(() => {
@@ -46,7 +47,7 @@ export default () => {
     return property;
   };
 
-  const createEntity = (type, attrs) => {
+  const create = (type, attrs) => {
     const id = uuidv4();
     const entity = {
       ...attrs,
@@ -59,15 +60,15 @@ export default () => {
     return yEntity.toJSON();
   };
 
-  const updateEntity = (type, id, updates) => {
+  const update = (type, id, updater) => {
     const existingEntity = getYEntity(type, id);
 
-    setMany(updates, existingEntity);
+    setMany(updater(existingEntity.toJSON()), existingEntity);
 
     return getYEntity(type, id).toJSON();
   };
 
-  const deleteEntity = (type, id) => {
+  const remove = (type, id) => {
     const yArray = doc.getArray(type);
     const index = yArray
       .toArray()
@@ -77,10 +78,10 @@ export default () => {
   };
 
   return {
-    getEntity,
-    getEntities,
-    createEntity,
-    updateEntity,
-    deleteEntity,
+    get,
+    getAll,
+    create,
+    update,
+    remove,
   };
 };

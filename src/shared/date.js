@@ -1,4 +1,4 @@
-import { formatISO, isPast, isToday } from "date-fns";
+import { formatISO, isBefore, startOfDay } from "date-fns";
 
 export const serializeDate = (date) =>
   formatISO(date, { representation: "date" });
@@ -13,4 +13,5 @@ export const formatHumanReadable = (date) => {
   return formatter.format(date);
 };
 
-export const isPastDate = (date) => !isToday(date) && isPast(date);
+export const isPastDate = (date, now = new Date()) =>
+  isBefore(date, startOfDay(now));
