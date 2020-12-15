@@ -4,7 +4,6 @@ import { WebsocketProvider } from "y-websocket";
 import { IndexeddbPersistence } from "y-indexeddb";
 import { v4 as uuidv4 } from "uuid";
 import flyd from "flyd";
-import R from "ramda";
 import { setMany, createMap } from "./util";
 
 const TEST_USER_ID = "test-user-3";
@@ -77,11 +76,5 @@ export default () => {
     yArray.delete(index);
   };
 
-  return {
-    get,
-    getAll,
-    create,
-    update,
-    remove,
-  };
+  return { get, getAll, create, update, remove };
 };

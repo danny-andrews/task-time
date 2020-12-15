@@ -75,7 +75,7 @@ const DroppableDayColumn = ({ date, tasks }) => {
     hover: (item) => {
       if (isSameDay(item.dueDate, date)) return;
 
-      moveTask({ id: item.id, newDueDate: date, newIndex: tasks.length });
+      moveTask(item.id, date);
       item.dueDate = date;
     },
   });

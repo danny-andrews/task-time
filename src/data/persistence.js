@@ -36,32 +36,16 @@ export default ({ backend, now = () => new Date() }) => {
 
   const remove = R.curryN(2, ({ key }, id) => backend.remove(key, id));
 
-  const getTask = get(TaskModel);
-
-  const rolloverOverdueTasks = R.map((task) => {
-    if (!task.isComplete && isPastDate(task.dueDate, now())) {
-      updateTask(task.id, { dueDate: now() });
-    }
-
-    return task;
-  });
-
+  // Tasks
   const tasks = getAll(TaskModel);
 
   const tasksByDisplayDate = tasks.map(getTasksByDueDate);
 
-  flyd.on((newTasks) => {
-    rolloverOverdueTasks(newTasks);
-  }, tasks);
-
-  const getDifficulty = (id) =>
-    DIFFICULTIES.find((difficulty) => difficulty.id === id);
-
-  const getDifficulties = () => DIFFICULTIES;
-
   const updateTask = update(TaskModel);
 
   const updateTaskWith = updateWith(TaskModel);
+
+  const getTask = get(TaskModel);
 
   const createTask = ({ text, dueDate, isImportant, difficulty, index }) =>
     create(TaskModel, {
@@ -76,6 +60,15 @@ export default ({ backend, now = () => new Date() }) => {
     });
 
   const deleteTask = remove(TaskModel);
+
+  const rolloverOverdueTasks = R.map((task) => {
+    if (!task.isComplete && isPastDate(task.dueDate, now())) {
+      updateTask(task.id, { dueDate: now() });
+    }
+
+    return task;
+  });
+  flyd.on(rolloverOverdueTasks, tasks);
 
   const toggleTask = (id) =>
     updateTaskWith(id, (task) => ({ ...task, isComplete: !task.isComplete }));
@@ -105,12 +98,18 @@ export default ({ backend, now = () => new Date() }) => {
     });
   };
 
-  const moveTask = ({ id, newDueDate, newIndex }) =>
+  const moveTask = (id, newDueDate) => {
+    const tasks = tasksByDisplayDate()[serializeDate(newDueDate)] || [];
     updateTask(id, {
       dueDate: newDueDate,
-      position: newIndex + 1,
+      position: tasks.length + 1,
     });
+  };
 
+  // Difficulties
+  const getDifficulty = (id) =>
+    DIFFICULTIES.find((difficulty) => difficulty.id === id);
+  const getDifficulties = () => DIFFICULTIES;
   const getTotalDifficulty = R.pipe(
     R.map((task) => getDifficulty(task.difficulty).value),
     R.sum
@@ -121,10 +120,12 @@ export default ({ backend, now = () => new Date() }) => {
       R.toPairs,
       R.filter(([date]) => isPastDate(parseISO(date), now())),
       R.map(([, tasks]) => getTotalDifficulty(tasks)),
-      (a) => (a.length > 0 ? Math.floor(median(a)) : 6)
+      (difficulties) =>
+        difficulties.length > 0 ? Math.floor(median(difficulties)) : 6
     )
   );
 
+  // Hooks
   const useRecommendedDifficulty = () =>
     useObservable([], recommendedDifficulty);
 
