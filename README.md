@@ -24,3 +24,7 @@ CSS Transforms - postcss (check postcss.config.js for plugins used)
 - `yarn lint:css` - Lints css files.
 - `yarn lint:js` - Lints js files.
 - `yarn serve` - Builds and serves files for development. Also watches files and automatically reloads. Port defaults to 10001.
+
+### Icons
+
+Icon set by [Raj Dev](https://freeicons.io/profile/714) on [freeicons.io](https://www.freeicons.io/icon-list/business-and-online-icons).
