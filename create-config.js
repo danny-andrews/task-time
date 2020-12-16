@@ -11,6 +11,9 @@ import livereload from "rollup-plugin-livereload";
 import analyze from "rollup-plugin-analyzer";
 import * as R from "ramda";
 
+const compact = R.filter((a) => !R.isEmpty(a));
+const compactAndJoin = (separator, list) => compact(list).join(separator);
+
 const htmlTemplate = ({ files, publicPath }) => {
   return `
 <!DOCTYPE html>
@@ -26,13 +29,19 @@ const htmlTemplate = ({ files, publicPath }) => {
     ${files.css
       .map(
         ({ fileName }) =>
-          `<link rel="stylesheet" type="text/css" href="/${publicPath}/${fileName}"/>`
+          `<link rel="stylesheet" type="text/css" href="/${compactAndJoin("/", [
+            publicPath,
+            fileName,
+          ])}"/>`
       )
       .join("\n")}
     ${files.js
       .map(
         ({ fileName }) =>
-          `<script src="/${publicPath}/${fileName}" defer></script>`
+          `<script src="/${compactAndJoin("/", [
+            publicPath,
+            fileName,
+          ])}" defer></script>`
       )
       .join("\n")}
   </head>
