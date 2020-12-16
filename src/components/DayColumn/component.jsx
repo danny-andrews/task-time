@@ -11,7 +11,7 @@ import {
   isPastDate,
   PersistenceContext,
 } from "../../shared";
-import { H, Disclosure, SquareButton } from "../Atoms";
+import { H, Disclosure, PrimaryButton } from "../Atoms";
 
 const Header = ({ date, difficulty, onSyncClick }) => {
   return (
@@ -21,13 +21,18 @@ const Header = ({ date, difficulty, onSyncClick }) => {
         [styles["accent"]]: isToday(date),
       })}
     >
-      <H level={2} styleLevel={4}>
+      <H level={2} styleLevel={5}>
         {formatHumanReadable(date)}
       </H>
-      <p>
-        Difficulty: <em>{difficulty}</em>{" "}
-        <SquareButton onClick={onSyncClick}>Sync</SquareButton>
-      </p>
+      <div className={styles.actions}>
+        <p className={styles.partition} />
+        <p className={styles.difficulty}>
+          Difficulty: <em>{difficulty}</em>{" "}
+        </p>
+        <div className={styles.sort}>
+          <PrimaryButton onClick={onSyncClick}>Sort</PrimaryButton>
+        </div>
+      </div>
     </header>
   );
 };

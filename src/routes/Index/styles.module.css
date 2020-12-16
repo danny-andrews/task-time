@@ -13,7 +13,7 @@
 
 @media (min-width: env(--breakpoint-phone)) {
   .root {
-    --header-area-height: calc(var(--header-height) + var(--spacing-large));
+    --header-area-height: calc(var(--header-height) + var(--spacing-medium));
 
     grid-template-areas:
       "header header header"

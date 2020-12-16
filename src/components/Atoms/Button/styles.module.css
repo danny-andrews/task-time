@@ -3,7 +3,6 @@
   cursor: pointer;
   min-height: var(--min-touch-target-size);
   min-width: var(--min-touch-target-size);
-  width: 100%;
 
   /* Prevent zoom on double-tap */
   touch-action: manipulation;
@@ -42,7 +41,7 @@
 }
 
 .disabled {
-  composes: opaque from "../../css/util.module.css";
+  composes: opaque from "../../../css/util.module.css";
   pointer-events: none;
   cursor: default;
 
