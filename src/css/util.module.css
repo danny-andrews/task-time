@@ -29,6 +29,6 @@
   outline-offset: 1px;
 }
 
-.opaque {
+.semi-transparent {
   opacity: 0.5;
 }

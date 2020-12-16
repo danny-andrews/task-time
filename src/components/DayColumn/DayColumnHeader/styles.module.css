@@ -4,10 +4,20 @@
   padding: var(--spacing-medium);
 }
 
+.accent {
+  background: var(--color-accent-1);
+}
+
+.faded {
+  composes: semi-transparent from "../../../css/util.module.css";
+}
+
 .actions {
-  display: flex;
+  --day-column-header-height: 1.5rem;
+
   align-items: stretch;
-  height: 1.5rem;
+  display: flex;
+  height: var(--day-column-header-height);
 }
 
 .partition,
@@ -16,6 +26,8 @@
 }
 
 .difficulty {
+  border-left: var(--border-solid);
+  border-right: var(--border-solid);
   flex-basis: 50%;
 }
 
@@ -25,12 +37,8 @@
   composes: center-contents from "../../../css/util.module.css";
 }
 
-.difficulty {
-  border-left: var(--border-solid);
-  border-right: var(--border-solid);
-}
-
 /* TODO: Find a better general-purpose icon-button pattern */
+/* stylelint-disable */
 .icon-button {
   border: var(--border-solid);
 
@@ -38,3 +46,4 @@
     min-width: 1.5rem;
   }
 }
+/* stylelint-enable */

@@ -56,7 +56,6 @@ const Index = () => {
         className={styles["right-nav"]}
         onRightArrowClick={goToNextDay}
         onDoubleRightArrowClick={shiftForward}
-        onHomeClick={goToCurrentDate}
         numDaysInView={numDaysInView}
       />
       <BottomNav

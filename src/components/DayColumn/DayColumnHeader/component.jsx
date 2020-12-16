@@ -7,11 +7,13 @@ import { H, IconButton } from "../../Atoms";
 import { Sort, Partition } from "../../Icons";
 
 const DayColumnHeader = ({ date, difficulty, onSortClick }) => {
+  const isInPast = isPastDate(date);
+
   return (
     <header
       className={cn(styles.header, {
-        [styles["faded"]]: isPastDate(date),
-        [styles["accent"]]: isToday(date),
+        [styles.faded]: isInPast,
+        [styles.accent]: isToday(date),
       })}
     >
       <H level={2} styleLevel={5}>
@@ -19,7 +21,7 @@ const DayColumnHeader = ({ date, difficulty, onSortClick }) => {
       </H>
       <div className={styles.actions}>
         <div className={styles.partition}>
-          <IconButton className={styles["icon-button"]}>
+          <IconButton isDisabled={isInPast} className={styles["icon-button"]}>
             <Partition />
           </IconButton>
         </div>
@@ -27,7 +29,11 @@ const DayColumnHeader = ({ date, difficulty, onSortClick }) => {
           Difficulty:&nbsp;<em>{difficulty}</em>
         </p>
         <div className={styles.sort}>
-          <IconButton onClick={onSortClick} className={styles["icon-button"]}>
+          <IconButton
+            isDisabled={isInPast}
+            onClick={onSortClick}
+            className={styles["icon-button"]}
+          >
             <Sort />
           </IconButton>
         </div>

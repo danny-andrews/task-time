@@ -41,7 +41,7 @@
 }
 
 .disabled {
-  composes: opaque from "../../../css/util.module.css";
+  composes: semi-transparent from "../../../css/util.module.css";
   pointer-events: none;
   cursor: default;
 
@@ -74,7 +74,7 @@
 
 .icon {
   composes: base rounded;
-  
+
   /* stylelint-disable-next-line selector-max-type */
   & > svg {
     vertical-align: middle;

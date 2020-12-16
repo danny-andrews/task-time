@@ -14,14 +14,6 @@
   }
 }
 
-.accent {
-  background: var(--color-accent-1);
-}
-
-.faded {
-  composes: opaque from "../../css/util.module.css";
-}
-
 .disclosure {
   width: 100%;
 }
