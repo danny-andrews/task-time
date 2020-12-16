@@ -63,19 +63,19 @@ export default ({ backend, now = () => new Date() }) => {
 
   const deleteTask = remove(TaskModel);
 
-  const rolloverOverdueTasks = R.map((task) => {
-    if (!task.isComplete && isPastDate(task.dueDate, now())) {
-      updateTask(task.id, { dueDate: now() });
-    }
+  const getOverdueTasks = R.filter(
+    (task) => !task.isComplete && isPastDate(task.dueDate, now())
+  );
 
-    return task;
+  const rolloverOverdueTasks = R.pipe(getOverdueTasks, (tasks) => {
+    backend.transact(() => {
+      tasks.forEach((task) => {
+        updateTask(task.id, { dueDate: now() });
+      });
+    });
   });
 
-  flyd.on((newTasks) => {
-    backend.doc.transact(() => {
-      rolloverOverdueTasks(newTasks);
-    });
-  }, tasks);
+  flyd.on(rolloverOverdueTasks, tasks);
 
   const toggleTask = (id) =>
     updateTaskWith(id, (task) => ({ ...task, isComplete: !task.isComplete }));
