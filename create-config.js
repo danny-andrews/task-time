@@ -26,13 +26,13 @@ const htmlTemplate = ({ files, publicPath }) => {
     ${files.css
       .map(
         ({ fileName }) =>
-          `<link rel="stylesheet" type="text/css" href="${publicPath}/${fileName}"/>`
+          `<link rel="stylesheet" type="text/css" href="/${publicPath}/${fileName}"/>`
       )
       .join("\n")}
     ${files.js
       .map(
         ({ fileName }) =>
-          `<script src="${publicPath}/${fileName}" defer></script>`
+          `<script src="/${publicPath}/${fileName}" defer></script>`
       )
       .join("\n")}
   </head>
