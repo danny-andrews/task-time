@@ -18,7 +18,9 @@ export default () => {
 
   const update = (type, id, updater) => {
     const entityLens = R.lensPath([type, id]);
-    store(R.over(entityLens, updater, store()));
+    store(
+      R.over(entityLens, (task) => ({ ...task, ...updater(task) }), store())
+    );
   };
 
   const remove = (type, id) => {

@@ -41,8 +41,6 @@ export default ({ backend, now = () => new Date() }) => {
 
   const tasksByDisplayDate = tasks.map(getTasksByDueDate);
 
-  flyd.on(() => console.log("tasks changed"), tasks);
-
   const updateTask = update(TaskModel);
 
   const updateTaskWith = updateWith(TaskModel);

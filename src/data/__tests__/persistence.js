@@ -82,7 +82,7 @@ t.test(
   }
 );
 
-t.test("#updateTask updates a task", async (is) => {
+t.test("#updateTask", async (is) => {
   const subject = Subject();
   const { id } = subject.createTask(TaskFactory({ text: "Do the dishes" }));
   subject.updateTask(id, { text: "Mow the lawn" });
