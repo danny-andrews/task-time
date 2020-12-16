@@ -22,31 +22,6 @@
   composes: opaque from "../../css/util.module.css";
 }
 
-.header {
-  composes: inner-spacing-small from "../../css/util.module.css";
-  border-bottom: var(--border-solid);
-  padding: var(--spacing-small);
-}
-
-.actions {
-  display: flex;
-  align-items: center;
-}
-
-.partition,
-.sort {
-  flex-basis: 30%;
-}
-
-.difficulty {
-  flex-basis: 40%;
-}
-
-.difficulty {
-  border-left: var(--border-solid);
-  border-right: var(--border-solid);
-}
-
 .disclosure {
   width: 100%;
 }

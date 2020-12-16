@@ -1,0 +1,40 @@
+.header {
+  composes: inner-spacing-medium from "../../../css/util.module.css";
+  border-bottom: var(--border-solid);
+  padding: var(--spacing-medium);
+}
+
+.actions {
+  display: flex;
+  align-items: stretch;
+  height: 1.5rem;
+}
+
+.partition,
+.sort {
+  flex-basis: 25%;
+}
+
+.difficulty {
+  flex-basis: 50%;
+}
+
+.partition,
+.sort,
+.difficulty {
+  composes: center-contents from "../../../css/util.module.css";
+}
+
+.difficulty {
+  border-left: var(--border-solid);
+  border-right: var(--border-solid);
+}
+
+/* TODO: Find a better general-purpose icon-button pattern */
+.icon-button {
+  border: var(--border-solid);
+
+  & svg {
+    min-width: 1.5rem;
+  }
+}

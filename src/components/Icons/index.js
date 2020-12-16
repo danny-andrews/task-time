@@ -8,3 +8,5 @@ export { default as Refresh } from "./Refresh.jsx";
 export { default as RightArrow } from "./RightArrow.jsx";
 export { default as Save } from "./Save.jsx";
 export { default as Trash } from "./Trash.jsx";
+export { default as Partition } from "./Partition.jsx";
+export { default as Sort } from "./Sort.jsx";

@@ -1,43 +1,12 @@
 import React, { forwardRef, useContext } from "react";
-import cn from "classnames";
 import { useDrop } from "react-dnd";
-import { isToday, isSameDay } from "date-fns";
+import { isSameDay } from "date-fns";
 import TaskForm from "../TaskForm";
 import Tasks from "../Tasks";
 import styles from "./styles.module.css";
-import {
-  DND_IDS,
-  formatHumanReadable,
-  isPastDate,
-  PersistenceContext,
-} from "../../shared";
-import { H, Disclosure, PrimaryButton } from "../Atoms";
-
-const Header = ({ date, difficulty, onSyncClick }) => {
-  return (
-    <header
-      className={cn(styles.header, {
-        [styles["faded"]]: isPastDate(date),
-        [styles["accent"]]: isToday(date),
-      })}
-    >
-      <H level={2} styleLevel={5}>
-        {formatHumanReadable(date)}
-      </H>
-      <div className={styles.actions}>
-        <div className={styles.partition}>
-          <PrimaryButton>Partition</PrimaryButton>
-        </div>
-        <p className={styles.difficulty}>
-          Difficulty: <em>{difficulty}</em>{" "}
-        </p>
-        <div className={styles.sort}>
-          <PrimaryButton onClick={onSyncClick}>Sort</PrimaryButton>
-        </div>
-      </div>
-    </header>
-  );
-};
+import { DND_IDS, isPastDate, PersistenceContext } from "../../shared";
+import { Disclosure } from "../Atoms";
+import DayColumnHeader from "./DayColumnHeader";
 
 const DayColumn = forwardRef(({ date, tasks, blocked }, ref) => {
   const { createTask, getTotalDifficulty, sortTasksInDay } = useContext(
@@ -62,16 +31,16 @@ const DayColumn = forwardRef(({ date, tasks, blocked }, ref) => {
       </Disclosure>
     );
   };
-  const handleSyncClick = () => {
+  const handleSortClick = () => {
     sortTasksInDay(date);
   };
 
   return (
     <li ref={ref} className={styles.root}>
-      <Header
+      <DayColumnHeader
         date={date}
         difficulty={getTotalDifficulty(tasks)}
-        onSyncClick={handleSyncClick}
+        onSortClick={handleSortClick}
       />
       <Tasks isInPast={isInPast} isBlocked={blocked} tasks={tasks} />
       {renderTaskForm()}
