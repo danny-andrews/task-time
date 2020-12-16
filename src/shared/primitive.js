@@ -20,6 +20,8 @@ export const median = (numbers) => {
 // List
 export const mapIndexed = R.addIndex(R.map);
 
+export const forEachIndexed = R.addIndex(R.forEach);
+
 // Function
 export const noop = R.always;
 

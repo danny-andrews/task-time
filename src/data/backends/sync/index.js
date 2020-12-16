@@ -76,5 +76,7 @@ export default () => {
     yArray.delete(index);
   };
 
-  return { get, getAll, create, update, remove };
+  const transact = doc.transact;
+
+  return { get, getAll, create, update, remove, transact };
 };

@@ -1,5 +1,5 @@
 import flyd from "flyd";
-import R from "ramda";
+import * as R from "ramda";
 
 export default () => {
   const store = flyd.stream({});
@@ -25,5 +25,7 @@ export default () => {
     store(R.over(R.lensProp(type), R.omit([id]), store()));
   };
 
-  return { getAll, get, create, update, remove };
+  const transact = (fn) => fn();
+
+  return { getAll, get, create, update, remove, transact };
 };

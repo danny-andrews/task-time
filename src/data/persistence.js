@@ -1,8 +1,8 @@
 import * as R from "ramda";
 import { parseISO } from "date-fns";
 import flyd from "flyd";
-import { serializeDate, isPastDate, median } from "../shared";
-import { getTasksByDueDate, TaskModel } from "./model";
+import { serializeDate, isPastDate, median, forEachIndexed } from "../shared";
+import { getTasksByDueDate, TaskModel, getTaskStaleness } from "./model";
 import useObservable from "../hooks/use-observable";
 
 const DIFFICULTIES = [
@@ -41,6 +41,8 @@ export default ({ backend, now = () => new Date() }) => {
 
   const tasksByDisplayDate = tasks.map(getTasksByDueDate);
 
+  flyd.on(() => console.log("tasks changed"), tasks);
+
   const updateTask = update(TaskModel);
 
   const updateTaskWith = updateWith(TaskModel);
@@ -68,7 +70,12 @@ export default ({ backend, now = () => new Date() }) => {
 
     return task;
   });
-  flyd.on(rolloverOverdueTasks, tasks);
+
+  flyd.on((newTasks) => {
+    backend.transact(() => {
+      rolloverOverdueTasks(newTasks);
+    });
+  }, tasks);
 
   const toggleTask = (id) =>
     updateTaskWith(id, (task) => ({ ...task, isComplete: !task.isComplete }));
@@ -81,6 +88,8 @@ export default ({ backend, now = () => new Date() }) => {
       { position: 0 },
     ];
     const oldIndex = tasks.findIndex((task) => task.id === id);
+    if (oldIndex === newIndex) return;
+
     const { left, right } =
       oldIndex > newIndex
         ? {
@@ -112,12 +121,15 @@ export default ({ backend, now = () => new Date() }) => {
   const getDifficulty = (id) =>
     DIFFICULTIES.find((difficulty) => difficulty.id === id);
 
+  const getTaskDifficulty = R.pipe(
+    R.prop("difficulty"),
+    getDifficulty,
+    R.prop("value")
+  );
+
   const getDifficulties = () => DIFFICULTIES;
 
-  const getTotalDifficulty = R.pipe(
-    R.map((task) => getDifficulty(task.difficulty).value),
-    R.sum
-  );
+  const getTotalDifficulty = R.pipe(R.map(getTaskDifficulty), R.sum);
 
   const recommendedDifficulty = tasksByDisplayDate.map(
     R.pipe(
@@ -131,6 +143,37 @@ export default ({ backend, now = () => new Date() }) => {
     )
   );
 
+  // This is a little cheeky, but I like how concise it is.
+  const byIsImportant = R.descend(R.prop("isImportant"));
+
+  const byDifficulty = R.descend(getTaskDifficulty);
+
+  const byStaleness = R.descend(getTaskStaleness);
+
+  const byIsComplete = R.ascend(R.prop("isComplete"));
+
+  const taskSort = R.sortWith([
+    byIsComplete,
+    byIsImportant,
+    byDifficulty,
+    byStaleness,
+  ]);
+
+  const sortTasksInDay = (dueDate) => {
+    backend.transact(() => {
+      R.pipe(
+        taskSort,
+        forEachIndexed(({ id, dueDate }, i) => {
+          changeTaskPosition({
+            id,
+            newDueDate: dueDate,
+            newIndex: i,
+          });
+        })
+      )(tasksByDisplayDate()[serializeDate(dueDate)] || []);
+    });
+  };
+
   // Hooks
   const useRecommendedDifficulty = () =>
     useObservable([], recommendedDifficulty);
@@ -139,7 +182,7 @@ export default ({ backend, now = () => new Date() }) => {
 
   return {
     // Difficulties
-    getDifficulty,
+    getTaskDifficulty,
     getDifficulties,
     getTotalDifficulty,
     // Tasks
@@ -151,6 +194,7 @@ export default ({ backend, now = () => new Date() }) => {
     refreshTask,
     moveTask,
     changeTaskPosition,
+    sortTasksInDay,
     // Custom Hooks.
     useTasksByDisplayDate,
     useRecommendedDifficulty,
