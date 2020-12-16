@@ -78,5 +78,5 @@ export default () => {
 
   const transact = doc.transact;
 
-  return { get, getAll, create, update, remove, transact };
+  return { get, getAll, create, update, remove, transact, doc };
 };

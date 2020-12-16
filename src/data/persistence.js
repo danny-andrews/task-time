@@ -72,7 +72,7 @@ export default ({ backend, now = () => new Date() }) => {
   });
 
   flyd.on((newTasks) => {
-    backend.transact(() => {
+    backend.doc.transact(() => {
       rolloverOverdueTasks(newTasks);
     });
   }, tasks);
