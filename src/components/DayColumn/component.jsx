@@ -25,7 +25,9 @@ const Header = ({ date, difficulty, onSyncClick }) => {
         {formatHumanReadable(date)}
       </H>
       <div className={styles.actions}>
-        <p className={styles.partition} />
+        <div className={styles.partition}>
+          <PrimaryButton>Partition</PrimaryButton>
+        </div>
         <p className={styles.difficulty}>
           Difficulty: <em>{difficulty}</em>{" "}
         </p>
