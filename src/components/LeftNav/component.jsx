@@ -5,9 +5,9 @@ import { LeftArrow, DoubleLeftArrow, Home } from "../Icons";
 const LeftNav = ({
   onLeftArrowClick,
   onDoubleLeftArrowClick,
+  onHomeClick,
   numDaysInView,
   className,
-  onHomeClick,
 }) => (
   <VerticalNav className={className}>
     <IconButton onClick={onLeftArrowClick} aria-label="Shift backward one day">

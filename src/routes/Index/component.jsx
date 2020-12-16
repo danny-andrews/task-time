@@ -45,6 +45,7 @@ const Index = () => {
         className={styles["left-nav"]}
         onLeftArrowClick={goToPrevDay}
         onDoubleLeftArrowClick={shiftBackward}
+        onHomeClick={goToCurrentDate}
         numDaysInView={numDaysInView}
       />
       <DayColumns
