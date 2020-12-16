@@ -52,7 +52,7 @@
 }
 
 .padded {
-  padding: var(--spacing-tiny) var(--spacing-small);
+  padding: var(--spacing-tiny);
 }
 
 .bordered {
@@ -73,7 +73,7 @@
 }
 
 .icon {
-  composes: base rounded;
+  composes: base rounded padded;
 
   /* stylelint-disable-next-line selector-max-type */
   & > svg {
