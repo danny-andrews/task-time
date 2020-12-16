@@ -24,7 +24,6 @@ const Task = ({ task, className }) => {
     createdAt,
     text,
     isImportant,
-    difficulty: difficultyId,
     originalDueDate,
     dueDate,
   } = task;
@@ -33,7 +32,7 @@ const Task = ({ task, className }) => {
     toggleTask,
     refreshTask,
     deleteTask,
-    getDifficulty,
+    getTaskDifficulty,
     updateTask,
   } = useContext(PersistenceContext);
   const handleTaskClick = () => toggleTask(task.id);
@@ -54,7 +53,7 @@ const Task = ({ task, className }) => {
   });
 
   const staleness = getTaskStaleness({ createdAt, originalDueDate });
-  const difficulty = getDifficulty(difficultyId).value;
+  const difficulty = getTaskDifficulty(task);
 
   return (
     <TaskComponent

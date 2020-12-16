@@ -1,5 +1,5 @@
 import t from "tap";
-import R from "ramda";
+import * as R from "ramda";
 import { parseISO } from "date-fns";
 import Persistence from "../persistence";
 import { InMemoryBackend } from "../backends";
@@ -114,23 +114,11 @@ t.test(
   }
 );
 
-t.test("#getDifficulty returns difficulty", async (is) => {
+t.test("#getTaskDifficulty returns difficulty", async (is) => {
   const subject = Subject();
-  is.same(subject.getDifficulty("EASY"), {
-    id: "EASY",
-    name: "easy",
-    value: 1,
-  });
-  is.same(subject.getDifficulty("MEDIUM"), {
-    id: "MEDIUM",
-    name: "medium",
-    value: 2,
-  });
-  is.same(subject.getDifficulty("HARD"), {
-    id: "HARD",
-    name: "hard",
-    value: 3,
-  });
+  is.same(subject.getTaskDifficulty({ difficulty: "EASY" }), 1);
+  is.same(subject.getTaskDifficulty({ difficulty: "MEDIUM" }), 2);
+  is.same(subject.getTaskDifficulty({ difficulty: "HARD" }), 3);
 });
 
 t.test("#getDifficulties returns all difficulties", async (is) => {
@@ -317,3 +305,77 @@ t.test(
     is.same(subject.recommendedDifficulty(), 3, "odd number of days");
   }
 );
+
+t.test("#sortTasks", async (is) => {
+  const dueDate = "2020-10-05";
+  const subject = Subject({ now: () => parseISO("2020-09-01") });
+  const { id: id1 } = subject.createTask(
+    TaskFactory({
+      dueDate: parseISO(dueDate),
+      index: 0,
+      isImportant: false,
+      difficulty: "EASY",
+    })
+  );
+
+  const { id: id2 } = subject.createTask(
+    TaskFactory({
+      dueDate: parseISO(dueDate),
+      index: 1,
+      isImportant: true,
+      difficulty: "EASY",
+    })
+  );
+
+  const { id: id3, position } = subject.createTask(
+    TaskFactory({
+      dueDate: parseISO(dueDate),
+      index: 2,
+      isImportant: false,
+      difficulty: "HARD",
+    })
+  );
+
+  const { id: id4 } = subject.createTask(
+    TaskFactory({
+      dueDate: parseISO(dueDate),
+      index: 3,
+      isImportant: true,
+      difficulty: "HARD",
+    })
+  );
+  subject.toggleTask(id4);
+
+  const { id: id5 } = subject.createTask(
+    TaskFactory({
+      dueDate: parseISO(dueDate),
+      index: 4,
+      isImportant: false,
+      difficulty: "EASY",
+    })
+  );
+  // i.e. Give it a staleness value
+  subject.updateTask(id5, { originalDueDate: parseISO("2020-10-03") });
+
+  const { id: id6 } = subject.createTask(
+    TaskFactory({
+      dueDate: parseISO(dueDate),
+      index: 4,
+      isImportant: false,
+      difficulty: "EASY",
+    })
+  );
+  // Make it come before id4
+  subject.updateTask(id6, { position: position - 1 });
+
+  subject.sortTasksInDay(parseISO(dueDate));
+
+  is.same(subject.tasksByDisplayDate()[dueDate].map(R.prop("id")), [
+    id2,
+    id3,
+    id5,
+    id1,
+    id6,
+    id4,
+  ]);
+});

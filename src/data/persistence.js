@@ -2,7 +2,7 @@ import * as R from "ramda";
 import { parseISO } from "date-fns";
 import flyd from "flyd";
 import { serializeDate, isPastDate, median } from "../shared";
-import { getTasksByDueDate, TaskModel } from "./model";
+import { getTasksByDueDate, TaskModel, getTaskStaleness } from "./model";
 import useObservable from "../hooks/use-observable";
 
 const DIFFICULTIES = [
@@ -31,7 +31,7 @@ export default ({ backend, now = () => new Date() }) => {
   );
 
   const update = R.curryN(3, (model, id, updates) =>
-    updateWith(model, id, R.mergeLeft(updates))
+    updateWith(model, id, R.always(updates))
   );
 
   const remove = R.curryN(2, ({ key }, id) => backend.remove(key, id));
@@ -40,6 +40,8 @@ export default ({ backend, now = () => new Date() }) => {
   const tasks = getAll(TaskModel);
 
   const tasksByDisplayDate = tasks.map(getTasksByDueDate);
+
+  flyd.on(() => console.log("tasks changed"), tasks);
 
   const updateTask = update(TaskModel);
 
@@ -61,26 +63,36 @@ export default ({ backend, now = () => new Date() }) => {
 
   const deleteTask = remove(TaskModel);
 
-  const rolloverOverdueTasks = R.map((task) => {
-    if (!task.isComplete && isPastDate(task.dueDate, now())) {
-      updateTask(task.id, { dueDate: now() });
-    }
+  const getOverdueTasks = R.filter(
+    (task) => !task.isComplete && isPastDate(task.dueDate, now())
+  );
 
-    return task;
+  const rolloverOverdueTasks = R.pipe(getOverdueTasks, (tasks) => {
+    backend.transact(() => {
+      tasks.forEach((task) => {
+        updateTask(task.id, { dueDate: now() });
+      });
+    });
   });
+
   flyd.on(rolloverOverdueTasks, tasks);
 
   const toggleTask = (id) =>
-    updateTaskWith(id, (task) => ({ ...task, isComplete: !task.isComplete }));
+    updateTaskWith(id, (task) => ({ isComplete: !task.isComplete }));
 
   const refreshTask = (id) =>
-    updateTaskWith(id, (task) => ({ ...task, originalDueDate: task.dueDate }));
+    updateTaskWith(id, (task) => ({ originalDueDate: task.dueDate }));
+
+  const getTasksForDueDate = (dueDate) =>
+    tasksByDisplayDate()[serializeDate(dueDate)] || [];
 
   const changeTaskPosition = ({ id, newDueDate, newIndex }) => {
     const tasks = tasksByDisplayDate()[serializeDate(newDueDate)] || [
       { position: 0 },
     ];
     const oldIndex = tasks.findIndex((task) => task.id === id);
+    if (oldIndex === newIndex) return;
+
     const { left, right } =
       oldIndex > newIndex
         ? {
@@ -101,10 +113,9 @@ export default ({ backend, now = () => new Date() }) => {
   };
 
   const moveTask = (id, newDueDate) => {
-    const tasks = tasksByDisplayDate()[serializeDate(newDueDate)] || [];
     updateTask(id, {
       dueDate: newDueDate,
-      position: tasks.length + 1,
+      position: getTasksForDueDate(newDueDate).length + 1,
     });
   };
 
@@ -112,12 +123,15 @@ export default ({ backend, now = () => new Date() }) => {
   const getDifficulty = (id) =>
     DIFFICULTIES.find((difficulty) => difficulty.id === id);
 
+  const getTaskDifficulty = R.pipe(
+    R.prop("difficulty"),
+    getDifficulty,
+    R.prop("value")
+  );
+
   const getDifficulties = () => DIFFICULTIES;
 
-  const getTotalDifficulty = R.pipe(
-    R.map((task) => getDifficulty(task.difficulty).value),
-    R.sum
-  );
+  const getTotalDifficulty = R.pipe(R.map(getTaskDifficulty), R.sum);
 
   const recommendedDifficulty = tasksByDisplayDate.map(
     R.pipe(
@@ -131,6 +145,36 @@ export default ({ backend, now = () => new Date() }) => {
     )
   );
 
+  // This is a little cheeky, but I like how concise it is.
+  const byIsImportant = R.descend(R.prop("isImportant"));
+
+  const byDifficulty = R.descend(getTaskDifficulty);
+
+  const byStaleness = R.descend(getTaskStaleness);
+
+  const byIsComplete = R.ascend(R.prop("isComplete"));
+
+  const taskSort = R.sortWith([
+    byIsComplete,
+    byIsImportant,
+    byDifficulty,
+    byStaleness,
+  ]);
+
+  const setPositions = (tasks) => {
+    backend.transact(() => {
+      tasks.forEach(({ id, dueDate }, i) => {
+        changeTaskPosition({
+          id,
+          newDueDate: dueDate,
+          newIndex: i,
+        });
+      });
+    });
+  };
+
+  const sortTasksInDay = R.pipe(getTasksForDueDate, taskSort, setPositions);
+
   // Hooks
   const useRecommendedDifficulty = () =>
     useObservable([], recommendedDifficulty);
@@ -139,7 +183,7 @@ export default ({ backend, now = () => new Date() }) => {
 
   return {
     // Difficulties
-    getDifficulty,
+    getTaskDifficulty,
     getDifficulties,
     getTotalDifficulty,
     // Tasks
@@ -151,6 +195,7 @@ export default ({ backend, now = () => new Date() }) => {
     refreshTask,
     moveTask,
     changeTaskPosition,
+    sortTasksInDay,
     // Custom Hooks.
     useTasksByDisplayDate,
     useRecommendedDifficulty,

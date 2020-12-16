@@ -11,9 +11,9 @@ import {
   isPastDate,
   PersistenceContext,
 } from "../../shared";
-import { H, Disclosure } from "../Atoms";
+import { H, Disclosure, SquareButton } from "../Atoms";
 
-const Header = ({ date, difficulty }) => {
+const Header = ({ date, difficulty, onSyncClick }) => {
   return (
     <header
       className={cn(styles.header, {
@@ -25,14 +25,17 @@ const Header = ({ date, difficulty }) => {
         {formatHumanReadable(date)}
       </H>
       <p>
-        Difficulty: <em>{difficulty}</em>
+        Difficulty: <em>{difficulty}</em>{" "}
+        <SquareButton onClick={onSyncClick}>Sync</SquareButton>
       </p>
     </header>
   );
 };
 
 const DayColumn = forwardRef(({ date, tasks, blocked }, ref) => {
-  const { createTask, getTotalDifficulty } = useContext(PersistenceContext);
+  const { createTask, getTotalDifficulty, sortTasksInDay } = useContext(
+    PersistenceContext
+  );
   const isInPast = isPastDate(date);
 
   const renderTaskForm = () => {
@@ -52,10 +55,17 @@ const DayColumn = forwardRef(({ date, tasks, blocked }, ref) => {
       </Disclosure>
     );
   };
+  const handleSyncClick = () => {
+    sortTasksInDay(date);
+  };
 
   return (
     <li ref={ref} className={styles.root}>
-      <Header date={date} difficulty={getTotalDifficulty(tasks)} />
+      <Header
+        date={date}
+        difficulty={getTotalDifficulty(tasks)}
+        onSyncClick={handleSyncClick}
+      />
       <Tasks isInPast={isInPast} isBlocked={blocked} tasks={tasks} />
       {renderTaskForm()}
     </li>
