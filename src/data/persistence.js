@@ -1,5 +1,5 @@
 import * as R from "ramda";
-import { parseISO } from "date-fns";
+import { parseISO, isSameDay, addDays } from "date-fns";
 import flyd from "flyd";
 import { serializeDate, isPastDate, median } from "../shared";
 import { getTasksByDueDate, TaskModel, getTaskStaleness } from "./model";
@@ -145,11 +145,8 @@ export default ({ backend, now = () => new Date() }) => {
 
   // This is a little cheeky, but I like how concise it is.
   const byIsImportant = R.descend(R.prop("isImportant"));
-
   const byDifficulty = R.descend(getTaskDifficulty);
-
   const byStaleness = R.descend(getTaskStaleness);
-
   const byIsComplete = R.ascend(R.prop("isComplete"));
 
   const taskSort = R.sortWith([
@@ -173,6 +170,50 @@ export default ({ backend, now = () => new Date() }) => {
 
   const sortTasksInDay = R.pipe(getTasksForDueDate, taskSort, setPositions);
 
+  const getPartitionedTasks3 = (dueDate, tasks, maxDifficulty) => {
+    if (R.isEmpty(tasks)) return [];
+
+    let thisDaysTasks = [];
+    let nextDaysTasks = [];
+    let currentDifficulty = 0;
+    tasks.forEach((task) => {
+      const difficulty = getTaskDifficulty(task);
+      if (difficulty + currentDifficulty <= maxDifficulty) {
+        thisDaysTasks = R.append(task, thisDaysTasks);
+        currentDifficulty += difficulty;
+      } else {
+        nextDaysTasks = R.append(task, nextDaysTasks);
+      }
+    });
+
+    const nextDate = addDays(dueDate, 1);
+    const nextTasks = [...nextDaysTasks, ...getTasksForDueDate(nextDate)];
+
+    return [
+      [dueDate, thisDaysTasks],
+      ...getPartitionedTasks3(nextDate, nextTasks, maxDifficulty),
+    ];
+  };
+
+  const getPartitionedTasks = (dueDate) =>
+    getPartitionedTasks3(
+      dueDate,
+      getTasksForDueDate(dueDate),
+      recommendedDifficulty()
+    );
+
+  const partitionTasks = (dueDate) => {
+    backend.transact(() => {
+      getPartitionedTasks(dueDate).forEach(([dueDate, tasks]) => {
+        tasks.forEach((task) => {
+          if (!isSameDay(task.dueDate, dueDate)) {
+            moveTask(task.id, dueDate);
+          }
+        });
+      });
+    });
+  };
+
   // Hooks
   const useRecommendedDifficulty = () =>
     useObservable([], recommendedDifficulty);
@@ -194,6 +235,7 @@ export default ({ backend, now = () => new Date() }) => {
     moveTask,
     changeTaskPosition,
     sortTasksInDay,
+    partitionTasks,
     // Custom Hooks.
     useTasksByDisplayDate,
     useRecommendedDifficulty,

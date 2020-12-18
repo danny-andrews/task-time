@@ -16,6 +16,21 @@ const TaskFactory = (attrs = {}) => ({
 const Subject = (attrs = {}) =>
   Persistence({ backend: InMemoryBackend(), ...attrs });
 
+const createCompletedTask = (subject, { difficulty, dueDate }) => {
+  const task = subject.createTask(
+    TaskFactory({
+      difficulty,
+      index: 0,
+    })
+  );
+  subject.updateTask(task.id, {
+    dueDate,
+    isComplete: true,
+  });
+
+  return task;
+};
+
 t.test(
   "#tasksByDisplayDate is an observable containing all deserialized tasks, partitioned by dueDate and sorted by position",
   async (is) => {
@@ -254,39 +269,24 @@ t.test(
   "#recommendedDifficulty returns median of the total difficulty of tasks completed per day in past, rounded down to nearest integer",
   async (is) => {
     const subject = Subject({ now: () => parseISO("2020-09-01") });
-    const createCompletedTask = ({ difficulty, dueDate }) => {
-      const task = subject.createTask(
-        TaskFactory({
-          difficulty,
-          index: 0,
-        })
-      );
-      subject.updateTask(task.id, {
-        dueDate,
-        isComplete: true,
-      });
-
-      return task;
-    };
-
     is.same(subject.recommendedDifficulty(), 3, "defaults value to 3");
 
-    createCompletedTask({
+    createCompletedTask(subject, {
       difficulty: "EASY",
       dueDate: parseISO("2020-08-01"),
     });
 
     is.same(subject.recommendedDifficulty(), 3, "minimum of 3");
 
-    createCompletedTask({
+    createCompletedTask(subject, {
       difficulty: "MEDIUM",
       dueDate: parseISO("2020-08-01"),
     });
-    createCompletedTask({
+    createCompletedTask(subject, {
       difficulty: "HARD",
       dueDate: parseISO("2020-08-02"),
     });
-    createCompletedTask({
+    createCompletedTask(subject, {
       difficulty: "HARD",
       dueDate: parseISO("2020-08-02"),
     });
@@ -297,7 +297,7 @@ t.test(
       "even number of days, floors median"
     );
 
-    createCompletedTask({
+    createCompletedTask(subject, {
       difficulty: "HARD",
       dueDate: parseISO("2020-08-03"),
     });
@@ -306,76 +306,130 @@ t.test(
   }
 );
 
-t.test("#sortTasks", async (is) => {
-  const dueDate = "2020-10-05";
+t.test(
+  "#sortTasks stably sorts tasks by completion status, importance, difficulty, and staleness",
+  async (is) => {
+    const dueDate = "2020-10-05";
+    const subject = Subject({ now: () => parseISO("2020-09-01") });
+    const { id: id1 } = subject.createTask(
+      TaskFactory({
+        dueDate: parseISO(dueDate),
+        index: 0,
+        isImportant: false,
+        difficulty: "EASY",
+      })
+    );
+
+    const { id: id2 } = subject.createTask(
+      TaskFactory({
+        dueDate: parseISO(dueDate),
+        index: 1,
+        isImportant: true,
+        difficulty: "EASY",
+      })
+    );
+
+    const { id: id3, position } = subject.createTask(
+      TaskFactory({
+        dueDate: parseISO(dueDate),
+        index: 2,
+        isImportant: false,
+        difficulty: "HARD",
+      })
+    );
+
+    const { id: id4 } = subject.createTask(
+      TaskFactory({
+        dueDate: parseISO(dueDate),
+        index: 3,
+        isImportant: true,
+        difficulty: "HARD",
+      })
+    );
+    subject.toggleTask(id4);
+
+    const { id: id5 } = subject.createTask(
+      TaskFactory({
+        dueDate: parseISO(dueDate),
+        index: 4,
+        isImportant: false,
+        difficulty: "EASY",
+      })
+    );
+    // i.e. Give it a staleness value
+    subject.updateTask(id5, { originalDueDate: parseISO("2020-10-03") });
+
+    const { id: id6 } = subject.createTask(
+      TaskFactory({
+        dueDate: parseISO(dueDate),
+        index: 4,
+        isImportant: false,
+        difficulty: "EASY",
+      })
+    );
+    // Make it come before id4
+    subject.updateTask(id6, { position: position - 1 });
+
+    subject.sortTasksInDay(parseISO(dueDate));
+
+    is.same(subject.tasksByDisplayDate()[dueDate].map(R.prop("id")), [
+      id2,
+      id3,
+      id5,
+      id1,
+      id6,
+      id4,
+    ]);
+  }
+);
+
+t.test("#reallocateTasks", async (is) => {
   const subject = Subject({ now: () => parseISO("2020-09-01") });
-  const { id: id1 } = subject.createTask(
-    TaskFactory({
-      dueDate: parseISO(dueDate),
-      index: 0,
-      isImportant: false,
-      difficulty: "EASY",
-    })
-  );
+
+  // Recommended difficulty = 3
+  createCompletedTask(subject, {
+    difficulty: "HARD",
+    dueDate: parseISO("2020-08-01"),
+  });
+  is.same(subject.recommendedDifficulty(), 3);
 
   const { id: id2 } = subject.createTask(
     TaskFactory({
-      dueDate: parseISO(dueDate),
-      index: 1,
-      isImportant: true,
-      difficulty: "EASY",
+      dueDate: parseISO("2020-09-01"),
+      index: 0,
+      difficulty: "MEDIUM",
     })
   );
-
-  const { id: id3, position } = subject.createTask(
+  const { id: id3 } = subject.createTask(
     TaskFactory({
-      dueDate: parseISO(dueDate),
-      index: 2,
-      isImportant: false,
-      difficulty: "HARD",
+      dueDate: parseISO("2020-09-01"),
+      index: 1,
+      difficulty: "MEDIUM",
     })
   );
-
   const { id: id4 } = subject.createTask(
     TaskFactory({
-      dueDate: parseISO(dueDate),
-      index: 3,
-      isImportant: true,
-      difficulty: "HARD",
+      dueDate: parseISO("2020-09-01"),
+      index: 0,
+      difficulty: "EASY",
     })
   );
-  subject.toggleTask(id4);
-
   const { id: id5 } = subject.createTask(
     TaskFactory({
-      dueDate: parseISO(dueDate),
-      index: 4,
-      isImportant: false,
+      dueDate: parseISO("2020-09-02"),
+      index: 0,
       difficulty: "EASY",
     })
   );
-  // i.e. Give it a staleness value
-  subject.updateTask(id5, { originalDueDate: parseISO("2020-10-03") });
 
-  const { id: id6 } = subject.createTask(
-    TaskFactory({
-      dueDate: parseISO(dueDate),
-      index: 4,
-      isImportant: false,
-      difficulty: "EASY",
-    })
-  );
-  // Make it come before id4
-  subject.updateTask(id6, { position: position - 1 });
+  subject.partitionTasks(parseISO("2020-09-01"));
 
-  subject.sortTasksInDay(parseISO(dueDate));
-
-  is.same(subject.tasksByDisplayDate()[dueDate].map(R.prop("id")), [
+  is.same(subject.tasksByDisplayDate()["2020-09-01"].map(R.prop("id")), [
     id2,
-    id3,
-    id5,
-    id1,
-    id6,
     id4,
+  ]);
+  is.same(subject.tasksByDisplayDate()["2020-09-02"].map(R.prop("id")), [
+    id5,
+    id3,
   ]);
 });

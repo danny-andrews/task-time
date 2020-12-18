@@ -9,9 +9,12 @@ import { Disclosure } from "../Atoms";
 import DayColumnHeader from "./DayColumnHeader";
 
 const DayColumn = forwardRef(({ date, tasks, blocked }, ref) => {
-  const { createTask, getTotalDifficulty, sortTasksInDay } = useContext(
-    PersistenceContext
-  );
+  const {
+    createTask,
+    getTotalDifficulty,
+    sortTasksInDay,
+    partitionTasks,
+  } = useContext(PersistenceContext);
   const isInPast = isPastDate(date);
 
   const renderTaskForm = () => {
@@ -34,6 +37,9 @@ const DayColumn = forwardRef(({ date, tasks, blocked }, ref) => {
   const handleSortClick = () => {
     sortTasksInDay(date);
   };
+  const handlePartitionClick = () => {
+    partitionTasks(date);
+  };
 
   return (
     <li ref={ref} className={styles.root}>
@@ -41,6 +47,7 @@ const DayColumn = forwardRef(({ date, tasks, blocked }, ref) => {
         date={date}
         difficulty={getTotalDifficulty(tasks)}
         onSortClick={handleSortClick}
+        onPartitionClick={handlePartitionClick}
       />
       <Tasks isInPast={isInPast} isBlocked={blocked} tasks={tasks} />
       {renderTaskForm()}

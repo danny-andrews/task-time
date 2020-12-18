@@ -6,7 +6,12 @@ import { formatHumanReadable, isPastDate } from "../../../shared";
 import { H, IconButton } from "../../Atoms";
 import { Sort, Partition } from "../../Icons";
 
-const DayColumnHeader = ({ date, difficulty, onSortClick }) => {
+const DayColumnHeader = ({
+  date,
+  difficulty,
+  onSortClick,
+  onPartitionClick,
+}) => {
   const isInPast = isPastDate(date);
 
   return (
@@ -21,7 +26,12 @@ const DayColumnHeader = ({ date, difficulty, onSortClick }) => {
       </H>
       <div className={styles.actions}>
         <div className={styles.partition}>
-          <IconButton isDisabled={isInPast} className={styles["icon-button"]}>
+          <IconButton
+            isDisabled={isInPast}
+            onClick={onPartitionClick}
+            className={styles["icon-button"]}
+            aria-label="Repartition tasks"
+          >
             <Partition />
           </IconButton>
         </div>
@@ -33,6 +43,7 @@ const DayColumnHeader = ({ date, difficulty, onSortClick }) => {
             isDisabled={isInPast}
             onClick={onSortClick}
             className={styles["icon-button"]}
+            aria-label="Sort tasks"
           >
             <Sort />
           </IconButton>
