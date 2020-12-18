@@ -47,7 +47,9 @@ const TaskForm = ({ onSubmit }) => {
 
         <Switch label="Important?" name="important" />
 
-        <PrimaryButton type="submit">Create Task</PrimaryButton>
+        <PrimaryButton type="submit" fullWidth>
+          Create Task
+        </PrimaryButton>
       </Form>
     </Formik>
   );

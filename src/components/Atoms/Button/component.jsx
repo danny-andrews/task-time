@@ -10,6 +10,7 @@ const Button = forwardRef(
       variation = "primary",
       type = "button",
       isDisabled = false,
+      fullWidth = false,
       ...rest
     },
     ref
@@ -18,6 +19,7 @@ const Button = forwardRef(
       type={type}
       className={cn(className, styles[variation], {
         [styles.disabled]: isDisabled,
+        [styles["full-width"]]: fullWidth,
       })}
       ref={ref}
       tabIndex={isDisabled ? -1 : 0}

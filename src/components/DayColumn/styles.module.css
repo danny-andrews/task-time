@@ -14,10 +14,6 @@
   }
 }
 
-.disclosure {
-  width: 100%;
-}
-
 @media (min-width: env(--breakpoint-phone)) {
   .disclosure {
     padding: 0 var(--spacing-small) var(--spacing-small) var(--spacing-small);

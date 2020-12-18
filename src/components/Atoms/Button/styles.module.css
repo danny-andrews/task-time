@@ -40,6 +40,10 @@
   }
 }
 
+.full-width {
+  width: 100%;
+}
+
 .disabled {
   composes: semi-transparent from "../../../css/util.module.css";
   pointer-events: none;

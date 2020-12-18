@@ -17,6 +17,7 @@ const Disclosure = ({ buttonText, children, className }) => {
         <DisclosureButton
           onClick={() => setIsOpen(!isOpen)}
           as={SquareButton}
+          fullWidth
           className={styles.button}
         >
           {isOpen ? (
