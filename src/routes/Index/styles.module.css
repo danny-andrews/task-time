@@ -27,7 +27,10 @@
       0;
   }
 
-  .bottom-nav { display: none; }
+  .bottom-nav {
+    display: none;
+    overflow: hidden;
+  }
 }
 
 @media (max-width: env(--breakpoint-phone)) {
