@@ -4,14 +4,6 @@
   flex: 1;
   flex-direction: column;
   text-align: center;
-
-  &:first-child {
-    border-left: var(--border-solid);
-  }
-
-  &:last-child {
-    border-right: var(--border-solid);
-  }
 }
 
 @media (min-width: env(--breakpoint-phone)) {

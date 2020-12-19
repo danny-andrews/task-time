@@ -1,3 +1,10 @@
 .root {
   display: flex;
 }
+
+@media (min-width: env(--breakpoint-phone)) {
+  .root {
+    border-left: var(--border-solid);
+    border-right: var(--border-solid);
+  }
+}
