@@ -1,14 +1,18 @@
 .root {
   --outer-spacing: var(--spacing-medium);
 
-  composes: inner-spacing-medium from "../../css/util.module.css";
   height: 100%;
   margin-bottom: var(--outer-spacing);
+  margin-top: var(--outer-spacing);
   overflow-y: scroll;
-  padding-left: var(--outer-spacing);
   padding-right: var(--outer-spacing);
-  padding-top: var(--outer-spacing);
   position: relative;
+}
+
+.inner {
+  composes: inner-spacing-medium from "../../css/util.module.css";
+  padding-bottom: var(--spacing-small);
+  padding-left: var(--outer-spacing);
 }
 
 .root:not(.in-past)::after {

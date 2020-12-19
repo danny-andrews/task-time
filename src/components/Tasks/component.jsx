@@ -21,16 +21,18 @@ const Tasks = ({ isBlocked, isInPast, tasks }) => {
         [styles["in-past"]]: isInPast,
       })}
     >
-      {tasks.map((task, i) => (
-        <DraggableTask
-          key={task.id}
-          task={task}
-          index={i}
-          onTaskMove={changeTaskPosition}
-          onDragStart={() => setDragInProgress(true)}
-          onDragEnd={() => setDragInProgress(false)}
-        />
-      ))}
+      <div className={styles.inner}>
+        {tasks.map((task, i) => (
+          <DraggableTask
+            key={task.id}
+            task={task}
+            index={i}
+            onTaskMove={changeTaskPosition}
+            onDragStart={() => setDragInProgress(true)}
+            onDragEnd={() => setDragInProgress(false)}
+          />
+        ))}
+      </div>
     </ol>
   );
 };
