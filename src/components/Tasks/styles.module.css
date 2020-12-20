@@ -25,7 +25,7 @@
     calc(
       var(--recommended-difficulty) * var(--min-touch-target-size)
       + (var(--recommended-difficulty) - 1) * var(--spacing-medium)
-      + 1.5 * var(--outer-spacing)
+      + var(--outer-spacing) / 2
       - 1px
     );
   z-index: -1;

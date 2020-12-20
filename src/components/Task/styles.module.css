@@ -1,6 +1,7 @@
 .root {
   align-items: stretch;
   display: flex;
+  font-size: var(--font-size-small);
   font-weight: var(--font-weight-bold);
   height: 100%;
   opacity: 0.75;
@@ -59,6 +60,7 @@
 
 .primary {
   flex: 1;
+  overflow-y: scroll;
 }
 
 .secondary {
