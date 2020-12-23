@@ -14,14 +14,14 @@ const Tasks = ({ isBlocked, isInPast, tasks }) => {
   const [dragInProgress, setDragInProgress] = useState(false);
 
   return (
-    <ol
+    <div
       className={cn(styles.root, {
         [styles["ax-hover-styles"]]: dragInProgress,
         [styles["blocked"]]: isBlocked,
         [styles["in-past"]]: isInPast,
       })}
     >
-      <div className={styles.inner}>
+      <ol className={styles.inner}>
         {tasks.map((task, i) => (
           <DraggableTask
             key={task.id}
@@ -32,8 +32,8 @@ const Tasks = ({ isBlocked, isInPast, tasks }) => {
             onDragEnd={() => setDragInProgress(false)}
           />
         ))}
-      </div>
-    </ol>
+      </ol>
+    </div>
   );
 };
 
