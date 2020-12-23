@@ -23,7 +23,7 @@
   right: calc(var(--outer-spacing) / 2);
   top:
     calc(
-      var(--recommended-difficulty) * var(--min-touch-target-size)
+      var(--recommended-difficulty) * var(--button-height)
       + (var(--recommended-difficulty) - 1) * var(--spacing-medium)
       + var(--outer-spacing) / 2
       - 1px

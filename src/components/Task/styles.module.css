@@ -9,7 +9,7 @@
 
 /* States */
 .important {
-  filter: var(--drop-shadow-important);
+  box-shadow: var(--drop-shadow-important);
 }
 
 .complete {
@@ -30,10 +30,16 @@
 }
 
 .icon {
-  --icon-size: 1.25rem;
+  --icon-size: 24px;
 
   height: var(--icon-size);
   width: var(--icon-size);
+}
+
+@media (min-width: env(--breakpoint-phone)) {
+  .icon {
+    --icon-size: 18px;
+  }
 }
 
 .refresh-icon,
@@ -70,6 +76,5 @@
 .form {
   align-items: center;
   display: flex;
-  padding: 0 var(--spacing-tiny);
-  width: 100%;
+  padding: var(--spacing-tiny);
 }

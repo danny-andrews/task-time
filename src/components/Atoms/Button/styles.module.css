@@ -1,8 +1,12 @@
+:root {
+  --button-height: var(--min-touch-target-size);
+}
+
 .base {
   background: var(--color-background);
   cursor: pointer;
-  min-height: var(--min-touch-target-size);
-  min-width: var(--min-touch-target-size);
+  min-height: var(--button-height);
+  min-width: var(--button-height);
 
   /* Prevent zoom on double-tap */
   touch-action: manipulation;
@@ -28,6 +32,10 @@
 }
 
 @media (min-width: env(--breakpoint-phone)) {
+  :root {
+    --button-height: 34px;
+  }
+
   .base {
     min-height: auto;
     min-width: auto;

@@ -1,10 +1,15 @@
 .root {
-  --input-height: 32px;
-
   composes: with-focus from "../../../css/util.module.css";
   border: var(--border-solid);
   border-radius: var(--border-radius);
-  height: var(--input-height);
   padding: var(--spacing-tiny);
   width: 100%;
+}
+
+.normal {
+  height: 32px;
+}
+
+.small {
+  height: 24px;
 }

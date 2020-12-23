@@ -56,7 +56,7 @@ const Task = ({
   return (
     <ButtonGroup
       style={{
-        height: `calc(${difficulty} * var(--min-touch-target-size) + (${difficulty} - 1) * var(--spacing-medium))`,
+        height: `calc(${difficulty} * var(--button-height) + (${difficulty} - 1) * var(--spacing-medium))`,
       }}
       className={cn(styles.root, className, {
         [styles["complete"]]: isComplete,
@@ -118,7 +118,7 @@ export const EditingTask = ({ onSave, ...rest }) => {
         <Task
           primaryAction={
             <div className={cn(styles.primary, styles.form)}>
-              <TextInput innerRef={textRef} name="text" />
+              <TextInput size="small" innerRef={textRef} name="text" />
             </div>
           }
           secondaryAction={
