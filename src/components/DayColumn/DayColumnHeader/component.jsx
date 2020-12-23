@@ -21,7 +21,7 @@ const DayColumnHeader = ({
         [styles.accent]: isToday(date),
       })}
     >
-      <H level={2} styleLevel={5}>
+      <H level={2} styleLevel={5} className={styles.date}>
         {formatHumanReadable(date)}
       </H>
       <div className={styles.actions}>

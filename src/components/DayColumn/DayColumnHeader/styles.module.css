@@ -1,5 +1,5 @@
 .header {
-  composes: inner-spacing-medium from "../../../css/util.module.css";
+  composes: inner-spacing-small from "../../../css/util.module.css";
   border-bottom: var(--border-solid);
   padding: var(--spacing-medium);
 }
@@ -12,23 +12,24 @@
   composes: semi-transparent from "../../../css/util.module.css";
 }
 
-.actions {
-  --day-column-header-height: 1.5rem;
+.date {
+  display: inline-block;
+  border-bottom: var(--border-solid);
+  padding-bottom: var(--spacing-tiny);
+}
 
+.actions {
   align-items: stretch;
   display: flex;
-  height: var(--day-column-header-height);
 }
 
 .partition,
 .sort {
-  flex-basis: 25%;
+  flex-basis: 15%;
 }
 
 .difficulty {
-  border-left: var(--border-solid);
-  border-right: var(--border-solid);
-  flex-basis: 50%;
+  flex-basis: 70%;
 }
 
 .partition,
