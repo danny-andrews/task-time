@@ -170,13 +170,16 @@ export default ({ backend, now = () => new Date() }) => {
 
   const sortTasksInDay = R.pipe(getTasksForDueDate, taskSort, setPositions);
 
+  const partitionTasksByCompletion = R.partition((task) => task.isComplete);
+
   const getPartitionedTasks3 = (dueDate, tasks, maxDifficulty) => {
     if (R.isEmpty(tasks)) return [];
+    const [completeTasks, incompleteTasks] = partitionTasksByCompletion(tasks);
 
+    let currentDifficulty = getTotalDifficulty(completeTasks);
     let thisDaysTasks = [];
     let nextDaysTasks = [];
-    let currentDifficulty = 0;
-    tasks.forEach((task) => {
+    incompleteTasks.forEach((task) => {
       const difficulty = getTaskDifficulty(task);
       if (difficulty + currentDifficulty <= maxDifficulty) {
         thisDaysTasks = R.append(task, thisDaysTasks);
@@ -187,10 +190,10 @@ export default ({ backend, now = () => new Date() }) => {
     });
 
     const nextDate = addDays(dueDate, 1);
-    const nextTasks = [...nextDaysTasks, ...getTasksForDueDate(nextDate)];
+    const nextTasks = [...getTasksForDueDate(nextDate), ...nextDaysTasks];
 
     return [
-      [dueDate, thisDaysTasks],
+      [dueDate, [...thisDaysTasks, ...completeTasks]],
       ...getPartitionedTasks3(nextDate, nextTasks, maxDifficulty),
     ];
   };
