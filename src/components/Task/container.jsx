@@ -19,14 +19,7 @@ const taskComponentFactory = ({ dueDate, isComplete, isEditing }) =>
     : IncompleteTask;
 
 const Task = ({ task, className }) => {
-  const {
-    isComplete,
-    createdAt,
-    text,
-    isImportant,
-    originalDueDate,
-    dueDate,
-  } = task;
+  const { isComplete, text, isImportant, originalDueDate, dueDate } = task;
   const [isEditing, setIsEditing] = useState(false);
   const {
     toggleTask,
@@ -52,7 +45,7 @@ const Task = ({ task, className }) => {
     isEditing,
   });
 
-  const staleness = getTaskStaleness({ createdAt, originalDueDate });
+  const staleness = getTaskStaleness({ dueDate, originalDueDate });
   const difficulty = getTaskDifficulty(task);
 
   return (

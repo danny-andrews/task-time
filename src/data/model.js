@@ -1,4 +1,4 @@
-import { differenceInDays, parseISO } from "date-fns";
+import { differenceInDays, parseISO, min } from "date-fns";
 import * as R from "ramda";
 import { serializeDate } from "../shared";
 
@@ -42,6 +42,5 @@ export const getTasksForDates = (dates, tasks) =>
     tasks: R.propOr([], serializeDate(date), tasks),
   }));
 
-export const getTaskStaleness = ({ createdAt, originalDueDate }) =>
-  differenceInDays(Date.now(), createdAt) -
-  differenceInDays(originalDueDate, createdAt);
+export const getTaskStaleness = ({ originalDueDate, dueDate }) =>
+  differenceInDays(min([Date.now(), dueDate]), originalDueDate);
