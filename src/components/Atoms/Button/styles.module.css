@@ -1,7 +1,3 @@
-:root {
-  --button-height: var(--min-touch-target-size);
-}
-
 .base {
   background: var(--color-background);
   cursor: pointer;

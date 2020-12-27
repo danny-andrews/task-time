@@ -13,8 +13,8 @@
 }
 
 .date {
-  display: inline-block;
   border-bottom: var(--border-solid);
+  display: inline-block;
   padding-bottom: var(--spacing-tiny);
 }
 

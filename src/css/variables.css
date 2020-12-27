@@ -79,6 +79,7 @@ html {
   /* Other */
   --header-height: 36px;
   --recommended-difficulty: 1;
+  --button-height: var(--min-touch-target-size);
 }
 
 @media (prefers-color-scheme: dark) {

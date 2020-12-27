@@ -1,4 +1,7 @@
 .root {
+  --input-height-small: 24px;
+  --input-height-normal: 32px;
+
   composes: with-focus from "../../../css/util.module.css";
   background: var(--color-background);
   border: var(--border-solid);
@@ -8,9 +11,9 @@
 }
 
 .normal {
-  height: 32px;
+  height: var(--input-height-normal);
 }
 
 .small {
-  height: 24px;
+  height: var(--input-height-small);
 }
