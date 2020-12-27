@@ -30,7 +30,6 @@ const Index = () => {
     dates,
     { goToPrevDay, shiftBackward, goToNextDay, shiftForward, goToCurrentDate },
   ] = dateWindow;
-  const tasksInView = getTasksForDates(dates, tasks);
   useEffect(() => {
     document.documentElement.style.setProperty(
       "--recommended-difficulty",
@@ -50,7 +49,7 @@ const Index = () => {
       />
       <DayColumns
         className={styles["main"]}
-        tasksByDay={tasksInView}
+        tasksByDay={getTasksForDates(dates, tasks)}
         dateWindow={dateWindow}
       />
       <RightNav
