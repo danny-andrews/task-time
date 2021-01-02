@@ -1,5 +1,5 @@
 .root {
-  composes: inner-spacing-medium from "../../css/util.module.css";
+  composes: inner-spacing-small from "../../css/util.module.css";
   padding: var(--spacing-small);
   text-align: left;
 }
