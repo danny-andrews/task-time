@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useContext } from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as R from "ramda";
 import { titleCase } from "title-case";
 import styles from "./styles.module.css";
@@ -45,7 +45,12 @@ const TaskForm = ({ onSubmit }) => {
           step={1}
         />
 
-        <Switch label="Important?" name="important" />
+        <Field
+          as={Switch}
+          label="Important?"
+          name="important"
+          type="checkbox"
+        />
 
         <PrimaryButton type="submit" fullWidth>
           Create Task
