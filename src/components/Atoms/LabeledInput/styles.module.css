@@ -3,5 +3,18 @@
 }
 
 .label-text {
+  line-height: 1;
+}
+
+.horizontal {
+  align-items: center;
+  display: flex;
+
+  & .label-text {
+    margin-right: var(--spacing-tiny);
+  }
+}
+
+.vertical .label-text {
   margin-bottom: var(--spacing-tiny);
 }
