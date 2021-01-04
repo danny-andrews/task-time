@@ -25,7 +25,7 @@ const createCompletedTask = (subject, { difficulty, dueDate }) => {
   return task;
 };
 
-t.only(
+t.test(
   "#tasksByDisplayDate is an observable containing all deserialized tasks, partitioned by dueDate and sorted by position",
   async (is) => {
     const subject = Subject({ now: () => parseISO("2020-09-01") });
