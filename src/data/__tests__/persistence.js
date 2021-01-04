@@ -9,7 +9,6 @@ const TaskFactory = (attrs = {}) => ({
   dueDate: parseISO("2020-09-02"),
   isImportant: false,
   difficulty: "EASY",
-  index: 0,
   ...attrs,
 });
 
@@ -17,12 +16,7 @@ const Subject = (attrs = {}) =>
   Persistence({ backend: InMemoryBackend(), ...attrs });
 
 const createCompletedTask = (subject, { difficulty, dueDate }) => {
-  const task = subject.createTask(
-    TaskFactory({
-      difficulty,
-      index: 0,
-    })
-  );
+  const task = subject.createTask(TaskFactory({ difficulty }));
   subject.updateTask(task.id, {
     dueDate,
     isComplete: true,
@@ -31,32 +25,23 @@ const createCompletedTask = (subject, { difficulty, dueDate }) => {
   return task;
 };
 
-t.test(
+t.only(
   "#tasksByDisplayDate is an observable containing all deserialized tasks, partitioned by dueDate and sorted by position",
   async (is) => {
     const subject = Subject({ now: () => parseISO("2020-09-01") });
     const task1 = subject.createTask(
-      TaskFactory({
-        dueDate: parseISO("2020-09-02"),
-        index: 0,
-      })
+      TaskFactory({ dueDate: parseISO("2020-09-02") })
     );
     const task2 = subject.createTask(
-      TaskFactory({
-        dueDate: parseISO("2020-09-05"),
-        index: 1,
-      })
+      TaskFactory({ dueDate: parseISO("2020-09-05") })
     );
     const task3 = subject.createTask(
-      TaskFactory({
-        dueDate: parseISO("2020-09-05"),
-        index: 0,
-      })
+      TaskFactory({ dueDate: parseISO("2020-09-05") })
     );
     const actual = subject.tasksByDisplayDate();
     is.same(actual, {
       "2020-09-02": [task1],
-      "2020-09-05": [task3, task2],
+      "2020-09-05": [task2, task3],
     });
   }
 );
@@ -79,7 +64,6 @@ t.test(
       dueDate: parseISO("2020-09-02"),
       isImportant: false,
       difficulty: "MEDIUM",
-      index: 0,
     });
     is.same(subject.tasks(), [
       {
@@ -176,17 +160,9 @@ t.test(
 t.test("#moveTask sets task dueDate and position", async (is) => {
   const subject = Subject({ now: () => parseISO("2020-09-01") });
   const { id } = subject.createTask(
-    TaskFactory({
-      dueDate: parseISO("2020-09-02"),
-      index: 0,
-    })
+    TaskFactory({ dueDate: parseISO("2020-09-02") })
   );
-  subject.createTask(
-    TaskFactory({
-      dueDate: parseISO("2020-10-05"),
-      index: 0,
-    })
-  );
+  subject.createTask(TaskFactory({ dueDate: parseISO("2020-10-05") }));
   subject.moveTask(id, parseISO("2020-10-05"));
   const taskStream = subject.getTask(id);
   is.same(taskStream().dueDate, parseISO("2020-10-05"));
@@ -196,24 +172,9 @@ t.test("#moveTask sets task dueDate and position", async (is) => {
 t.test("#changeTaskPosition reorders tasks", async (is) => {
   const dueDate = "2020-09-02";
   const subject = Subject({ now: () => parseISO("2020-09-01") });
-  const task1 = subject.createTask(
-    TaskFactory({
-      dueDate: parseISO(dueDate),
-      index: 0,
-    })
-  );
-  const task2 = subject.createTask(
-    TaskFactory({
-      dueDate: parseISO(dueDate),
-      index: 1,
-    })
-  );
-  const task3 = subject.createTask(
-    TaskFactory({
-      dueDate: parseISO(dueDate),
-      index: 2,
-    })
-  );
+  const task1 = subject.createTask(TaskFactory({ dueDate: parseISO(dueDate) }));
+  const task2 = subject.createTask(TaskFactory({ dueDate: parseISO(dueDate) }));
+  const task3 = subject.createTask(TaskFactory({ dueDate: parseISO(dueDate) }));
   const testStream = subject.tasksByDisplayDate
     .map(R.prop(dueDate))
     .map(R.map(R.prop("id")));
@@ -314,7 +275,6 @@ t.test(
     const { id: id1 } = subject.createTask(
       TaskFactory({
         dueDate: parseISO(dueDate),
-        index: 0,
         isImportant: false,
         difficulty: "EASY",
       })
@@ -323,7 +283,6 @@ t.test(
     const { id: id2 } = subject.createTask(
       TaskFactory({
         dueDate: parseISO(dueDate),
-        index: 1,
         isImportant: true,
         difficulty: "EASY",
       })
@@ -332,7 +291,6 @@ t.test(
     const { id: id3, position } = subject.createTask(
       TaskFactory({
         dueDate: parseISO(dueDate),
-        index: 2,
         isImportant: false,
         difficulty: "HARD",
       })
@@ -341,7 +299,6 @@ t.test(
     const { id: id4 } = subject.createTask(
       TaskFactory({
         dueDate: parseISO(dueDate),
-        index: 3,
         isImportant: true,
         difficulty: "HARD",
       })
@@ -351,7 +308,6 @@ t.test(
     const { id: id5 } = subject.createTask(
       TaskFactory({
         dueDate: parseISO(dueDate),
-        index: 4,
         isImportant: false,
         difficulty: "EASY",
       })
@@ -362,7 +318,6 @@ t.test(
     const { id: id6 } = subject.createTask(
       TaskFactory({
         dueDate: parseISO(dueDate),
-        index: 4,
         isImportant: false,
         difficulty: "EASY",
       })
@@ -393,35 +348,30 @@ t.test("#reallocateTasks", async (is) => {
   is.same(subject.recommendedDifficulty(), 3);
 
   const { id: id2 } = createCompletedTask(subject, {
-    index: 0,
     difficulty: "EASY",
     dueDate: parseISO("2020-09-01"),
   });
   const { id: id3 } = subject.createTask(
     TaskFactory({
       dueDate: parseISO("2020-09-01"),
-      index: 1,
       difficulty: "MEDIUM",
     })
   );
   const { id: id4 } = subject.createTask(
     TaskFactory({
       dueDate: parseISO("2020-09-01"),
-      index: 2,
       difficulty: "MEDIUM",
     })
   );
   const { id: id5 } = subject.createTask(
     TaskFactory({
       dueDate: parseISO("2020-09-01"),
-      index: 3,
       difficulty: "EASY",
     })
   );
   const { id: id6 } = subject.createTask(
     TaskFactory({
       dueDate: parseISO("2020-09-02"),
-      index: 0,
       difficulty: "EASY",
     })
   );

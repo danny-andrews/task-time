@@ -82,6 +82,7 @@ html {
   --button-height: var(--min-touch-target-size);
 }
 
+/* stylelint-disable-next-line selector-no-qualifying-type */
 html.dark-mode {
   --color-attention: var(--color-white);
   --color-text: var(--color-white);

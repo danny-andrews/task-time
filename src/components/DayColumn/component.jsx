@@ -27,7 +27,6 @@ const DayColumn = forwardRef(({ date, tasks, blocked }, ref) => {
         ...rest,
         isImportant: important,
         dueDate: date,
-        index: tasks.length,
       });
 
       R.last(tasksRef.current.children).scrollIntoView();

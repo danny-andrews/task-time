@@ -41,13 +41,16 @@ export default ({ backend, now = () => new Date() }) => {
 
   const tasksByDisplayDate = tasks.map(getTasksByDueDate);
 
+  const getTasksForDueDate = (dueDate) =>
+    tasksByDisplayDate()[serializeDate(dueDate)] || [];
+
   const updateTask = update(TaskModel);
 
   const updateTaskWith = updateWith(TaskModel);
 
   const getTask = get(TaskModel);
 
-  const createTask = ({ text, dueDate, isImportant, difficulty, index }) =>
+  const createTask = ({ text, dueDate, isImportant, difficulty }) =>
     create(TaskModel, {
       createdAt: now(),
       originalDueDate: dueDate,
@@ -56,7 +59,7 @@ export default ({ backend, now = () => new Date() }) => {
       isComplete: false,
       difficulty,
       isImportant,
-      position: index + 1,
+      position: getTasksForDueDate(dueDate).length + 1,
     });
 
   const deleteTask = remove(TaskModel);
@@ -80,9 +83,6 @@ export default ({ backend, now = () => new Date() }) => {
 
   const refreshTask = (id) =>
     updateTaskWith(id, (task) => ({ originalDueDate: task.dueDate }));
-
-  const getTasksForDueDate = (dueDate) =>
-    tasksByDisplayDate()[serializeDate(dueDate)] || [];
 
   const changeTaskPosition = ({ id, newDueDate, newIndex }) => {
     const tasks = tasksByDisplayDate()[serializeDate(newDueDate)] || [
