@@ -16,7 +16,7 @@ export default () => {
       setIsDarkModeEnabled(ls.get("use-dark-scheme"));
     }, []);
     useEffect(() => {
-      const rootClassList = document.querySelector("html").classList;
+      const rootClassList = document.documentElement.classList;
       if (isDarkModeEnabled) {
         rootClassList.add("dark-mode");
       } else {
