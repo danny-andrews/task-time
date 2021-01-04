@@ -1,6 +1,7 @@
-import React, { forwardRef, useContext } from "react";
+import React, { forwardRef, useContext, useRef } from "react";
 import { useDrop } from "react-dnd";
 import { isSameDay } from "date-fns";
+import * as R from "ramda";
 import TaskForm from "../TaskForm";
 import Tasks from "../Tasks";
 import styles from "./styles.module.css";
@@ -16,17 +17,21 @@ const DayColumn = forwardRef(({ date, tasks, blocked }, ref) => {
     partitionTasks,
   } = useContext(PersistenceContext);
   const isInPast = isPastDate(date);
+  const tasksRef = useRef();
 
   const renderTaskForm = () => {
     if (isPastDate(date)) return null;
 
-    const handleSubmit = ({ important, ...rest }) =>
+    const handleSubmit = ({ important, ...rest }) => {
       createTask({
         ...rest,
         isImportant: important,
         dueDate: date,
         index: tasks.length,
       });
+
+      R.last(tasksRef.current.children).scrollIntoView();
+    };
 
     return (
       <Disclosure buttonText="New Task" className={styles.disclosure}>
@@ -49,7 +54,12 @@ const DayColumn = forwardRef(({ date, tasks, blocked }, ref) => {
         onSortClick={handleSortClick}
         onPartitionClick={handlePartitionClick}
       />
-      <Tasks isInPast={isInPast} isBlocked={blocked} tasks={tasks} />
+      <Tasks
+        tasksRef={tasksRef}
+        isInPast={isInPast}
+        isBlocked={blocked}
+        tasks={tasks}
+      />
       {renderTaskForm()}
     </li>
   );

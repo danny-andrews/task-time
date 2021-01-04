@@ -4,7 +4,7 @@ import DraggableTask from "../DraggableTask";
 import styles from "./styles.module.css";
 import { PersistenceContext } from "../../shared";
 
-const Tasks = ({ isBlocked, isInPast, tasks }) => {
+const Tasks = ({ isBlocked, isInPast, tasks, tasksRef }) => {
   const { changeTaskPosition } = useContext(PersistenceContext);
 
   // HACK: Remove hover styles for draggable items while dragging is in progress
@@ -21,7 +21,7 @@ const Tasks = ({ isBlocked, isInPast, tasks }) => {
         [styles["in-past"]]: isInPast,
       })}
     >
-      <ol className={styles.inner}>
+      <ol className={styles.inner} ref={tasksRef}>
         {tasks.map((task, i) => (
           <DraggableTask
             key={task.id}
