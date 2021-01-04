@@ -19,7 +19,7 @@ const taskComponentFactory = ({ dueDate, isComplete, isEditing }) =>
     : IncompleteTask;
 
 const Task = ({ task, className }) => {
-  const { isComplete, text, isImportant, originalDueDate, dueDate } = task;
+  const { id, isComplete, text, isImportant, originalDueDate, dueDate } = task;
   const [isEditing, setIsEditing] = useState(false);
   const {
     toggleTask,
@@ -28,15 +28,15 @@ const Task = ({ task, className }) => {
     getTaskDifficulty,
     updateTask,
   } = useContext(PersistenceContext);
-  const handleTaskClick = () => toggleTask(task.id);
-  const handleRefreshClick = () => refreshTask(task.id);
-  const handleDeleteClick = () => deleteTask(task.id);
+  const handleTaskClick = () => toggleTask(id);
+  const handleRefreshClick = () => refreshTask(id);
+  const handleDeleteClick = () => deleteTask(id);
   const handleEditClick = () => {
     setIsEditing(true);
   };
   const handleSave = ({ text }) => {
     setIsEditing(false);
-    updateTask(task.id, { text: text.trim() });
+    updateTask(id, { text: text.trim() });
   };
 
   const TaskComponent = taskComponentFactory({
