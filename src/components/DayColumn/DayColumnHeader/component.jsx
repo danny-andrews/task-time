@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import cn from "classnames";
 import { isToday } from "date-fns";
 import styles from "./styles.module.css";
-import { formatHumanReadable, isPastDate } from "../../../shared";
-import { H, IconButton } from "../../Atoms";
+import {
+  formatHumanReadable,
+  isPastDate,
+  PersistenceContext,
+} from "../../../shared";
+import { H, IconButton, Progress } from "../../Atoms";
 import { Sort, Partition } from "../../Icons";
 
 const DayColumnHeader = ({
@@ -13,6 +17,9 @@ const DayColumnHeader = ({
   onPartitionClick,
 }) => {
   const isInPast = isPastDate(date);
+  const recommendedDifficulty = useContext(
+    PersistenceContext
+  ).useRecommendedDifficulty();
 
   return (
     <header
@@ -25,6 +32,16 @@ const DayColumnHeader = ({
         {formatHumanReadable(date)}
       </H>
       <div className={styles.actions}>
+        <div className={styles.sort}>
+          <IconButton
+            isDisabled={isInPast}
+            onClick={onSortClick}
+            className={styles["icon-button"]}
+            aria-label="Sort tasks"
+          >
+            <Sort />
+          </IconButton>
+        </div>
         <div className={styles.partition}>
           <IconButton
             isDisabled={isInPast}
@@ -35,18 +52,12 @@ const DayColumnHeader = ({
             <Partition />
           </IconButton>
         </div>
-        <p className={styles.difficulty}>
-          Difficulty:&nbsp;<em>{difficulty}</em>
-        </p>
-        <div className={styles.sort}>
-          <IconButton
-            isDisabled={isInPast}
-            onClick={onSortClick}
-            className={styles["icon-button"]}
-            aria-label="Sort tasks"
-          >
-            <Sort />
-          </IconButton>
+        <div className={styles.difficulty}>
+          <Progress
+            label="Difficulty"
+            max={recommendedDifficulty}
+            current={difficulty}
+          />
         </div>
       </div>
     </header>

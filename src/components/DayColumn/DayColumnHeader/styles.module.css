@@ -1,7 +1,11 @@
 .header {
-  composes: inner-spacing-small from "../../../css/util.module.css";
+  composes: inner-spacing-medium from "../../../css/util.module.css";
   border-bottom: var(--border-solid);
-  padding: var(--spacing-medium);
+  padding:
+    var(--spacing-small)
+    var(--spacing-medium)
+    var(--spacing-medium)
+    var(--spacing-medium);
 }
 
 .accent {
@@ -19,17 +23,21 @@
 }
 
 .actions {
-  align-items: stretch;
   display: flex;
+  justify-content: stretch;
 }
 
-.partition,
-.sort {
-  flex-basis: 15%;
+.actions > * + * {
+  margin-left: var(--spacing-small);
 }
 
 .difficulty {
-  flex-basis: 70%;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.difficulty-label {
+  line-height: 1;
 }
 
 .partition,
