@@ -1,6 +1,15 @@
 .root {
   composes: center-contents from "../../css/util.module.css";
-  background: var(--color-accent-1);
+  align-items: center;
   border-bottom: var(--border-solid);
+  display: flex;
   height: var(--header-height);
+  padding: var(--spacing-tiny) var(--spacing-small);
+  position: relative;
+  text-align: center;
+}
+
+.right {
+  position: absolute;
+  right: var(--spacing-small);
 }

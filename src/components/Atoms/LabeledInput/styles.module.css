@@ -11,7 +11,7 @@
   display: flex;
 
   & .label-text {
-    margin-right: var(--spacing-tiny);
+    margin-right: var(--spacing-small);
   }
 }
 

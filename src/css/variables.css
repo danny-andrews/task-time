@@ -82,14 +82,12 @@ html {
   --button-height: var(--min-touch-target-size);
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    --color-attention: var(--color-white);
-    --color-text: var(--color-white);
-    --color-background: var(--color-black);
-    --color-border: var(--color-white);
-    --color-accent-1: var(--color-grey-darker-2);
-    --color-accent-2: var(--color-grey-darker-1);
-    --color-focus: var(--color-yellow);
-  }
+html.dark-mode {
+  --color-attention: var(--color-white);
+  --color-text: var(--color-white);
+  --color-background: var(--color-black);
+  --color-border: var(--color-white);
+  --color-accent-1: var(--color-grey-darker-2);
+  --color-accent-2: var(--color-grey-darker-1);
+  --color-focus: var(--color-yellow);
 }
