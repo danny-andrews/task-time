@@ -29,12 +29,11 @@
 
 @media (min-width: env(--breakpoint-phone)) {
   :root {
-    --button-height: 34px;
+    --button-height: 36px;
   }
 
   .base {
     min-height: auto;
-    min-width: auto;
   }
 }
 
