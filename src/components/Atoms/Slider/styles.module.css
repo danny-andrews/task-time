@@ -24,7 +24,8 @@ html {
 }
 
 .label {
-  margin-bottom: var(--spacing-tiny);
+  line-height: 1;
+  margin-bottom: var(--spacing-small);
 }
 
 .highlight {

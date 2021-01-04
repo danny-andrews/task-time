@@ -16,5 +16,5 @@
 }
 
 .vertical .label-text {
-  margin-bottom: var(--spacing-tiny);
+  margin-bottom: var(--spacing-small);
 }
