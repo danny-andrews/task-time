@@ -31,35 +31,28 @@ const DayColumnHeader = ({
       <H level={2} styleLevel={5} className={styles.date}>
         {formatHumanReadable(date)}
       </H>
-      <div className={styles.actions}>
-        <div className={styles.sort}>
-          <IconButton
-            isDisabled={isInPast}
-            onClick={onSortClick}
-            className={styles["icon-button"]}
-            aria-label="Sort tasks"
-          >
-            <Sort />
-          </IconButton>
-        </div>
-        <div className={styles.difficulty}>
-          <Progress
-            label="Difficulty"
-            max={recommendedDifficulty}
-            current={difficulty}
-          />
-        </div>
-        <div className={styles.partition}>
-          <IconButton
-            isDisabled={isInPast}
-            onClick={onPartitionClick}
-            className={styles["icon-button"]}
-            aria-label="Repartition tasks"
-          >
-            <Partition />
-          </IconButton>
-        </div>
-      </div>
+      <IconButton
+        isDisabled={isInPast}
+        onClick={onSortClick}
+        className={cn(styles["icon-button"], styles.left)}
+        aria-label="Sort tasks"
+      >
+        <Sort />
+      </IconButton>
+      <Progress
+        className={styles.difficulty}
+        label="Difficulty"
+        max={recommendedDifficulty}
+        current={difficulty}
+      />
+      <IconButton
+        isDisabled={isInPast}
+        onClick={onPartitionClick}
+        className={cn(styles["icon-button"], styles.right)}
+        aria-label="Repartition tasks"
+      >
+        <Partition />
+      </IconButton>
     </header>
   );
 };

@@ -17,7 +17,6 @@ const Header = ({ className }) => {
       </H>
       <div className={styles.right}>
         <Switch
-          className={styles.right}
           horizontal
           checkedIcon={
             <span role="img" aria-label="Sun">

@@ -1,11 +1,29 @@
 .header {
-  composes: inner-spacing-medium from "../../../css/util.module.css";
   border-bottom: var(--border-solid);
-  padding:
-    var(--spacing-small)
-    var(--spacing-medium)
-    var(--spacing-medium)
-    var(--spacing-medium);
+  column-gap: var(--spacing-small);
+  display: grid;
+  padding: var(--spacing-medium);
+  grid-template-areas:
+    "date date date"
+    "left difficulty right";
+  grid-template-columns: var(--button-height) auto var(--button-height);
+  grid-template-rows: auto var(--button-height);
+  row-gap: var(--spacing-medium);
+}
+
+.right { grid-area: right; }
+
+.left { grid-area: left; }
+
+.difficulty {
+  grid-area: difficulty;
+}
+
+.date {
+  border-bottom: var(--border-solid);
+  display: inline-block;
+  padding-bottom: var(--spacing-tiny);
+  grid-area: date;
 }
 
 .accent {
@@ -16,34 +34,8 @@
   composes: semi-transparent from "../../../css/util.module.css";
 }
 
-.date {
-  border-bottom: var(--border-solid);
-  display: inline-block;
-  padding-bottom: var(--spacing-tiny);
-}
-
-.actions {
-  display: flex;
-  justify-content: stretch;
-}
-
-.actions > * + * {
-  margin-left: var(--spacing-small);
-}
-
-.difficulty {
-  flex-direction: column;
-  flex-grow: 1;
-}
-
 .difficulty-label {
   line-height: 1;
-}
-
-.partition,
-.sort,
-.difficulty {
-  composes: center-contents from "../../../css/util.module.css";
 }
 
 /* TODO: Find a better general-purpose icon-button pattern */
