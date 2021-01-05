@@ -42,6 +42,13 @@ const DayColumnHeader = ({
             <Sort />
           </IconButton>
         </div>
+        <div className={styles.difficulty}>
+          <Progress
+            label="Difficulty"
+            max={recommendedDifficulty}
+            current={difficulty}
+          />
+        </div>
         <div className={styles.partition}>
           <IconButton
             isDisabled={isInPast}
@@ -51,13 +58,6 @@ const DayColumnHeader = ({
           >
             <Partition />
           </IconButton>
-        </div>
-        <div className={styles.difficulty}>
-          <Progress
-            label="Difficulty"
-            max={recommendedDifficulty}
-            current={difficulty}
-          />
         </div>
       </div>
     </header>

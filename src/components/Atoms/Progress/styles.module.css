@@ -42,7 +42,6 @@
   background: var(--color-text);
   height: 100%;
   position: absolute;
-  transform: translateX(var(--progress-bar-offset));
   width: 100%;
 }
 

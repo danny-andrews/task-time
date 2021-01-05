@@ -4,11 +4,10 @@ import styles from "./styles.module.css";
 
 const Progress = ({ className, max, current, label }) => {
   const ref = useRef();
+  const style = {
+    transform: `translateX(${(1 - Math.min(current, max) / max) * -100}%)`,
+  };
   useEffect(() => {
-    ref.current.style.setProperty(
-      "--progress-bar-offset",
-      `${(1 - Math.min(current, max) / max) * -100}%`
-    );
     if (current > max) {
       ref.current.style.setProperty(
         "--progress-bar-max-marker-offset",
@@ -33,7 +32,7 @@ const Progress = ({ className, max, current, label }) => {
           aria-valuemin={0}
           aria-valuemax={max}
         >
-          <div className={styles.bar} />
+          <div style={style} className={styles.bar} />
         </div>
       </div>
       <p className={styles.label}>{[current, max].join("/")}</p>

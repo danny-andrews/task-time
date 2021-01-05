@@ -219,7 +219,7 @@ export default ({ backend, now = () => new Date() }) => {
 
   // Hooks
   const useRecommendedDifficulty = () =>
-    useObservable([], recommendedDifficulty);
+    useObservable(3, recommendedDifficulty);
 
   const useTasksByDisplayDate = () => useObservable([], tasksByDisplayDate);
 
