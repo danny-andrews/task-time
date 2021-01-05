@@ -24,7 +24,7 @@ const Header = ({ className }) => {
               &#x2600;&#xFE0F;
             </span>
           }
-          unCheckedIcon={
+          uncheckedIcon={
             <span role="img" aria-label="Moon">
               &#x1F319;
             </span>
