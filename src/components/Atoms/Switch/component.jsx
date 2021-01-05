@@ -9,8 +9,8 @@ const Switch = ({
   className,
   label,
   horizontal,
-  checked,
-  onChange,
+  checkedIcon,
+  uncheckedIcon,
   ...props
 }) => (
   <LabeledInput
@@ -20,10 +20,11 @@ const Switch = ({
     horizontal={horizontal}
   >
     <Toggle
+      icons={{
+        checked: <span className="switch-icon">{checkedIcon}</span>,
+        unchecked: <span className="switch-icon">{uncheckedIcon}</span>,
+      }}
       {...R.omit(["value"], props)}
-      icons={false}
-      onChange={onChange}
-      checked={checked}
     />
   </LabeledInput>
 );

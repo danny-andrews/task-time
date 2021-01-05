@@ -1,6 +1,13 @@
-/* stylelint-disable max-nesting-depth, declaration-no-important */
+/* stylelint-disable max-nesting-depth, declaration-no-important,
+   mavrin/stylelint-declaration-use-css-custom-properties */
 .react-toggle {
   --border-size: 2px;
+
+  & .switch-icon {
+    position: absolute;
+    right: -6px;
+    top: 6px;
+  }
 
   & .react-toggle-thumb {
     background-color: var(--color-text);
@@ -27,7 +34,6 @@
   &.react-toggle--focus {
     & .react-toggle-thumb {
       outline: var(--outline-focus);
-      outline-offset: var(--border-size);
     }
   }
 }

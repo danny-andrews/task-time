@@ -10,6 +10,7 @@
 }
 
 .right {
+  display: flex;
   position: absolute;
   right: var(--spacing-small);
 }
