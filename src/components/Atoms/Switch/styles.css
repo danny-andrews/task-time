@@ -4,8 +4,9 @@
   --border-size: 2px;
 
   & .switch-icon {
+    font-size: 14px;
+    left: -2px;
     position: absolute;
-    right: -6px;
     top: 6px;
   }
 
@@ -34,6 +35,7 @@
   &.react-toggle--focus {
     & .react-toggle-thumb {
       outline: var(--outline-focus);
+      outline-offset: -1px;
     }
   }
 }
