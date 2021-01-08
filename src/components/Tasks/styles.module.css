@@ -4,7 +4,7 @@
   height: 100%;
   margin-bottom: var(--outer-spacing);
   margin-top: var(--outer-spacing);
-  overflow-y: scroll;
+  overflow-y: auto;
   padding-right: var(--outer-spacing);
   position: relative;
 }
