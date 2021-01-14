@@ -9,6 +9,9 @@ import { DND_IDS } from "../../shared";
 const DraggableTask = ({ task, index, onTaskMove, onDragStart, onDragEnd }) => {
   const ref = useRef(null);
   const [{ draggedItem }, drag] = useDrag({
+    canDrag: () => {
+      return !task.isComplete;
+    },
     item: {
       type: DND_IDS.TASK,
       index,
@@ -53,9 +56,7 @@ const DraggableTask = ({ task, index, onTaskMove, onDragStart, onDragEnd }) => {
     },
   });
 
-  if (!task.isComplete) {
-    drag(drop(ref));
-  }
+  drag(drop(ref));
 
   return (
     <li className={cn({ [styles.dragging]: isDragging })} ref={ref}>
