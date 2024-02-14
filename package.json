@@ -3,17 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "yarn rollup --config",
-    "build:analyze": "ANALYZE_BUILD=true yarn build:prod",
+    "build": "NODE_ENV=production rollup --config",
+    "build:analyze": "ANALYZE_BUILD=true npm run build",
     "build:clean": "rm -r task-time || true",
     "build:icons": "npx @svgr/cli src/components/Icons/svg --out-dir src/components/Icons",
-    "build:prod": "yarn build:clean; NODE_ENV=production yarn build",
-    "ci": "yarn lint; yarn test",
-    "lint": "yarn lint:js; yarn lint:css",
+    "ci": "npm run lint; npm run test",
+    "lint": "npm run lint:js; npm run lint:css",
     "lint:css": "stylelint 'src/**/*.css' 'src/**/.module.css'",
-    "lint:js": "yarn eslint . --ext=js,jsx; yarn prettier . --check",
+    "lint:js": "npx eslint . --ext=js,jsx; npm run prettier . --check",
     "test": "tap --no-coverage",
-    "serve": "yarn build --watch"
+    "serve": "rollup --config --watch"
   },
   "dependencies": {
     "@reach/disclosure": "^0.11.2",

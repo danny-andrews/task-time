@@ -81,9 +81,9 @@ export default ({ isProd, envVars, outputDir, analyzeBuild }, config) => {
     },
     plugins: [
       ...(R.isNil(envVars) ? [] : [replace(envVarObj)]),
+      babel({ babelHelpers: "bundled", exclude: "node_modules/**" }),
       commonjs(),
       resolve({ browser: true }),
-      babel({ babelHelpers: "bundled", exclude: "node_modules/**" }),
       ...(isProd ? [terser()] : []),
       postcss({
         autoModules: true,
