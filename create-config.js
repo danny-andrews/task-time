@@ -32,7 +32,7 @@ const htmlTemplate = ({ files, publicPath }) => {
           `<link rel="stylesheet" type="text/css" href="/${compactAndJoin("/", [
             publicPath,
             fileName,
-          ])}"/>`
+          ])}"/>`,
       )
       .join("\n")}
     ${files.js
@@ -41,7 +41,7 @@ const htmlTemplate = ({ files, publicPath }) => {
           `<script src="/${compactAndJoin("/", [
             publicPath,
             fileName,
-          ])}" defer></script>`
+          ])}" defer></script>`,
       )
       .join("\n")}
   </head>
@@ -57,7 +57,7 @@ const mapObj = (transformKey, transformValue) =>
   R.pipe(
     R.toPairs,
     R.map(([key, value]) => [transformKey(key), transformValue(value)]),
-    R.fromPairs
+    R.fromPairs,
   );
 
 export default ({ isProd, envVars, outputDir, analyzeBuild }, config) => {
@@ -65,9 +65,9 @@ export default ({ isProd, envVars, outputDir, analyzeBuild }, config) => {
   const hashAssets = isProd;
   const envVarObj = mapObj(
     (key) => `process.env.${key}`,
-    JSON.stringify
+    JSON.stringify,
   )(envVars);
-  const publicPath = isProd ? "task-time" : "";
+  const publicPath = isProd ? "" : "";
   const output = config.output || [];
   const plugins = config.plugins || [];
 
